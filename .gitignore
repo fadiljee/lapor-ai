@@ -13,3 +13,7 @@ yarn-error.log*
 
 # PRD — dokumen internal, tidak dipush ke repository publik
 PRD/
+
+# Docker — konfigurasi lokal, tidak dipush
+docker-compose.yml
+postgres_data/
