@@ -1,0 +1,115 @@
+@import "tailwindcss";
+
+@theme {
+  /* ── Tipografi ────────────────────────────────────────────── */
+  --font-display: "Fraunces", serif;      /* H1/H2, angka besar statistik */
+  --font-sans:    "Public Sans", sans-serif; /* Body, label form, navigasi */
+  --font-mono:    "IBM Plex Mono", monospace; /* Nomor tiket, kode, angka tabular */
+
+  /* ── Palet Warna (flat, tanpa gradient) ──────────────────── */
+  --color-ink:              #1A1D1F;   /* Teks utama, garis ikon */
+  --color-paper:            #F4F3EE;   /* Background utama (abu-netral) */
+  --color-paper-raised:     #FFFFFF;   /* Card, form, permukaan terangkat */
+  --color-line:             #D8D4C9;   /* Hairline border, pembatas */
+  --color-muted:            #6B6862;   /* Teks sekunder, placeholder */
+
+  /* Merah Garuda — HANYA untuk aksi utama & urgensi kritis */
+  --color-red-garuda:       #A32A21;
+  --color-red-garuda-ink:   #7A1F19;   /* Hover/pressed state */
+  --color-red-garuda-tint:  #FAEAEA;   /* Background badge kritis */
+
+  /* Navy Dinas — Header, elemen AI/sistem, tautan institusi */
+  --color-navy-dinas:       #1F3A52;
+  --color-navy-dinas-hover: #162C3E;
+  --color-navy-dinas-tint:  #E7ECEF;   /* Background badge navy, hover ringan */
+
+  /* Status Urgensi — palet pewarna alami (soga, hijau lumut, indigo pudar) */
+  --color-urgensi-kritis:   #A32A21;   /* Kritis = merah garuda */
+  --color-urgensi-kritis-bg: #FAEAEA;
+  --color-urgensi-tinggi:   #B5732A;   /* Soga/ochre */
+  --color-urgensi-tinggi-bg: #FDF3E0;
+  --color-urgensi-sedang:   #4B6E4F;   /* Hijau lumut */
+  --color-urgensi-sedang-bg: #EDF2EE;
+  --color-urgensi-rendah:   #3E5C74;   /* Indigo pudar */
+  --color-urgensi-rendah-bg: #E8EDF2;
+}
+
+/* ── Base Styles ──────────────────────────────────────────────── */
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Typography Helpers ───────────────────────────────────────── */
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-mono-ticket {
+  font-family: var(--font-mono);
+}
+
+/* ── Ticket / Resi Components ─────────────────────────────────── */
+
+/* Garis perforasi putus-putus — HANYA dipakai di komponen resi/tiket */
+.ticket-perforation {
+  border-top: 1px dashed var(--color-line);
+  position: relative;
+}
+
+/* Notch kiri (sobekan fisik tiket) */
+.ticket-perforation::before {
+  content: '';
+  position: absolute;
+  left: -20px;
+  top: -9px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: var(--color-paper);
+  border: 1px solid var(--color-line);
+  border-left: none;
+}
+
+/* Notch kanan */
+.ticket-perforation::after {
+  content: '';
+  position: absolute;
+  right: -20px;
+  top: -9px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: var(--color-paper);
+  border: 1px solid var(--color-line);
+  border-right: none;
+}
+
+/* ── AI Stamp Cap ─────────────────────────────────────────────── */
+.ai-stamp-cap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: 1.5px solid currentColor;
+  transform: rotate(-4deg);
+  text-align: center;
+  flex-direction: column;
+  line-height: 1.1;
+  font-family: var(--font-mono);
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* ── Focus Styles ─────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--color-navy-dinas);
+  outline-offset: 2px;
+}

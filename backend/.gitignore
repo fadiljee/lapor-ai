@@ -1,0 +1,50 @@
+# Build artifacts and dependencies
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+
+# Environment files
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+.log/
+
+# Database files
+*.sqlite
+*.sqlite3
+*.db
+*.db-journal
+
+# Coverage reports
+coverage/
+.coverage
+htmlcov/
+
+# PRD - do not publish public repository
+PRD/
