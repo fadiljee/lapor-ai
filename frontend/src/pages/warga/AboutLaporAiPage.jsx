@@ -31,7 +31,7 @@ const FAQ_ITEMS = [
   },
   {
     q: 'Berapa lama laporan saya akan diproses?',
-    a: 'Triage AI berlangsung dalam hitungan detik setelah pengiriman. Verifikasi petugas ditargetkan dalam 3 hari kerja, tindak lanjut dinas dalam 5 hari kerja, dan tanggapan resmi maksimal 10 hari kerja — sesuai standar SP4N-LAPOR!.'
+    a: 'Triage AI berlangsung dalam hitungan detik setelah pengiriman. Verifikasi petugas ditargetkan dalam 3 hari kerja, tindak lanjut dinas dalam 5 hari kerja, dan tanggapan resmi maksimal 10 hari kerja — sesuai target standar pelayanan publik.'
   },
 ];
 
@@ -69,7 +69,7 @@ export function AboutLaporAiPage() {
         <div className="md:col-span-3">
           {/* Eyebrow */}
           <div className="text-[10px] font-mono-ticket text-[#1F3A52] uppercase tracking-[0.2em] mb-4">
-            Lapisan AI di Atas SP4N-LAPOR!
+            Sistem Pengaduan Publik Berbasis AI
           </div>
 
           {/* H1 — Fraunces */}
@@ -239,7 +239,7 @@ export function AboutLaporAiPage() {
 
       {/* Footer Note — Status Prototipe */}
       <p className="text-center text-[11px] text-[#6B6862] italic mt-8 leading-relaxed">
-        LAPOR-AI adalah pengembangan tambahan di atas SP4N-LAPOR! dan saat ini berstatus prototipe;
+        LAPOR-AI adalah platform pengaduan publik berbasis AI dan saat ini berstatus prototipe;
         pemetaan ke dinas tujuan bersifat konseptual sampai instansi pilot ditetapkan.
       </p>
     </div>

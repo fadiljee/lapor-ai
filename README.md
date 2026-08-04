@@ -14,7 +14,7 @@
 
 **LAPOR-AI** merupakan sistem pengaduan masyarakat tingkat lanjut berbasis Artificial Intelligence yang memanfaatkan **Large Language Model (Google Gemini API)** untuk membantu proses **triage laporan secara otomatis**.
 
-Sistem ini bertindak sebagai lapisan kecerdasan buatan (AI Layer) di atas sistem pengaduan publik seperti SP4N-LAPOR! dengan kemampuan:
+Sistem ini bertindak sebagai platform pengaduan masyarakat pintar berbasis AI dengan kemampuan:
 
 - 🧠 **Klasifikasi Kategori Multi-Domain**: Mengkategorikan pengaduan ke 8 domain dinas teknis (Infrastruktur, Keamanan/Bencana, Layanan Publik, Lingkungan, Kesehatan, Pendidikan, Ketertiban Umum, Lainnya).
 - 🚨 **Triage Urgensi Multi-Tier**: Menentukan skor urgensi (*Kritis*, *Tinggi*, *Sedang*, *Rendah*) secara real-time. Laporan darurat otomatis diangkat ke puncak antrean.

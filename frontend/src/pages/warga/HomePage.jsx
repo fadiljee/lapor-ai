@@ -45,7 +45,7 @@ export function HomePage() {
         <div className="lg:col-span-3">
           {/* Eyebrow */}
           <div className="inline-flex items-center gap-2 border border-[#D8D4C9] bg-[#E7ECEF] text-[#1F3A52] px-3 py-1 rounded text-[10px] font-mono-ticket font-semibold uppercase tracking-widest mb-5">
-            Lapisan AI di Atas SP4N-LAPOR!
+            Sistem Pengaduan Publik Berbasis AI
           </div>
 
           {/* H1 — Fraunces Display */}

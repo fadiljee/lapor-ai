@@ -15,7 +15,7 @@ export function Footer() {
             deteksi duplikasi teknis, dan routing dinas otomatis. Memproses Bahasa Indonesia dan Bahasa Bangka.
           </p>
           <p className="text-[#6B6862] mt-3 italic leading-relaxed">
-            LAPOR-AI adalah pengembangan tambahan di atas SP4N-LAPOR! dan saat ini berstatus prototipe;
+            LAPOR-AI adalah platform pengaduan publik berbasis AI dan saat ini berstatus prototipe;
             pemetaan ke dinas tujuan bersifat konseptual sampai instansi pilot ditetapkan.
           </p>
         </div>
