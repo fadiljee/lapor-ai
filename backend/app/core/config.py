@@ -1,5 +1,8 @@
 import os
+from dotenv import load_dotenv
 from pydantic_settings import BaseSettings
+
+load_dotenv()
 
 class Settings(BaseSettings):
     PROJECT_NAME: str = "LAPOR-AI Backend"
@@ -11,10 +14,11 @@ class Settings(BaseSettings):
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 # 1 day
     
-    # LLM Provider
-    GROQ_API_KEY: str = os.getenv("GROQ_API_KEY", "")
-    PRIMARY_MODEL: str = os.getenv("PRIMARY_MODEL", "llama-3.3-70b-versatile")
-    FALLBACK_MODEL: str = os.getenv("FALLBACK_MODEL", "llama3-8b-8192")
+    # LLM Provider (Gemini)
+    GEMINI_API_KEY: str = os.getenv("GEMINI_API_KEY", "")
+    GEMINI_BASE_URL: str = os.getenv("GEMINI_BASE_URL", "https://generativelanguage.googleapis.com/v1beta")
+    PRIMARY_MODEL: str = os.getenv("PRIMARY_MODEL", "gemini-3.6-flash")
+    FALLBACK_MODEL: str = os.getenv("FALLBACK_MODEL", "gemini-2.0-flash")
     
     # Database (PostgreSQL)
     DATABASE_URL: str = os.getenv("DATABASE_URL", "postgresql://postgres:password@localhost:5432/lapor_ai")

@@ -27,7 +27,13 @@ export function LoginPage() {
       localStorage.setItem('lapor_ai_token', res.access_token);
       localStorage.setItem('lapor_ai_role', res.role);
       localStorage.setItem('lapor_ai_nama', res.nama);
-      navigate('/dashboard/antrean');
+      // Role-aware redirect
+      const roleRoutes = {
+        supervisor: '/dashboard/analitik',
+        auditor: '/dashboard/audit-log',
+        admin: '/dashboard/routing',
+      };
+      navigate(roleRoutes[res.role] || '/dashboard/antrean');
     } catch (err) {
       setError(err.message || 'Login gagal. Periksa email dan password.');
     } finally {

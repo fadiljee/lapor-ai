@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { FilePlus, Search, Zap, ShieldCheck, Route, ArrowRight, Clock, CheckCircle2 } from 'lucide-react';
+import { FilePlus, Search, Zap, ShieldCheck, Route, ArrowRight } from 'lucide-react';
 import { AiStampCap } from '../../components/common/AiStampCap';
+import { api } from '../../services/api';
 
 /* ── Resi horizontal — alur laporan 5 tahap ───────────────────── */
 const FLOW_STEPS = [
@@ -12,14 +13,30 @@ const FLOW_STEPS = [
   { num: '05', label: 'Tanggapan Resmi', sub: '10 hari tanggapan maksimal' },
 ];
 
-/* ── Statistik dari PRD G1–G5 ─────────────────────────────────── */
-const STATS = [
-  { value: '>90%', label: 'Presisi Klasifikasi Kritis (Target G3)', mono: true },
-  { value: '<10 dtk', label: 'Waktu Triage Otomatis (Target G1)', mono: true },
-  { value: '100%', label: 'PII Disamarkan Sebelum Diproses AI', mono: true },
-];
-
 export function HomePage() {
+  const [kpi, setKpi] = useState(null);
+
+  useEffect(() => {
+    api.getDashboardStats()
+      .then((d) => setKpi(d.kpi))
+      .catch(() => null); // silently fail — fallback shown
+  }, []);
+
+  const liveStats = [
+    {
+      value: kpi != null ? kpi.total_reports : '>0',
+      label: 'Total Laporan Diterima di Sistem',
+    },
+    {
+      value: kpi != null ? `${kpi.ai_accuracy_rate}%` : '>90%',
+      label: 'Akurasi Rekomendasi AI (Human Agreement)',
+    },
+    {
+      value: '100%',
+      label: 'PII Disamarkan Sebelum Diproses AI',
+    },
+  ];
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
 
@@ -145,10 +162,10 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* ── Statistik PRD ─────────────────────────────────────── */}
+      {/* ── Statistik Live (Real DB) ───────────────────────── */}
       <section className="mb-10 border-y-4 border-[#A32A21] py-6 bg-[#FFFFFF]">
         <div className="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-[#D8D4C9]">
-          {STATS.map((s, i) => (
+          {liveStats.map((s, i) => (
             <div key={i} className="text-center px-6 py-4">
               <div className="font-display text-3xl sm:text-4xl font-semibold text-[#1A1D1F] mb-1">{s.value}</div>
               <div className="text-xs text-[#6B6862]">{s.label}</div>

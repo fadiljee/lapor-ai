@@ -80,8 +80,8 @@ def create_report(req: ReportCreate, db: Session = Depends(get_db)):
     # Create AI Analysis Log
     analysis_log = AIAnalysisLog(
         report_id=ticket_id,
-        model_used=ai_res.get("provider", "Groq API"),
-        provider=ai_res.get("provider", "Groq API"),
+        model_used=ai_res.get("provider", "DeepSeek API"),
+        provider=ai_res.get("provider", "DeepSeek API"),
         retry_count=0,
         latency_ms=ai_res.get("latency_ms", 120),
         raw_prompt=wrapped_prompt,
@@ -95,7 +95,7 @@ def create_report(req: ReportCreate, db: Session = Depends(get_db)):
         actor="AI Triage Engine",
         action="CREATE_AND_TRIAGE",
         details=f"Klasifikasi: {new_report.kategori}, Urgensi: {new_report.skor_urgensi}, Status: {new_report.status}",
-        model_version=ai_res.get("provider", "Groq API")
+        model_version=ai_res.get("provider", "DeepSeek API")
     )
     db.add(audit)
     

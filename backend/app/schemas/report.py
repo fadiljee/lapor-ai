@@ -50,6 +50,13 @@ class UserLogin(BaseModel):
     email: str
     password: str
 
+class UserRegister(BaseModel):
+    email: str
+    password: str
+    nama: str
+    role: Optional[str] = "warga"
+    instansi: Optional[str] = None
+
 class Token(BaseModel):
     access_token: str
     token_type: str = "bearer"

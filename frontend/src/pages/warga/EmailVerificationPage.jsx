@@ -50,17 +50,21 @@ export function EmailVerificationPage() {
 
     try {
       await api.verifyOTP({ email, otp_code: code });
-      navigate('/lapor/berhasil', {
-        state: {
-          report: {
-            id: ticketId,
-            pelapor_email: email,
-            status: 'Terverifikasi AI',
-            kategori: 'Pengaduan Warga',
-            created_at: 'Baru Saja'
-          }
-        }
-      });
+      // Fetch real report data so success page shows the actual ticket
+      let reportData = {
+        id: ticketId,
+        pelapor_email: email,
+        status: 'Terverifikasi AI',
+        kategori: 'Pengaduan Warga',
+        created_at: new Date().toLocaleString('id-ID'),
+        is_anonim: false,
+      };
+      try {
+        reportData = await api.getReportDetail(ticketId);
+      } catch (_) {
+        // fallback to minimal data above if fetch fails
+      }
+      navigate('/lapor/berhasil', { state: { report: reportData } });
     } catch (err) {
       setError(err.message || 'Kode OTP salah atau kedaluwarsa.');
     } finally {

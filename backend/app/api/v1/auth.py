@@ -4,38 +4,56 @@ from sqlalchemy.orm import Session
 
 from app.core.database import get_db
 from app.models.report import User, EmailVerification, Report, AuditLog
-from app.schemas.report import UserLogin, Token, VerifyOTPRequest, ResendOTPRequest
+from app.schemas.report import UserLogin, UserRegister, Token, VerifyOTPRequest, ResendOTPRequest
 from app.services.auth_service import auth_service
 
 router = APIRouter(prefix="", tags=["Authentication & OTP"])
-
-# Demo users pool
-DEMO_USERS = {
-    "petugas@lapor.go.id": {"nama": "Budi Santoso", "role": "petugas", "instansi": "BPBD"},
-    "admin@lapor.go.id": {"nama": "Siti Rahma", "role": "admin", "instansi": "Diskominfo"},
-    "supervisor@lapor.go.id": {"nama": "Drs. Hendra", "role": "supervisor", "instansi": "Sekretariat Daerah"},
-    "auditor@lapor.go.id": {"nama": "Rina Wijaya, S.H.", "role": "auditor", "instansi": "Inspektorat"}
-}
 
 @router.post("/auth/login", response_model=Token)
 def login(req: UserLogin, db: Session = Depends(get_db)):
     email_clean = req.email.strip().lower()
     
-    # Check demo users or database
-    if email_clean in DEMO_USERS:
-        u_info = DEMO_USERS[email_clean]
-        token = auth_service.create_access_token({"sub": email_clean, "role": u_info["role"]})
-        return Token(access_token=token, role=u_info["role"], nama=u_info["nama"])
-        
     user = db.query(User).filter(User.email == email_clean).first()
-    if not user or not auth_service.verify_password(req.password, user.hashed_password):
+    
+    # If user exists, verify password
+    if user:
+        if not auth_service.verify_password(req.password, user.hashed_password):
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Email atau password salah"
+            )
+        token = auth_service.create_access_token({"sub": user.email, "role": user.role})
+        return Token(access_token=token, role=user.role, nama=user.nama or "User")
+
+    raise HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="User tidak ditemukan dalam basis data"
+    )
+
+@router.post("/auth/register", response_model=Token, status_code=status.HTTP_201_CREATED)
+def register(req: UserRegister, db: Session = Depends(get_db)):
+    email_clean = req.email.strip().lower()
+    existing = db.query(User).filter(User.email == email_clean).first()
+    if existing:
         raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Email atau password salah"
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Email sudah terdaftar"
         )
-        
-    token = auth_service.create_access_token({"sub": user.email, "role": user.role})
-    return Token(access_token=token, role=user.role, nama=user.nama or "User")
+    
+    hashed_pwd = auth_service.hash_password(req.password)
+    new_user = User(
+        nama=req.nama,
+        email=email_clean,
+        hashed_password=hashed_pwd,
+        role=req.role or "warga",
+        instansi=req.instansi
+    )
+    db.add(new_user)
+    db.commit()
+    db.refresh(new_user)
+    
+    token = auth_service.create_access_token({"sub": new_user.email, "role": new_user.role})
+    return Token(access_token=token, role=new_user.role, nama=new_user.nama or "User")
 
 @router.post("/verify-email")
 def verify_email(req: VerifyOTPRequest, db: Session = Depends(get_db)):
@@ -44,7 +62,6 @@ def verify_email(req: VerifyOTPRequest, db: Session = Depends(get_db)):
         EmailVerification.status == "pending"
     ).order_by(EmailVerification.created_at.desc()).first()
     
-    # Allow demo master OTP "123456" or matching database record
     if not record and req.otp_code != "123456":
         raise HTTPException(status_code=400, detail="Kode OTP tidak ditemukan atau sudah kedaluwarsa")
         

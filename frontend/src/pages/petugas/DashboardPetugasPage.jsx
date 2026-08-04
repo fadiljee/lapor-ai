@@ -36,6 +36,11 @@ export function DashboardPetugasPage() {
     loadReports();
   }, [urgencyFilter]);
 
+  const handleSearch = (e) => {
+    e.preventDefault();
+    loadReports();
+  };
+
   const handleSelectReport = (rpt) => {
     setSelectedReport(rpt);
   };
@@ -170,7 +175,9 @@ export function DashboardPetugasPage() {
                   </div>
                   <div className="text-[10px] text-[#5B6357] flex items-center justify-between">
                     <span>{rpt.dinas_tujuan}</span>
-                    <span className="font-mono">{rpt.created_at.split(' ')[1] || 'Baru'}</span>
+                    <span className="font-mono">
+                      {rpt.created_at ? (rpt.created_at.split(' ')[1] || rpt.created_at) : 'Baru'}
+                    </span>
                   </div>
                 </div>
               ))
