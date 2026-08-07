@@ -2,24 +2,41 @@ const API_BASE_URL = '/api/v1';
 
 // ─── Core fetch wrapper ───────────────────────────────────────────────────────
 async function fetchAPI(endpoint, options = {}) {
-  const defaultHeaders = { 'Content-Type': 'application/json' };
+  const defaultHeaders = {};
 
   const token = localStorage.getItem('lapor_ai_token');
   if (token) {
     defaultHeaders['Authorization'] = `Bearer ${token}`;
   }
 
+  // Jika body BUKAN FormData, set Content-Type ke application/json
+  if (!(options.body instanceof FormData)) {
+    defaultHeaders['Content-Type'] = 'application/json';
+  }
+  // Jika body adalah FormData, biarkan browser mengatur Content-Type (dengan boundary-nya) secara otomatis
+
   const response = await fetch(`${API_BASE_URL}${endpoint}`, {
     ...options,
     headers: { ...defaultHeaders, ...options.headers },
   });
 
-  // Handle empty body (204, etc.)
+  // Handle empty or non-JSON body safely
   const text = await response.text();
-  const data = text ? JSON.parse(text) : {};
+  let data = {};
+  try {
+    data = text ? JSON.parse(text) : {};
+  } catch {
+    data = { detail: text || `Server error ${response.status}` };
+  }
 
   if (!response.ok) {
-    throw new Error(data.detail || `Server error ${response.status}`);
+    const errorMessage = typeof data.detail === 'string' 
+      ? data.detail 
+      : JSON.stringify(data.detail || data) || `Server error ${response.status}`;
+    
+    const err = new Error(errorMessage);
+    err.response = { data };
+    throw err;
   }
   return data;
 }
@@ -42,7 +59,6 @@ export function logout() {
   localStorage.removeItem('lapor_ai_role');
   localStorage.removeItem('lapor_ai_nama');
 }
-
 // ─── API methods ──────────────────────────────────────────────────────────────
 export const api = {
   // ── Auth & OTP
@@ -60,13 +76,13 @@ export const api = {
 
   // ── Reports
   createReport: (reportData) =>
-    fetchAPI('/reports', { method: 'POST', body: JSON.stringify(reportData) }),
+    fetchAPI('/reports', { 
+      method: 'POST', 
+      // Jangan bungkus dengan JSON.stringify jika reportData berupa FormData
+      body: reportData instanceof FormData ? reportData : JSON.stringify(reportData) 
+    }),
 
-  /**
-   * @param {Object} params - Optional filters: urgensi, kategori, status, search
-   */
   getReports: (params = {}) => {
-    // Remove undefined/empty keys before building query string
     const clean = Object.fromEntries(
       Object.entries(params).filter(([, v]) => v !== undefined && v !== '')
     );
@@ -79,9 +95,7 @@ export const api = {
   overrideReport: (id, updateData) =>
     fetchAPI(`/reports/${id}`, { method: 'PATCH', body: JSON.stringify(updateData) }),
 
-  // ── Dashboard & Analytics
   getDashboardStats: () => fetchAPI('/dashboard'),
 
-  // ── Audit Log
   getAuditLogs: () => fetchAPI('/audit-logs'),
 };

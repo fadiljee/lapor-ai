@@ -1,12 +1,14 @@
 import datetime
 import random
+import shutil
+import os
 from typing import Optional, List
-from fastapi import APIRouter, Depends, HTTPException, status, Query
+from fastapi import APIRouter, Depends, HTTPException, status, Query, Form, File, UploadFile
 from sqlalchemy.orm import Session
 
 from app.core.database import get_db
 from app.models.report import Report, AIAnalysisLog, Feedback, AuditLog, EmailVerification
-from app.schemas.report import ReportCreate, ReportResponse, ReportOverride
+from app.schemas.report import ReportResponse, ReportOverride
 from app.services.pii_masking_service import pii_masking_service
 from app.services.prompt_injection_guard import prompt_injection_guard
 from app.services.llm_orchestrator import llm_orchestrator
@@ -21,52 +23,81 @@ def generate_ticket_id() -> str:
     seq = random.randint(1000, 9999)
     return f"LP-{now_str}-{seq}"
 
+@router.get("/test-ai")
+def test_ai_connection():
+    try:
+        dummy_prompt = prompt_injection_guard.sanitize_and_wrap("Test koneksi infrastruktur jalan berlubang")
+        ai_res = llm_orchestrator.analyze_report(dummy_prompt, "default")
+        return {"status": "connected", "ai_response": ai_res}
+    except Exception as e:
+        return {"status": "disconnected", "error": str(e)}
+
 @router.post("", response_model=ReportResponse, status_code=status.HTTP_201_CREATED)
-def create_report(req: ReportCreate, db: Session = Depends(get_db)):
+def create_report(
+    kategori: str = Form(...),
+    deskripsi: str = Form(...),
+    lokasi_alamat: Optional[str] = Form(None),
+    lokasi_lat: Optional[float] = Form(None),
+    lokasi_lng: Optional[float] = Form(None),
+    is_anonim: bool = Form(False),
+    email: Optional[str] = Form(None),
+    preset_type: Optional[str] = Form(None),
+    lampiran: Optional[UploadFile] = File(None),
+    db: Session = Depends(get_db)
+):
     ticket_id = generate_ticket_id()
     
+    # Tangani penyimpanan file lampiran fisik (jika ada)
+    lampiran_path = None
+    if lampiran and lampiran.filename:
+        upload_dir = "uploads"
+        os.makedirs(upload_dir, exist_ok=True)
+        lampiran_path = f"{upload_dir}/{ticket_id}_{lampiran.filename}"
+        with open(lampiran_path, "wb") as buffer:
+            shutil.copyfileobj(lampiran.file, buffer)
+    
     # 1. PII Masking
-    masked_desc = pii_masking_service.mask_text(req.deskripsi)
+    masked_desc = pii_masking_service.mask_text(deskripsi)
     
     # 2. Text Fingerprint & Duplicate Detection
-    fingerprint = duplicate_detection_service.generate_fingerprint(req.deskripsi)
+    fingerprint = duplicate_detection_service.generate_fingerprint(deskripsi)
     existing_duplicate = db.query(Report).filter(Report.text_fingerprint == fingerprint).first()
     is_duplicate = existing_duplicate is not None
     
     # 3. Prompt Injection Guard & LLM Analysis
     wrapped_prompt = prompt_injection_guard.sanitize_and_wrap(masked_desc)
-    ai_res = llm_orchestrator.analyze_report(wrapped_prompt, req.preset_type)
+    ai_res = llm_orchestrator.analyze_report(wrapped_prompt, preset_type)
     
     # 4. Department Lookup
     dinas = department_routing_service.get_department(ai_res.get("kategori", "Lainnya"))
     
     # Status determination
-    initial_status = "Pending Email Verification" if (not req.is_anonim and req.email) else "Terverifikasi AI"
+    initial_status = "Pending Email Verification" if (not is_anonim and email) else "Terverifikasi AI"
     if is_duplicate:
         initial_status = "Perlu Verifikasi Manual"
         
-    email_verified = req.is_anonim
+    email_verified = is_anonim
     
     # Create Report entity
     new_report = Report(
         id=ticket_id,
-        pelapor_email=req.email if not req.is_anonim else None,
-        is_anonim=req.is_anonim,
+        pelapor_email=email if not is_anonim else None,
+        is_anonim=is_anonim,
         email_verified=email_verified,
-        deskripsi_asli=req.deskripsi,
+        deskripsi_asli=deskripsi,
         deskripsi_masked=masked_desc,
         text_fingerprint=fingerprint,
-        kategori=ai_res.get("kategori", req.kategori or "Lainnya"),
+        kategori=ai_res.get("kategori", kategori or "Lainnya"),
         skor_urgensi=ai_res.get("skor_urgensi", "Sedang"),
         alasan_urgensi=ai_res.get("alasan_urgensi", ""),
         ringkasan=ai_res.get("ringkasan", ""),
         bahasa_terdeteksi=ai_res.get("bahasa_terdeteksi", "Bahasa Indonesia"),
         confidence_score=ai_res.get("confidence_score", 0.90),
         entitas=ai_res.get("entitas", []),
-        lokasi_alamat=req.lokasi_alamat or "Lokasi tidak ditentukan",
-        lokasi_lat=req.lokasi_lat,
-        lokasi_lng=req.lokasi_lng,
-        lampiran_path=req.lampiran_path,
+        lokasi_alamat=lokasi_alamat or "Lokasi tidak ditentukan",
+        lokasi_lat=lokasi_lat,
+        lokasi_lng=lokasi_lng,
+        lampiran_path=lampiran_path,
         dinas_tujuan=dinas,
         is_duplikat=is_duplicate,
         duplikat_of_id=existing_duplicate.id if existing_duplicate else None,
@@ -80,8 +111,8 @@ def create_report(req: ReportCreate, db: Session = Depends(get_db)):
     # Create AI Analysis Log
     analysis_log = AIAnalysisLog(
         report_id=ticket_id,
-        model_used=ai_res.get("provider", "DeepSeek API"),
-        provider=ai_res.get("provider", "DeepSeek API"),
+        model_used=ai_res.get("provider", "Google Gemini API"),
+        provider=ai_res.get("provider", "Google Gemini API"),
         retry_count=0,
         latency_ms=ai_res.get("latency_ms", 120),
         raw_prompt=wrapped_prompt,
@@ -95,15 +126,15 @@ def create_report(req: ReportCreate, db: Session = Depends(get_db)):
         actor="AI Triage Engine",
         action="CREATE_AND_TRIAGE",
         details=f"Klasifikasi: {new_report.kategori}, Urgensi: {new_report.skor_urgensi}, Status: {new_report.status}",
-        model_version=ai_res.get("provider", "DeepSeek API")
+        model_version=ai_res.get("provider", "Google Gemini API")
     )
     db.add(audit)
     
     # If requires OTP verification
-    if not req.is_anonim and req.email:
+    if not is_anonim and email:
         otp_code = auth_service.generate_otp()
         verification = EmailVerification(
-            email=req.email,
+            email=email,
             otp_code=otp_code,
             expired_at=datetime.datetime.utcnow() + datetime.timedelta(minutes=10),
             status="pending"
@@ -137,7 +168,6 @@ def get_reports(
             (Report.lokasi_alamat.like(f"%{search}%"))
         )
         
-    # Sort by Urgency priority (Kritis first) then newest created_at
     reports = query.all()
     urgency_order = {"Kritis": 1, "Tinggi": 2, "Sedang": 3, "Rendah": 4}
     reports.sort(key=lambda r: (urgency_order.get(r.skor_urgensi, 5), r.created_at), reverse=False)
@@ -171,10 +201,9 @@ def override_report(report_id: str, req: ReportOverride, db: Session = Depends(g
         
     report.updated_at = datetime.datetime.utcnow()
     
-    # Save Feedback entry
     feedback = Feedback(
         report_id=report_id,
-        petugas_id=1, # Default Officer
+        petugas_id=1,
         keputusan_akhir=report.status,
         koreksi_ai=bool(req.kategori or req.skor_urgensi),
         kategori_lama=kategori_lama,
@@ -185,7 +214,6 @@ def override_report(report_id: str, req: ReportOverride, db: Session = Depends(g
     )
     db.add(feedback)
     
-    # Save Audit Log
     audit = AuditLog(
         report_id=report_id,
         actor="Petugas Verifikator",

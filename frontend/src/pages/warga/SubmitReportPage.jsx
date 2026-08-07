@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { QuickFillPreset } from '../../components/report/QuickFillPreset';
 import { api } from '../../services/api';
-import { ArrowLeft, ArrowRight, CheckCircle2, MapPin, Upload, ShieldAlert, Loader2, Bot } from 'lucide-react';
+import { ArrowLeft, ArrowRight, CheckCircle2, MapPin, Upload, ShieldAlert, Loader2, Bot, LocateFixed, X, FileText, Image as ImageIcon } from 'lucide-react';
 
 /* ── Resi step indicator strips ──────────────────────────────── */
 const STEPS = [
@@ -24,11 +24,24 @@ const KATEGORI = [
   { value: 'Lainnya',            label: 'Lainnya' },
 ];
 
+const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 MB
+const ALLOWED_TYPES = ['image/png', 'image/jpeg', 'image/jpg', 'application/pdf'];
+
 export function SubmitReportPage() {
   const navigate = useNavigate();
+  const fileInputRef = useRef(null);
+
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
+  // Location state
+  const [locating, setLocating] = useState(false);
+  const [locationError, setLocationError] = useState('');
+
+  // File upload state (kept separate from formData: File objects aren't JSON-safe)
+  const [attachment, setAttachment] = useState(null); // { file, previewUrl }
+  const [fileError, setFileError] = useState('');
 
   const [formData, setFormData] = useState({
     kategori: 'Infrastruktur',
@@ -38,13 +51,79 @@ export function SubmitReportPage() {
     lokasi_lng: 106.1169,
     is_anonim: false,
     email: '',
-    lampiran_path: '',
     preset_type: ''
   });
 
   const handlePresetSelect = (presetData) => {
     setFormData((prev) => ({ ...prev, ...presetData }));
     setError('');
+  };
+
+  /* ── Geolocation: "Gunakan Lokasi Saya" ──────────────────────── */
+  const handleUseMyLocation = () => {
+    if (!navigator.geolocation) {
+      setLocationError('Perangkat/browser Anda tidak mendukung fitur lokasi.');
+      return;
+    }
+
+    setLocating(true);
+    setLocationError('');
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        setFormData((prev) => ({
+          ...prev,
+          lokasi_lat: latitude,
+          lokasi_lng: longitude,
+          // Only auto-fill the address text if the user hasn't typed one already
+          lokasi_alamat: prev.lokasi_alamat.trim()
+            ? prev.lokasi_alamat
+            : `Koordinat GPS: ${latitude.toFixed(5)}, ${longitude.toFixed(5)}`
+        }));
+        setLocating(false);
+      },
+      (err) => {
+        setLocating(false);
+        if (err.code === err.PERMISSION_DENIED) {
+          setLocationError('Izin lokasi ditolak. Aktifkan izin lokasi di pengaturan browser Anda.');
+        } else {
+          setLocationError('Gagal mengambil lokasi. Coba lagi atau isi alamat secara manual.');
+        }
+      },
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+    );
+  };
+
+  /* ── File upload handlers ─────────────────────────────────────── */
+  const handleFileSelect = (fileList) => {
+    setFileError('');
+    const file = fileList?.[0];
+    if (!file) return;
+
+    if (!ALLOWED_TYPES.includes(file.type)) {
+      setFileError('Format tidak didukung. Gunakan PNG, JPG, atau PDF.');
+      return;
+    }
+    if (file.size > MAX_FILE_SIZE) {
+      setFileError('Ukuran file melebihi 10 MB.');
+      return;
+    }
+
+    const previewUrl = file.type.startsWith('image/') ? URL.createObjectURL(file) : null;
+    setAttachment({ file, previewUrl });
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    handleFileSelect(e.dataTransfer.files);
+  };
+
+  const handleRemoveAttachment = () => {
+    if (attachment?.previewUrl) URL.revokeObjectURL(attachment.previewUrl);
+    setAttachment(null);
+    setFileError('');
+    if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
   const handleNextStep = () => {
@@ -79,23 +158,45 @@ export function SubmitReportPage() {
     setError('');
 
     try {
-      const res = await api.createReport(formData);
+      // Send as multipart/form-data so the file (if any) reaches the backend
+      const payload = new FormData();
+      Object.entries(formData).forEach(([key, value]) => payload.append(key, value));
+      if (attachment?.file) {
+        payload.append('lampiran', attachment.file);
+      }
+
+      const res = await api.createReport(payload);
       if (!formData.is_anonim && formData.email) {
         navigate('/verifikasi-email', { state: { email: formData.email, ticketId: res.id } });
       } else {
         navigate('/lapor/berhasil', { state: { report: res } });
       }
     } catch (err) {
-      setError(err.message || 'Gagal mengirim laporan. Silakan coba lagi.');
-    } finally {
-      setLoading(false);
+      console.error("Detail Error Submit:", err); // Cek console browser untuk debugging
+
+      let errorMsg = 'Gagal mengirim laporan. Silakan coba lagi.';
+
+      if (typeof err === 'string') {
+        errorMsg = err;
+      } else if (err?.response?.data) {
+        const data = err.response.data;
+        if (typeof data.detail === 'string') {
+          errorMsg = data.detail;
+        } else if (Array.isArray(data.detail)) {
+          errorMsg = data.detail.map(d => `${d.loc?.join(' -> ')}: ${d.msg}`).join(', ');
+        } else {
+          errorMsg = JSON.stringify(data);
+        }
+      } else if (err?.message) {
+        errorMsg = err.message;
+      }
+
+      setError(errorMsg);
     }
   };
 
   const labelClass = 'block text-[11px] font-bold text-[#1A1D1F] uppercase tracking-wider mb-2';
-  /* Field utama (Deskripsi) pakai border lebih tegas saat fokus */
   const inputPrimary = 'w-full bg-[#F4F3EE] border border-[#D8D4C9] rounded px-3 py-2.5 text-sm text-[#1A1D1F] focus:outline-none focus:border-[1.5px] focus:border-[#1A1D1F] transition-colors placeholder:text-[#6B6862]';
-  /* Field opsional tetap --line tipis */
   const inputSecondary = 'w-full bg-[#F4F3EE] border border-[#D8D4C9] rounded px-3 py-2.5 text-sm text-[#1A1D1F] focus:outline-none focus:border-[#1F3A52] transition-colors placeholder:text-[#6B6862]';
 
   return (
@@ -175,7 +276,6 @@ export function SubmitReportPage() {
                   {formData.deskripsi.length}/2000
                 </span>
               </div>
-              {/* Primary field — border lebih tegas saat fokus */}
               <textarea
                 rows={6}
                 value={formData.deskripsi}
@@ -183,7 +283,6 @@ export function SubmitReportPage() {
                 placeholder="Ceritakan kejadian masalah secara jelas. Dapat ditulis dalam Bahasa Indonesia atau Bahasa Bangka..."
                 className="w-full bg-[#F4F3EE] border-[1.5px] border-[#D8D4C9] rounded p-3 text-sm text-[#1A1D1F] focus:outline-none focus:border-[#1A1D1F] transition-colors placeholder:text-[#6B6862] resize-none"
               />
-              {/* AI hint indicator */}
               <div className="flex items-center gap-1.5 mt-2">
                 <Bot className="w-3.5 h-3.5 text-[#1F3A52] shrink-0" />
                 <p className="text-[11px] text-[#6B6862]">
@@ -198,7 +297,22 @@ export function SubmitReportPage() {
         {step === 2 && (
           <div className="space-y-5">
             <div>
-              <label className={labelClass}>Lokasi Kejadian (Alamat / Patokan)</label>
+              <div className="flex justify-between items-center mb-2">
+                <label className={`${labelClass} mb-0`}>Lokasi Kejadian (Alamat / Patokan)</label>
+                <button
+                  type="button"
+                  onClick={handleUseMyLocation}
+                  disabled={locating}
+                  className="flex items-center gap-1.5 text-[11px] font-bold text-[#1F3A52] hover:text-[#162C3E] disabled:opacity-50 transition-colors"
+                >
+                  {locating ? (
+                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                  ) : (
+                    <LocateFixed className="w-3.5 h-3.5" />
+                  )}
+                  {locating ? 'Mencari lokasi...' : 'Gunakan Lokasi Saya'}
+                </button>
+              </div>
               <div className="relative">
                 <MapPin className="w-4 h-4 text-[#6B6862] absolute left-3 top-3.5" />
                 <input
@@ -209,16 +323,65 @@ export function SubmitReportPage() {
                   className={`${inputSecondary} pl-9`}
                 />
               </div>
-              <p className="text-[11px] text-[#6B6862] mt-1.5">Opsional — membantu petugas dinas menentukan lokasi kejadian</p>
+              {locationError ? (
+                <p className="text-[11px] text-[#A32A21] mt-1.5">{locationError}</p>
+              ) : (
+                <p className="text-[11px] text-[#6B6862] mt-1.5">
+                  Opsional — ketik alamat manual atau gunakan tombol "Gunakan Lokasi Saya" di atas
+                </p>
+              )}
+              {formData.lokasi_lat && formData.lokasi_lng && (
+                <p className="text-[10px] font-mono-ticket text-[#6B6862] mt-1">
+                  Koordinat tersimpan: {formData.lokasi_lat.toFixed(5)}, {formData.lokasi_lng.toFixed(5)}
+                </p>
+              )}
             </div>
 
             <div>
               <label className={labelClass}>Lampiran Foto / Bukti (Maks 10 MB)</label>
-              <div className="border-2 border-dashed border-[#D8D4C9] bg-[#F4F3EE] p-8 rounded text-center cursor-pointer hover:border-[#1F3A52] transition-colors">
-                <Upload className="w-8 h-8 text-[#6B6862] mx-auto mb-2" />
-                <p className="text-sm font-semibold text-[#1A1D1F]">Unggah Foto atau Dokumen Pendukung</p>
-                <p className="text-[11px] text-[#6B6862] mt-1">Format PNG, JPG, atau PDF — Opsional</p>
-              </div>
+
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept=".png,.jpg,.jpeg,.pdf"
+                onChange={(e) => handleFileSelect(e.target.files)}
+                className="hidden"
+              />
+
+              {!attachment ? (
+                <div
+                  onClick={() => fileInputRef.current?.click()}
+                  onDrop={handleDrop}
+                  onDragOver={(e) => e.preventDefault()}
+                  className="border-2 border-dashed border-[#D8D4C9] bg-[#F4F3EE] p-8 rounded text-center cursor-pointer hover:border-[#1F3A52] transition-colors"
+                >
+                  <Upload className="w-8 h-8 text-[#6B6862] mx-auto mb-2" />
+                  <p className="text-sm font-semibold text-[#1A1D1F]">Unggah Foto atau Dokumen Pendukung</p>
+                  <p className="text-[11px] text-[#6B6862] mt-1">Format PNG, JPG, atau PDF — Opsional</p>
+                </div>
+              ) : (
+                <div className="border border-[#D8D4C9] bg-[#F4F3EE] rounded p-3 flex items-center gap-3">
+                  {attachment.previewUrl ? (
+                    <img src={attachment.previewUrl} alt="preview" className="w-14 h-14 object-cover rounded border border-[#D8D4C9]" />
+                  ) : (
+                    <div className="w-14 h-14 rounded border border-[#D8D4C9] bg-white flex items-center justify-center">
+                      <FileText className="w-6 h-6 text-[#6B6862]" />
+                    </div>
+                  )}
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-semibold text-[#1A1D1F] truncate">{attachment.file.name}</p>
+                    <p className="text-[11px] text-[#6B6862]">{(attachment.file.size / (1024 * 1024)).toFixed(2)} MB</p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={handleRemoveAttachment}
+                    className="p-1.5 rounded hover:bg-[#D8D4C9] transition-colors"
+                  >
+                    <X className="w-4 h-4 text-[#6B6862]" />
+                  </button>
+                </div>
+              )}
+              {fileError && <p className="text-[11px] text-[#A32A21] mt-1.5">{fileError}</p>}
             </div>
           </div>
         )}
@@ -324,6 +487,12 @@ export function SubmitReportPage() {
                   </span>
                 </div>
               </div>
+              {attachment && (
+                <div className="border-t border-[#D8D4C9] pt-3 flex items-center gap-2 text-xs">
+                  <ImageIcon className="w-3.5 h-3.5 text-[#6B6862]" />
+                  <span className="text-[#1A1D1F] font-medium">{attachment.file.name}</span>
+                </div>
+              )}
             </div>
 
             <div className="flex items-start gap-2 bg-[#E7ECEF] border border-[#D8D4C9] rounded p-3 text-[11px] text-[#1F3A52]">
