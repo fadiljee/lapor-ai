@@ -275,16 +275,10 @@ Tersedia akun default untuk pengujian dashboard berdasarkan peran (Password defa
 
 ---
 
-# 📜 Lisensi
-
-Project ini menggunakan lisensi **MIT License**.
-
----
-
 # 👨‍💻 Tim Pengembang
 
 **LAPOR-AI Development Team**  
-FTI FEST 2026 — Politeknik Manufaktur Negeri Bangka Belitung
+FTI FEST 2026 - SFT TEAM
 
 ---
 
