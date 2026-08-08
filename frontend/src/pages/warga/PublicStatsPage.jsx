@@ -104,7 +104,7 @@ export function PublicStatsPage() {
                     <span style={{ fontFamily: '"Inter", sans-serif', fontSize: '13px', color: '#1A1A18' }} className="col-span-4 sm:col-span-3">
                       {item.label}
                     </span>
-                    <div className="col-span-6 sm:col-span-7 bg-[#EBEBDF] h-4 w-full">
+                    <div className="col-span-6 sm:col-span-7 bg-bg-base h-4 w-full">
                       <div style={{ width: item.pct, backgroundColor: '#1F4E3E' }} className="h-full" />
                     </div>
                     <span style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '12px', fontWeight: 600, color: '#1A1A18' }} className="col-span-2 text-right">
@@ -130,19 +130,19 @@ export function PublicStatsPage() {
 
               <div className="flex flex-wrap gap-6">
                 <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 bg-[#6B6659]" />
+                  <div className="w-3 h-3 bg-text-secondary" />
                   <span style={{ fontFamily: '"Inter", sans-serif', fontSize: '12px', color: '#6B6659' }}>Belum Verifikasi (15%)</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 bg-[#3E5C74]" />
+                  <div className="w-3 h-3 bg-primary" />
                   <span style={{ fontFamily: '"Inter", sans-serif', fontSize: '12px', color: '#6B6659' }}>Diproses (30%)</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 bg-[#1F4E3E]" />
+                  <div className="w-3 h-3 bg-primary" />
                   <span style={{ fontFamily: '"Inter", sans-serif', fontSize: '12px', color: '#6B6659' }}>Selesai Ditangani (45%)</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 bg-[#B23A2A]" />
+                  <div className="w-3 h-3 bg-accent" />
                   <span style={{ fontFamily: '"Inter", sans-serif', fontSize: '12px', color: '#6B6659' }}>Ditutup / Selesai (10%)</span>
                 </div>
               </div>

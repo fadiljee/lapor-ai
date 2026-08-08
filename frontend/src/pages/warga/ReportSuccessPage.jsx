@@ -20,14 +20,14 @@ export function ReportSuccessPage() {
 
       {/* Success Header */}
       <div className="text-center mb-8">
-        <div className="w-14 h-14 rounded-full bg-[#EDF2EE] text-[#4B6E4F] flex items-center justify-center mx-auto mb-4 border border-[#D8D4C9]">
+        <div className="w-14 h-14 rounded-full bg-green-50 text-primary flex items-center justify-center mx-auto mb-4 border border-border">
           <CheckCircle2 className="w-8 h-8" />
         </div>
 
-        <h1 className="font-display text-3xl font-semibold text-[#1A1D1F] mb-2">
+        <h1 className="font-display text-3xl font-semibold text-text-text-primary mb-2">
           Pengaduan Berhasil Diterima
         </h1>
-        <p className="text-xs text-[#6B6862] max-w-sm mx-auto">
+        <p className="text-xs text-text-secondary max-w-sm mx-auto">
           Laporan Anda telah masuk ke sistem LAPOR-AI dan sedang diproses melalui pipeline triage otomatis. Simpan tanda terima di bawah ini.
         </p>
       </div>
@@ -53,7 +53,7 @@ export function ReportSuccessPage() {
       </div>
 
       {/* Note */}
-      <p className="text-center text-[11px] text-[#6B6862] mb-6 italic">
+      <p className="text-center text-[11px] text-text-secondary mb-6 italic">
         Nomor tiket di atas adalah satu-satunya cara melacak status laporan Anda. Simpan baik-baik.
       </p>
 
@@ -61,14 +61,14 @@ export function ReportSuccessPage() {
       <div className="flex flex-col sm:flex-row justify-center gap-3">
         <Link
           to="/lacak"
-          className="bg-[#A32A21] hover:bg-[#7A1F19] text-white px-5 py-2.5 rounded font-bold text-xs flex items-center justify-center gap-2 transition-colors"
+          className="bg-accent hover:bg-accent-hover text-white px-5 py-2.5 rounded font-bold text-xs flex items-center justify-center gap-2 transition-colors"
         >
           <Search className="w-4 h-4" />
           Lacak Status Tiket Laporan
         </Link>
         <Link
           to="/lapor"
-          className="border-[1.5px] border-[#1F3A52] text-[#1F3A52] hover:bg-[#E7ECEF] px-5 py-2.5 rounded font-bold text-xs flex items-center justify-center gap-2 transition-colors"
+          className="border-[1.5px] border-primary text-primary hover:bg-slate-100 px-5 py-2.5 rounded font-bold text-xs flex items-center justify-center gap-2 transition-colors"
         >
           <FilePlus className="w-4 h-4" />
           Buat Pengaduan Lainnya

@@ -7,7 +7,7 @@ from fastapi import APIRouter, Depends, HTTPException, status, Query, Form, File
 from sqlalchemy.orm import Session
 
 from app.core.database import get_db
-from app.models.report import Report, AIAnalysisLog, Feedback, AuditLog, EmailVerification
+from app.models.report import Report, AIAnalysisLog, Feedback, AuditLog, EmailVerification, User
 from app.schemas.report import ReportResponse, ReportOverride
 from app.services.pii_masking_service import pii_masking_service
 from app.services.prompt_injection_guard import prompt_injection_guard
@@ -192,6 +192,9 @@ def override_report(report_id: str, req: ReportOverride, db: Session = Depends(g
     
     if req.kategori:
         report.kategori = req.kategori
+        if not req.dinas_tujuan:
+            report.dinas_tujuan = department_routing_service.get_department(req.kategori)
+            
     if req.skor_urgensi:
         report.skor_urgensi = req.skor_urgensi
     if req.dinas_tujuan:
@@ -201,9 +204,23 @@ def override_report(report_id: str, req: ReportOverride, db: Session = Depends(g
         
     report.updated_at = datetime.datetime.utcnow()
     
+    petugas_user = db.query(User).filter(User.role == "petugas").first()
+    if not petugas_user:
+        petugas_user = db.query(User).first()
+    if not petugas_user:
+        petugas_user = User(
+            email="petugas@lapor.go.id",
+            nama="Budi Santoso",
+            role="petugas",
+            instansi="BPBD",
+            hashed_password=auth_service.hash_password("password123")
+        )
+        db.add(petugas_user)
+        db.flush()
+
     feedback = Feedback(
         report_id=report_id,
-        petugas_id=1,
+        petugas_id=petugas_user.id,
         keputusan_akhir=report.status,
         koreksi_ai=bool(req.kategori or req.skor_urgensi),
         kategori_lama=kategori_lama,
@@ -218,7 +235,7 @@ def override_report(report_id: str, req: ReportOverride, db: Session = Depends(g
         report_id=report_id,
         actor="Petugas Verifikator",
         action="OVERRIDE_REPORT",
-        details=f"Kategori: {kategori_lama} -> {report.kategori}, Urgensi: {urgensi_lama} -> {report.skor_urgensi}, Dinas: {report.dinas_tujuan}",
+        details=f"Status: {report.status}, Kategori: {kategori_lama} -> {report.kategori}, Urgensi: {urgensi_lama} -> {report.skor_urgensi}, Dinas: {report.dinas_tujuan}",
         model_version="Human-in-the-Loop"
     )
     db.add(audit)

@@ -80,7 +80,7 @@ class Feedback(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     report_id = Column(String, ForeignKey("reports.id"), nullable=False)
-    petugas_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    petugas_id = Column(Integer, ForeignKey("users.id"), nullable=True)
     keputusan_akhir = Column(String, nullable=False)
     koreksi_ai = Column(Boolean, default=False)
     kategori_lama = Column(String, nullable=True)

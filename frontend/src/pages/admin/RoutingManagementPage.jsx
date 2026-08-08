@@ -17,35 +17,35 @@ export function RoutingManagementPage() {
   return (
     <div className="flex flex-col md:flex-row min-h-[calc(100vh-4rem)]">
       <Sidebar />
-      <main className="flex-1 p-4 sm:p-6 bg-[#F3F4EF]">
-        <div className="bg-white border border-[#D8DAD2] p-6 rounded-lg mb-6 shadow-sm">
+      <main className="flex-1 p-4 sm:p-6 bg-bg-base">
+        <div className="bg-white border border-border p-6 rounded-lg mb-6 shadow-sm">
           <div className="flex items-center gap-2 mb-2">
-            <MapPin className="w-5 h-5 text-[#1F4E4B]" />
-            <h1 className="font-serif font-bold text-xl text-[#1A2420]">
+            <MapPin className="w-5 h-5 text-primary" />
+            <h1 className="font-serif font-bold text-xl text-text-primary">
               Matriks Pemetaan Dinas Tujuan (PRD Section 36)
             </h1>
           </div>
-          <p className="text-xs text-[#5B6357]">
+          <p className="text-xs text-text-secondary">
             Tabel lookup deterministik untuk menentukan rekomendasi awal dinas tujuan berdasarkan hasil klasifikasi kategori AI.
           </p>
         </div>
 
-        <div className="bg-white border border-[#D8DAD2] rounded-lg overflow-hidden shadow-sm">
+        <div className="bg-white border border-border rounded-lg overflow-hidden shadow-sm">
           <table className="w-full text-left border-collapse text-xs">
             <thead>
-              <tr className="bg-[#1F4E4B] text-white">
+              <tr className="bg-primary text-white">
                 <th className="p-3 font-bold uppercase">Kategori LLM</th>
                 <th className="p-3 font-bold uppercase">Ciri / Sub-Isu Indikator</th>
                 <th className="p-3 font-bold uppercase">Dinas Tujuan (Deterministik)</th>
                 <th className="p-3 font-bold uppercase">Prioritas Default</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#D8DAD2]">
+            <tbody className="divide-y divide-border">
               {routingMatrix.map((row, idx) => (
-                <tr key={idx} className="hover:bg-[#F3F4EF]">
-                  <td className="p-3 font-bold text-[#1F4E4B]">{row.kategori}</td>
-                  <td className="p-3 text-[#5B6357]">{row.ciri}</td>
-                  <td className="p-3 font-semibold text-[#1A2420]">{row.dinas}</td>
+                <tr key={idx} className="hover:bg-bg-base">
+                  <td className="p-3 font-bold text-primary">{row.kategori}</td>
+                  <td className="p-3 text-text-secondary">{row.ciri}</td>
+                  <td className="p-3 font-semibold text-text-primary">{row.dinas}</td>
                   <td className="p-3 font-mono text-[11px]">{row.prioritas}</td>
                 </tr>
               ))}

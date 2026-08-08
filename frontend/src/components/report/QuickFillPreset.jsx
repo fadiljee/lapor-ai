@@ -58,15 +58,15 @@ export function QuickFillPreset({ onSelectPreset }) {
   ];
 
   return (
-    <div className="bg-[#EEF1EC] border border-[#D8DAD2] p-4 rounded-lg mb-6">
+    <div className="bg-bg-base border border-border p-4 rounded-lg mb-6">
       <div className="flex items-center gap-2 mb-2">
-        <Zap className="w-4 h-4 text-[#1F4E4B]" />
-        <span className="text-xs font-semibold uppercase tracking-wider text-[#1F4E4B]">
+        <Zap className="w-4 h-4 text-primary" />
+        <span className="text-xs font-semibold uppercase tracking-wider text-primary">
           Mode Demo: Quick-Fill Preset (FR-1.9)
         </span>
-        <span className="bg-[#1F4E4B] text-white text-[10px] px-1.5 py-0.5 rounded">Preset Presentasi</span>
+        <span className="bg-primary text-white text-[10px] px-1.5 py-0.5 rounded">Preset Presentasi</span>
       </div>
-      <p className="text-xs text-[#5B6357] mb-3">
+      <p className="text-xs text-text-secondary mb-3">
         Pilih salah satu skenario preset pengaduan di bawah ini untuk mengisi formulir secara instan saat simulasi demo presentasi:
       </p>
 
@@ -76,12 +76,12 @@ export function QuickFillPreset({ onSelectPreset }) {
             key={preset.id}
             type="button"
             onClick={() => onSelectPreset(preset.data)}
-            className="text-left bg-white hover:bg-[#F3F4EF] border border-[#D8DAD2] p-2.5 rounded transition-all flex flex-col justify-center group"
+            className="text-left bg-white hover:bg-bg-base border border-border p-2.5 rounded transition-all flex flex-col justify-center group"
           >
-            <div className="text-xs font-bold text-[#1A2420] group-hover:text-[#1F4E4B]">
+            <div className="text-xs font-bold text-text-primary group-hover:text-primary">
               {preset.label}
             </div>
-            <div className="text-[11px] text-[#5B6357] truncate">
+            <div className="text-[11px] text-text-secondary truncate">
               {preset.desc}
             </div>
           </button>

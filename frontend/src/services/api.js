@@ -78,9 +78,22 @@ export const api = {
   createReport: (reportData) =>
     fetchAPI('/reports', { 
       method: 'POST', 
-      // Jangan bungkus dengan JSON.stringify jika reportData berupa FormData
       body: reportData instanceof FormData ? reportData : JSON.stringify(reportData) 
     }),
+
+  submitReport: (reportData, attachment) => {
+    if (reportData instanceof FormData) {
+      return fetchAPI('/reports', { method: 'POST', body: reportData });
+    }
+    const formData = new FormData();
+    Object.entries(reportData).forEach(([k, v]) => {
+      if (v !== null && v !== undefined) formData.append(k, v);
+    });
+    if (attachment) {
+      formData.append('lampiran', attachment);
+    }
+    return fetchAPI('/reports', { method: 'POST', body: formData });
+  },
 
   getReports: (params = {}) => {
     const clean = Object.fromEntries(

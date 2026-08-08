@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,600&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap');
+
 @import "tailwindcss";
 
 @theme {
@@ -6,39 +8,54 @@
   --font-sans:    "Public Sans", sans-serif; /* Body, label form, navigasi */
   --font-mono:    "IBM Plex Mono", monospace; /* Nomor tiket, kode, angka tabular */
 
-  /* ── Palet Warna (flat, tanpa gradient) ──────────────────── */
-  --color-ink:              #1A1D1F;   /* Teks utama, garis ikon */
-  --color-paper:            #F4F3EE;   /* Background utama (abu-netral) */
-  --color-paper-raised:     #FFFFFF;   /* Card, form, permukaan terangkat */
-  --color-line:             #D8D4C9;   /* Hairline border, pembatas */
-  --color-muted:            #6B6862;   /* Teks sekunder, placeholder */
+  /* ── Palet Warna (Redesign PRD) ──────────────────── */
+  --color-primary:          #1E3D36;   /* Hijau tua: Navbar, aksi utama */
+  --color-primary-dark:     #12211D;   /* Hijau lebih gelap: Footer */
+  --color-accent:           #B3382B;   /* Merah bata: Badge, urgensi kritis */
+  --color-accent-hover:     #8B2920;   /* Merah bata gelap: Hover */
+  
+  --color-bg:               #F1EFE7;   /* Krem hangat: Background halaman */
+  --color-bg-base:          #F1EFE7;   /* Alias for bg-base utility */
+  --color-surface:          #FFFFFF;   /* Putih: Card, panel */
+  --color-border:           #E0DED4;   /* Abu terang: Border tipis */
+  
+  --color-text-primary:     #1B1B18;   /* Hitam/Gelap: Heading, teks utama */
+  --color-text-secondary:   #6B6F63;   /* Abu: Deskripsi, label kecil */
 
-  /* Merah Garuda — HANYA untuk aksi utama & urgensi kritis */
-  --color-red-garuda:       #A32A21;
-  --color-red-garuda-ink:   #7A1F19;   /* Hover/pressed state */
-  --color-red-garuda-tint:  #FAEAEA;   /* Background badge kritis */
-
-  /* Navy Dinas — Header, elemen AI/sistem, tautan institusi */
-  --color-navy-dinas:       #1F3A52;
-  --color-navy-dinas-hover: #162C3E;
-  --color-navy-dinas-tint:  #E7ECEF;   /* Background badge navy, hover ringan */
-
-  /* Status Urgensi — palet pewarna alami (soga, hijau lumut, indigo pudar) */
-  --color-urgensi-kritis:   #A32A21;   /* Kritis = merah garuda */
-  --color-urgensi-kritis-bg: #FAEAEA;
-  --color-urgensi-tinggi:   #B5732A;   /* Soga/ochre */
-  --color-urgensi-tinggi-bg: #FDF3E0;
-  --color-urgensi-sedang:   #4B6E4F;   /* Hijau lumut */
-  --color-urgensi-sedang-bg: #EDF2EE;
-  --color-urgensi-rendah:   #3E5C74;   /* Indigo pudar */
-  --color-urgensi-rendah-bg: #E8EDF2;
+  /* Status Urgensi */
+  --color-urgensi-kritis:    #B3382B;
+  --color-urgensi-kritis-bg: #FEF2F2;
+  --color-urgensi-tinggi:    #B9832E;
+  --color-urgensi-tinggi-bg: #FFFBEB;
+  --color-urgensi-sedang:    #4A6C93;
+  --color-urgensi-sedang-bg: #EFF6FF;
+  --color-urgensi-rendah:    #6E7259;
+  --color-urgensi-rendah-bg: #F0FDF4;
 }
 
 /* ── Base Styles ──────────────────────────────────────────────── */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
 body {
   font-family: var(--font-sans);
-  background-color: var(--color-paper);
-  color: var(--color-ink);
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  margin: 0;
+  padding: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -56,7 +73,7 @@ body {
 
 /* Garis perforasi putus-putus — HANYA dipakai di komponen resi/tiket */
 .ticket-perforation {
-  border-top: 1px dashed var(--color-line);
+  border-top: 1px dashed var(--color-border);
   position: relative;
 }
 
@@ -69,8 +86,8 @@ body {
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background-color: var(--color-paper);
-  border: 1px solid var(--color-line);
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
   border-left: none;
 }
 
@@ -83,8 +100,8 @@ body {
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background-color: var(--color-paper);
-  border: 1px solid var(--color-line);
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
   border-right: none;
 }
 
@@ -110,6 +127,6 @@ body {
 
 /* ── Focus Styles ─────────────────────────────────────────────── */
 :focus-visible {
-  outline: 2px solid var(--color-navy-dinas);
+  outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }

@@ -11,31 +11,31 @@ export function UrgencyBadge({ level }) {
 
   const styles = {
     KRITIS: {
-      bg: 'bg-[#FAEAEA]',
-      border: 'border-[#A32A21]',
-      text: 'text-[#A32A21]',
-      dot: 'bg-[#A32A21]',
+      bg: 'bg-urgensi-kritis-bg',
+      border: 'border-urgensi-kritis',
+      text: 'text-urgensi-kritis',
+      dot: 'bg-urgensi-kritis',
       label: 'KRITIS'
     },
     TINGGI: {
-      bg: 'bg-[#FDF3E0]',
-      border: 'border-[#B5732A]',
-      text: 'text-[#B5732A]',
-      dot: 'bg-[#B5732A]',
+      bg: 'bg-urgensi-tinggi-bg',
+      border: 'border-urgensi-tinggi',
+      text: 'text-urgensi-tinggi',
+      dot: 'bg-urgensi-tinggi',
       label: 'TINGGI'
     },
     SEDANG: {
-      bg: 'bg-[#EDF2EE]',
-      border: 'border-[#4B6E4F]',
-      text: 'text-[#4B6E4F]',
-      dot: 'bg-[#4B6E4F]',
+      bg: 'bg-urgensi-sedang-bg',
+      border: 'border-urgensi-sedang',
+      text: 'text-urgensi-sedang',
+      dot: 'bg-urgensi-sedang',
       label: 'SEDANG'
     },
     RENDAH: {
-      bg: 'bg-[#E8EDF2]',
-      border: 'border-[#3E5C74]',
-      text: 'text-[#3E5C74]',
-      dot: 'bg-[#3E5C74]',
+      bg: 'bg-urgensi-rendah-bg',
+      border: 'border-urgensi-rendah',
+      text: 'text-urgensi-rendah',
+      dot: 'bg-urgensi-rendah',
       label: 'RENDAH'
     }
   };

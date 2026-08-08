@@ -43,6 +43,7 @@ def seed_initial_users():
     db: Session = SessionLocal()
     try:
         initial_users = [
+            {"email": "warga@lapor.go.id", "nama": "Budi Warga", "role": "warga", "instansi": "Masyarakat"},
             {"email": "petugas@lapor.go.id", "nama": "Budi Santoso", "role": "petugas", "instansi": "BPBD"},
             {"email": "admin@lapor.go.id", "nama": "Siti Rahma", "role": "admin", "instansi": "Diskominfo"},
             {"email": "supervisor@lapor.go.id", "nama": "Drs. Hendra", "role": "supervisor", "instansi": "Sekretariat Daerah"},

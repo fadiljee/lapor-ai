@@ -1,83 +1,119 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { ListFilter, MapPin, Clock, BarChart3, ShieldAlert, LogOut, UserCheck } from 'lucide-react';
+import { ListFilter, MapPin, Clock, BarChart3, ShieldAlert, LogOut, FilePlus, Search, Home } from 'lucide-react';
+import { LogoutModal } from '../common/LogoutModal';
 
 export function Sidebar() {
   const location = useLocation();
   const navigate = useNavigate();
-  const role = localStorage.getItem('lapor_ai_role') || 'petugas';
-  const name = localStorage.getItem('lapor_ai_nama') || 'Petugas Staff';
+  const [logoutModalOpen, setLogoutModalOpen] = useState(false);
 
-  const handleLogout = () => {
+  const role = localStorage.getItem('lapor_ai_role') || 'warga';
+  const name = localStorage.getItem('lapor_ai_nama') || 'Pengguna LAPOR-AI';
+
+  const handleLogoutConfirm = () => {
     localStorage.removeItem('lapor_ai_token');
     localStorage.removeItem('lapor_ai_role');
     localStorage.removeItem('lapor_ai_nama');
+    setLogoutModalOpen(false);
     navigate('/masuk');
   };
 
   const isActive = (path) => location.pathname === path;
 
-  const navItems = [
-    { path: '/dashboard/antrean', label: 'Antrean Triage', icon: ListFilter, roles: ['petugas', 'admin', 'supervisor', 'auditor'] },
-    { path: '/dashboard/routing', label: 'Routing Dinas', icon: MapPin, roles: ['admin'] },
-    { path: '/dashboard/sla', label: 'Manajemen SLA', icon: Clock, roles: ['admin'] },
-    { path: '/dashboard/analitik', label: 'Analitik KPI', icon: BarChart3, roles: ['supervisor', 'admin'] },
-    { path: '/dashboard/audit-log', label: 'Log Audit AI', icon: ShieldAlert, roles: ['auditor', 'admin', 'supervisor'] },
+  // Role-specific navigation items definition (Strict isolation per role)
+  const allNavItems = [
+    // 1. Warga Pelapor
+    { path: '/dashboard/warga', label: 'Ringkasan Laporan Saya', icon: Home, roles: ['warga'] },
+    { path: '/lapor', label: 'Ajukan Laporan Pengaduan', icon: FilePlus, roles: ['warga'] },
+    { path: '/lacak', label: 'Lacak Tiket Laporan', icon: Search, roles: ['warga'] },
+
+    // 2. Petugas Triage (Verifikator)
+    { path: '/dashboard/antrean', label: 'Antrean Triage AI', icon: ListFilter, roles: ['petugas'] },
+    
+    // 3. Admin Instansi/Dinas
+    { path: '/dashboard/routing', label: 'Routing Unit Kerja / Dinas', icon: MapPin, roles: ['admin'] },
+    { path: '/dashboard/sla', label: 'Manajemen SLA Operasional', icon: Clock, roles: ['admin'] },
+    
+    // 4. Supervisor/Pimpinan
+    { path: '/dashboard/analitik', label: 'Analitik Agregat & Hotspot', icon: BarChart3, roles: ['supervisor'] },
+    
+    // 5. Auditor/Compliance
+    { path: '/dashboard/audit-log', label: 'Log Transparansi Audit AI', icon: ShieldAlert, roles: ['auditor'] },
   ];
 
+  // Filter items matching current user's role
+  const allowedNavItems = allNavItems.filter((item) => item.roles.includes(role));
+
+  const roleTitles = {
+    warga: 'Warga Pelapor',
+    petugas: 'Petugas Triage (Verifikator)',
+    admin: 'Admin Instansi / Dinas',
+    supervisor: 'Supervisor / Pimpinan',
+    auditor: 'Auditor / Compliance'
+  };
+
   return (
-    <aside className="w-full md:w-64 bg-white border-r border-[#D8DAD2] shrink-0 min-h-[calc(100vh-4rem)] p-4 flex flex-col justify-between">
-      <div>
-        {/* User Info Card */}
-        <div className="bg-[#F3F4EF] p-3 rounded border border-[#D8DAD2] mb-6 flex items-center gap-3">
-          <div className="w-8 h-8 rounded bg-[#1F4E4B] text-white flex items-center justify-center font-bold text-sm shrink-0">
-            {name.charAt(0)}
-          </div>
-          <div className="overflow-hidden">
-            <div className="text-xs font-bold text-[#1A2420] truncate">{name}</div>
-            <div className="text-[10px] text-[#A23B2E] font-bold uppercase tracking-wider">
-              Role: {role}
+    <>
+      <aside className="w-full md:w-[220px] bg-white border-r border-border shrink-0 min-h-[calc(100vh-4rem)] p-4 flex flex-col justify-between">
+        <div>
+          {/* User Info Card */}
+          <div className="bg-black/5 p-3.5 rounded border border-border mb-6 flex items-center gap-3">
+            <div className="w-9 h-9 rounded bg-primary text-white flex items-center justify-center font-bold text-sm shrink-0">
+              {name.charAt(0).toUpperCase()}
+            </div>
+            <div className="overflow-hidden">
+              <div className="text-xs font-bold text-text-primary truncate">{name}</div>
+              <div className="text-[10px] text-accent font-bold uppercase tracking-wider truncate">
+                Role: {roleTitles[role] || role}
+              </div>
             </div>
           </div>
+
+          {/* Navigation Section */}
+          <div className="text-[10px] font-bold uppercase tracking-widest text-text-secondary mb-2 px-2">
+            Menu Navigasi
+          </div>
+          <nav className="space-y-1">
+            {allowedNavItems.map((item) => {
+              const Icon = item.icon;
+              const active = isActive(item.path);
+              return (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`flex items-center gap-2.5 px-3 py-2.5 rounded text-xs transition-colors ${
+                    active
+                      ? 'bg-black/5 font-bold text-text-primary'
+                      : 'text-text-primary hover:bg-black/5'
+                  }`}
+                >
+                  <Icon className="w-4 h-4 shrink-0" />
+                  <span className="truncate">{item.label}</span>
+                </Link>
+              );
+            })}
+          </nav>
         </div>
 
-        {/* Navigation Section */}
-        <div className="text-[10px] font-bold uppercase tracking-widest text-[#5B6357] mb-2 px-2">
-          Menu Navigasi Staff
+        {/* Logout button */}
+        <div className="pt-4 border-t border-border mt-6">
+          <button
+            type="button"
+            onClick={() => setLogoutModalOpen(true)}
+            className="w-full flex items-center justify-center gap-2 px-3 py-2 text-xs font-bold text-accent bg-transparent hover:bg-accent/10 border border-accent rounded transition-colors"
+          >
+            <LogOut className="w-4 h-4" />
+            <span>Keluar Sesi</span>
+          </button>
         </div>
-        <nav className="space-y-1">
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            const active = isActive(item.path);
-            return (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`flex items-center gap-2.5 px-3 py-2 rounded text-xs font-semibold transition-colors ${
-                  active
-                    ? 'bg-[#1F4E4B] text-white'
-                    : 'text-[#1A2420] hover:bg-[#F3F4EF]'
-                }`}
-              >
-                <Icon className="w-4 h-4" />
-                <span>{item.label}</span>
-              </Link>
-            );
-          })}
-        </nav>
-      </div>
+      </aside>
 
-      {/* Logout button */}
-      <div className="pt-4 border-t border-[#D8DAD2]">
-        <button
-          type="button"
-          onClick={handleLogout}
-          className="w-full flex items-center justify-center gap-2 px-3 py-2 text-xs font-bold text-[#B3261E] bg-[#FBEAEA] hover:bg-[#B3261E] hover:text-white border border-[#B3261E] rounded transition-colors"
-        >
-          <LogOut className="w-4 h-4" />
-          <span>Keluar Sesi</span>
-        </button>
-      </div>
-    </aside>
+      <LogoutModal
+        isOpen={logoutModalOpen}
+        onClose={() => setLogoutModalOpen(false)}
+        onConfirm={handleLogoutConfirm}
+      />
+    </>
   );
 }

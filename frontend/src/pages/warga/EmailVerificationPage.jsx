@@ -88,26 +88,26 @@ export function EmailVerificationPage() {
 
   return (
     <div className="max-w-md mx-auto px-4 py-12">
-      <div className="bg-white border border-[#D8DAD2] rounded-lg p-8 shadow-sm text-center">
-        <div className="w-12 h-12 rounded-full bg-[#EEF1EC] text-[#1F4E4B] flex items-center justify-center mx-auto mb-4 border border-[#D8DAD2]">
+      <div className="bg-white border border-border rounded-lg p-8 shadow-sm text-center">
+        <div className="w-12 h-12 rounded-full bg-bg-base text-primary flex items-center justify-center mx-auto mb-4 border border-border">
           <Mail className="w-6 h-6" />
         </div>
 
-        <h1 className="font-serif text-2xl font-bold text-[#1A2420] mb-2">
+        <h1 className="font-serif text-2xl font-bold text-text-primary mb-2">
           Verifikasi Email Pelapor
         </h1>
-        <p className="text-xs text-[#5B6357] mb-6">
-          Masukkan 6 digit kode OTP yang telah dikirimkan ke <span className="font-bold text-[#1A2420]">{email}</span>
+        <p className="text-xs text-text-secondary mb-6">
+          Masukkan 6 digit kode OTP yang telah dikirimkan ke <span className="font-bold text-text-primary">{email}</span>
         </p>
 
         {error && (
-          <div className="bg-[#FBEAEA] border border-[#B3261E] text-[#B3261E] text-xs p-3 rounded mb-4 text-left">
+          <div className="bg-red-50 border border-accent text-accent text-xs p-3 rounded mb-4 text-left">
             {error}
           </div>
         )}
 
         {resendMessage && (
-          <div className="bg-[#EEF1EC] border border-[#1F4E4B] text-[#1F4E4B] text-xs p-3 rounded mb-4 text-left">
+          <div className="bg-bg-base border border-primary text-primary text-xs p-3 rounded mb-4 text-left">
             {resendMessage}
           </div>
         )}
@@ -123,19 +123,19 @@ export function EmailVerificationPage() {
                 maxLength={1}
                 value={digit}
                 onChange={(e) => handleOtpChange(idx, e.target.value)}
-                className="w-10 h-12 text-center text-lg font-mono font-bold border border-[#D8DAD2] bg-[#F3F4EF] rounded focus:outline-none focus:border-[#1F4E4B] focus:bg-white"
+                className="w-10 h-12 text-center text-lg font-mono font-bold border border-border bg-bg-base rounded focus:outline-none focus:border-primary focus:bg-white"
               />
             ))}
           </div>
 
-          <div className="text-[11px] text-[#5B6357] bg-[#F3F4EF] p-2 rounded border border-[#D8DAD2]">
-            💡 Kode OTP demo default: <span className="font-mono font-bold text-[#1F4E4B]">123456</span>
+          <div className="text-[11px] text-text-secondary bg-bg-base p-2 rounded border border-border">
+            💡 Kode OTP demo default: <span className="font-mono font-bold text-primary">123456</span>
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-[#1F4E4B] hover:bg-[#163A38] text-white py-2.5 rounded font-bold text-xs flex items-center justify-center gap-2 transition-colors disabled:opacity-50"
+            className="w-full bg-primary hover:bg-primary-dark text-white py-2.5 rounded font-bold text-xs flex items-center justify-center gap-2 transition-colors disabled:opacity-50"
           >
             <CheckCircle2 className="w-4 h-4" />
             <span>Verifikasi & Lanjutkan</span>
@@ -143,13 +143,13 @@ export function EmailVerificationPage() {
         </form>
 
         {/* Resend Cooldown Section */}
-        <div className="mt-6 pt-4 border-t border-[#D8DAD2]">
-          <p className="text-xs text-[#5B6357] mb-2">Tidak menerima kode OTP?</p>
+        <div className="mt-6 pt-4 border-t border-border">
+          <p className="text-xs text-text-secondary mb-2">Tidak menerima kode OTP?</p>
           <button
             type="button"
             onClick={handleResend}
             disabled={cooldown > 0}
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#1F4E4B] hover:underline disabled:opacity-50 disabled:no-underline"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:underline disabled:opacity-50 disabled:no-underline"
           >
             <RefreshCw className="w-3.5 h-3.5" />
             {cooldown > 0 ? `Kirim ulang dalam ${cooldown} detik` : 'Kirim Ulang Kode OTP'}
