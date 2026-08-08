@@ -1,50 +1,52 @@
-# Build artifacts and dependencies
+# Python & Bytecode
 __pycache__/
 *.pyc
 *.pyo
+*.pyd
+.pytest_cache/
+.cache/
+coverage/
+.coverage
+htmlcov/
 *.egg-info/
-dist/
-build/
 .eggs/
-*.egg
 
-# Environment files
+# Environments & Secrets
 .env
 .env.local
 .env.development
 .env.test
 .env.production
-
-# Virtual environments
 venv/
 env/
 .venv/
 
-# IDE files
+# User Uploads & Media Attachments
+uploads/
+*.pdf
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.webp
+
+# Database & SQLite
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+
+# IDE & OS
 .idea/
 .vscode/
 *.swp
 *.swo
-
-# OS generated files
 .DS_Store
 Thumbs.db
 
 # Logs
 *.log
 logs/
-.log/
 
-# Database files
-*.sqlite
-*.sqlite3
-*.db
-*.db-journal
-
-# Coverage reports
-coverage/
-.coverage
-htmlcov/
-
-# PRD - do not publish public repository
+# PRD
 PRD/

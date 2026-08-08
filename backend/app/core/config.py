@@ -25,6 +25,10 @@ class Settings(BaseSettings):
     DB_POOL_SIZE: int = 5
     DB_MAX_OVERFLOW: int = 10
 
+    # Resend Email API
+    RESEND_API_KEY: str = os.getenv("RESEND_API_KEY", "")
+    RESEND_FROM_EMAIL: str = os.getenv("RESEND_FROM_EMAIL", "LAPOR-AI <noreply@lapor-ai.web.id>")
+
     class Config:
         case_sensitive = True
 

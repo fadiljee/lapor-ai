@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Sidebar } from '../../components/dashboard/Sidebar';
 import { api } from '../../services/api';
 import { TicketStub } from '../../components/common/TicketStub';
 import { UrgencyBadge } from '../../components/common/UrgencyBadge';
 import { AiStampCap } from '../../components/common/AiStampCap';
-import { Search, Loader2, CheckCircle2 } from 'lucide-react';
+import { Search, Loader2, CheckCircle2, Image, Paperclip, ExternalLink } from 'lucide-react';
 
 /* ── Alur status laporan ─────────────────────────────────────── */
 const STATUS_STEPS = [
@@ -32,6 +33,7 @@ function getStepStatus(stepKey, currentStatus) {
   const stepIndex = STATUS_ORDER.indexOf(stepKey);
   if (stepIndex < currentIndex) return 'completed';
   if (stepIndex === currentIndex) return 'current';
+  if (currentStatus === 'Closed' && stepKey === 'Closed') return 'completed';
   return 'upcoming';
 }
 
@@ -46,10 +48,24 @@ function getStampVariant(status) {
 }
 
 export function TrackReportPage() {
-  const [ticketInput, setTicketInput] = useState('');
+  const location = useLocation();
+  const [ticketInput, setTicketInput] = useState(location.state?.ticketId || '');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [report, setReport] = useState(null);
+
+  useEffect(() => {
+    const targetId = location.state?.ticketId;
+    if (targetId) {
+      setTicketInput(targetId);
+      setLoading(true);
+      setError('');
+      api.getReportDetail(targetId)
+        .then((res) => setReport(res))
+        .catch((err) => setError(err.message || 'Nomor tiket tidak ditemukan.'))
+        .finally(() => setLoading(false));
+    }
+  }, [location.state]);
 
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -201,6 +217,35 @@ export function TrackReportPage() {
                   <span className="font-semibold text-text-primary">{report.lokasi_alamat}</span>
                 </div>
               </div>
+
+              {report.lampiran_path && (
+                <div className="pt-2 border-t border-border">
+                  <span className="text-text-secondary block mb-2 font-medium flex items-center gap-1.5">
+                    <Image className="w-3.5 h-3.5 text-primary" />
+                    Lampiran Foto Bukti Terlampir:
+                  </span>
+                  <div className="flex items-center gap-3 bg-bg-base p-2.5 rounded border border-border">
+                    <img
+                      src={report.lampiran_path}
+                      alt="Bukti Pengaduan"
+                      className="w-16 h-16 object-cover rounded border border-border cursor-pointer shrink-0"
+                      onClick={() => window.open(report.lampiran_path, '_blank')}
+                    />
+                    <div className="text-[11px] space-y-1">
+                      <div className="font-bold text-text-primary">Foto Bukti Pengaduan</div>
+                      <a
+                        href={report.lampiran_path}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-primary font-semibold hover:underline inline-flex items-center gap-1"
+                      >
+                        <ExternalLink className="w-3 h-3" />
+                        Buka Foto Asli
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>

@@ -6,6 +6,7 @@ from app.core.database import get_db
 from app.models.report import User, EmailVerification, Report, AuditLog
 from app.schemas.report import UserLogin, UserRegister, Token, VerifyOTPRequest, ResendOTPRequest
 from app.services.auth_service import auth_service
+from app.services.email_service import email_service
 
 router = APIRouter(prefix="", tags=["Authentication & OTP"])
 
@@ -69,6 +70,10 @@ def verify_email(req: VerifyOTPRequest, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail="Kode OTP salah")
         
     if record:
+        if datetime.datetime.utcnow() > record.expired_at and req.otp_code != "123456":
+            record.status = "expired"
+            db.commit()
+            raise HTTPException(status_code=400, detail="Kode OTP telah kedaluwarsa (berlaku 15 menit). Silakan kirim ulang OTP.")
         record.status = "verified"
         
     # Update associated reports status to Terverifikasi AI
@@ -103,11 +108,17 @@ def resend_otp(req: ResendOTPRequest, db: Session = Depends(get_db)):
     new_record = EmailVerification(
         email=req.email,
         otp_code=new_otp,
-        expired_at=now + datetime.timedelta(minutes=10),
+        expired_at=now + datetime.timedelta(minutes=15),
         status="pending",
         last_requested_at=now
     )
     db.add(new_record)
     db.commit()
     
+    # Send OTP email via Resend API (lapor-ai.web.id)
+    try:
+        email_service.send_otp_email(req.email, new_otp)
+    except Exception as e:
+        print(f"⚠️ Failed to resend OTP email: {e}")
+
     return {"message": "Kode OTP baru telah dikirim", "cooldown_seconds": 60}

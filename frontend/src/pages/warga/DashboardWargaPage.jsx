@@ -1,10 +1,23 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Sidebar } from '../../components/dashboard/Sidebar';
-import { FilePlus, Search, ShieldCheck, Bot, Clock, ArrowRight, CheckCircle, Sparkles } from 'lucide-react';
+import { UrgencyBadge } from '../../components/common/UrgencyBadge';
+import { api } from '../../services/api';
+import { FilePlus, Search, ShieldCheck, Bot, Clock, ArrowRight, CheckCircle, Sparkles, FileText } from 'lucide-react';
 
 export function DashboardWargaPage() {
   const userName = localStorage.getItem('lapor_ai_nama') || 'Warga Pelapor';
+  const [recentReports, setRecentReports] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    api.getReports()
+      .then((data) => {
+        setRecentReports(data.slice(0, 5));
+      })
+      .catch((err) => console.error('Error fetching citizen reports:', err))
+      .finally(() => setLoading(false));
+  }, []);
 
   return (
     <div className="flex flex-col md:flex-row min-h-[calc(100vh-4rem)]">
@@ -68,6 +81,55 @@ export function DashboardWargaPage() {
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
+        </div>
+
+        {/* Live Recent Reports Section (Real Data from PostgreSQL) */}
+        <div className="bg-white border border-border p-6 rounded-lg shadow-sm mb-6 space-y-4">
+          <div className="flex items-center justify-between border-b border-border pb-3">
+            <div className="flex items-center gap-2">
+              <FileText className="w-5 h-5 text-primary" />
+              <h3 className="font-serif font-bold text-base text-text-primary">
+                Daftar Pengaduan Masuk Real-Time
+              </h3>
+            </div>
+            <span className="text-xs text-text-secondary font-mono">Real PostgreSQL Database</span>
+          </div>
+
+          {loading ? (
+            <div className="text-center text-xs text-text-secondary py-6">Memuat pengaduan real-time...</div>
+          ) : recentReports.length === 0 ? (
+            <div className="text-center text-xs text-text-secondary py-6">Belum ada pengaduan. Silakan ajukan laporan pertama Anda!</div>
+          ) : (
+            <div className="divide-y divide-border text-xs">
+              {recentReports.map((rpt) => (
+                <div key={rpt.id} className="py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div>
+                    <div className="flex items-center gap-2 mb-1">
+                      <Link
+                        to="/lacak"
+                        state={{ ticketId: rpt.id }}
+                        className="font-mono font-bold text-primary hover:text-accent hover:underline transition-colors"
+                        title="Klik untuk lacak rincian tiket ini"
+                      >
+                        {rpt.id}
+                      </Link>
+                      <UrgencyBadge level={rpt.skor_urgensi} />
+                      <span className="text-[10px] text-text-secondary">· {rpt.created_at}</span>
+                    </div>
+                    <p className="text-text-primary font-medium line-clamp-1 mb-0.5">{rpt.ringkasan || rpt.deskripsi_masked}</p>
+                    <span className="text-[11px] text-text-secondary">{rpt.lokasi_alamat} → <span className="font-semibold text-text-primary">{rpt.dinas_tujuan}</span></span>
+                  </div>
+                  <Link
+                    to="/lacak"
+                    state={{ ticketId: rpt.id }}
+                    className="inline-flex items-center justify-center gap-1.5 bg-primary text-white hover:bg-primary-dark px-3 py-1.5 rounded text-xs font-bold transition-colors shrink-0 shadow-sm"
+                  >
+                    <span>Lacak Tiket Ini →</span>
+                  </Link>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Information & Safeguard Panel */}

@@ -15,6 +15,7 @@ from app.services.llm_orchestrator import llm_orchestrator
 from app.services.department_routing_service import department_routing_service
 from app.services.duplicate_detection_service import duplicate_detection_service
 from app.services.auth_service import auth_service
+from app.services.email_service import email_service
 
 router = APIRouter(prefix="/reports", tags=["Reports"])
 
@@ -41,11 +42,13 @@ def create_report(
     lokasi_lng: Optional[float] = Form(None),
     is_anonim: bool = Form(False),
     email: Optional[str] = Form(None),
+    pelapor_email: Optional[str] = Form(None),
     preset_type: Optional[str] = Form(None),
     lampiran: Optional[UploadFile] = File(None),
     db: Session = Depends(get_db)
 ):
     ticket_id = generate_ticket_id()
+    target_email = (pelapor_email or email or "").strip()
     
     # Tangani penyimpanan file lampiran fisik (jika ada)
     lampiran_path = None
@@ -72,7 +75,7 @@ def create_report(
     dinas = department_routing_service.get_department(ai_res.get("kategori", "Lainnya"))
     
     # Status determination
-    initial_status = "Pending Email Verification" if (not is_anonim and email) else "Terverifikasi AI"
+    initial_status = "Pending Email Verification" if (not is_anonim and target_email) else "Terverifikasi AI"
     if is_duplicate:
         initial_status = "Perlu Verifikasi Manual"
         
@@ -81,7 +84,7 @@ def create_report(
     # Create Report entity
     new_report = Report(
         id=ticket_id,
-        pelapor_email=email if not is_anonim else None,
+        pelapor_email=target_email if not is_anonim else None,
         is_anonim=is_anonim,
         email_verified=email_verified,
         deskripsi_asli=deskripsi,
@@ -131,15 +134,20 @@ def create_report(
     db.add(audit)
     
     # If requires OTP verification
-    if not is_anonim and email:
+    if not is_anonim and target_email:
         otp_code = auth_service.generate_otp()
         verification = EmailVerification(
-            email=email,
+            email=target_email,
             otp_code=otp_code,
-            expired_at=datetime.datetime.utcnow() + datetime.timedelta(minutes=10),
+            expired_at=datetime.datetime.utcnow() + datetime.timedelta(minutes=15),
             status="pending"
         )
         db.add(verification)
+        # Send OTP email via Resend API (lapor-ai.web.id)
+        try:
+            email_service.send_otp_email(target_email, otp_code, new_report.id)
+        except Exception as e:
+            print(f"⚠️ Failed to send OTP email: {e}")
     
     db.commit()
     
@@ -261,6 +269,7 @@ def _format_report_response(r: Report) -> ReportResponse:
         confidence_score=r.confidence_score or 0.90,
         entitas=entitas_list,
         lokasi_alamat=r.lokasi_alamat or "Tidak ditentukan",
+        lampiran_path=f"http://localhost:8000/{r.lampiran_path}" if r.lampiran_path else None,
         dinas_tujuan=r.dinas_tujuan,
         is_duplikat=r.is_duplikat,
         status=r.status,

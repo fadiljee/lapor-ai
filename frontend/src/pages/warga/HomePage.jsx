@@ -63,7 +63,7 @@ export function HomePage() {
             LAPOR-AI menambahkan tiga hal ke sistem pengaduan yang sudah ada:
             laporan darurat naik ke atas antrean secara otomatis, laporan disalurkan ke
             dinas yang tepat, dan laporan ganda tidak lagi membanjiri antrean.{' '}
-            <span className="font-semibold text-text-primary">AI tidak pernah menentukan apakah suatu laporan benar atau salah — itu tetap kerja manusia.</span>
+            <span className="font-semibold text-text-primary">AI tidak pernah menentukan apakah suatu laporan benar atau salah-itu tetap kerja manusia.</span>
           </p>
 
           {/* CTA Buttons */}

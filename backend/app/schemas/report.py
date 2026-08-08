@@ -26,6 +26,7 @@ class ReportResponse(BaseModel):
     confidence_score: Optional[float] = 0.90
     entitas: Optional[List[str]] = []
     lokasi_alamat: Optional[str] = None
+    lampiran_path: Optional[str] = None
     dinas_tujuan: str
     is_duplikat: bool
     status: str

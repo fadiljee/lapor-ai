@@ -3,7 +3,7 @@ import { Sidebar } from '../../components/dashboard/Sidebar';
 import { AIJustificationCard } from '../../components/dashboard/AIJustificationCard';
 import { UrgencyBadge } from '../../components/common/UrgencyBadge';
 import { api } from '../../services/api';
-import { ListFilter, Search, CheckCircle2, Edit3, XCircle, Clock, MapPin, Building, RefreshCw, AlertCircle, CheckCircle } from 'lucide-react';
+import { ListFilter, Search, CheckCircle2, Edit3, XCircle, Clock, MapPin, Building, RefreshCw, AlertCircle, CheckCircle, Image, Paperclip, ExternalLink } from 'lucide-react';
 
 const DEPARTMENT_MAP = {
   'Infrastruktur': 'Dinas Pekerjaan Umum dan Penataan Ruang (PUPR)',
@@ -272,45 +272,49 @@ export function DashboardPetugasPage() {
         )}
 
         {/* Master-Detail Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
           {/* Left Master List (4 Cols) */}
-          <div className="lg:col-span-4 bg-white border border-border rounded-lg p-3 shadow-sm space-y-2 max-h-[700px] overflow-y-auto">
-            <div className="text-[11px] font-bold text-text-secondary uppercase tracking-wider px-2 py-1 flex items-center justify-between">
+          <div className="lg:col-span-4 bg-white border border-border rounded-lg p-3.5 shadow-sm flex flex-col max-h-[calc(100vh-6rem)] sticky top-4 overflow-hidden">
+            <div className="text-[11px] font-bold text-text-secondary uppercase tracking-wider px-1 py-1 pb-2.5 mb-1 border-b border-border flex items-center justify-between shrink-0">
               <span>Daftar Antrean</span>
               <span className="font-mono text-primary font-bold">({filteredReports.length} Laporan)</span>
             </div>
 
-            {loading ? (
-              <div className="p-8 text-center text-xs text-text-secondary">Memuat antrean...</div>
-            ) : filteredReports.length === 0 ? (
-              <div className="p-8 text-center text-xs text-text-secondary">
-                {searchQuery ? 'Tidak ada laporan yang cocok dengan pencarian.' : 'Tidak ada laporan dalam antrean.'}
-              </div>
-            ) : (
-              filteredReports.map((rpt) => (
-                <div
-                  key={rpt.id}
-                  onClick={() => handleSelectReport(rpt)}
-                  className={`border-l-4 ${getUrgencyBorderColor(rpt.skor_urgensi)} border border-border p-3 rounded cursor-pointer transition-all ${
-                    selectedReport?.id === rpt.id ? 'bg-bg-base ring-1 ring-primary' : 'bg-white hover:bg-bg-base'
-                  }`}
-                >
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="font-mono text-[11px] font-bold text-text-primary">{rpt.id}</span>
-                    <UrgencyBadge level={rpt.skor_urgensi} />
-                  </div>
-                  <div className="text-xs font-semibold text-text-primary line-clamp-1 mb-1">
-                    {rpt.ringkasan || rpt.deskripsi_masked}
-                  </div>
-                  <div className="text-[10px] text-text-secondary flex items-center justify-between">
-                    <span className="truncate max-w-[140px]">{rpt.dinas_tujuan}</span>
-                    <span className="font-mono text-[10px] font-semibold text-primary">
-                      {rpt.status}
-                    </span>
-                  </div>
+            <div data-lenis-prevent className="flex-1 overflow-y-auto custom-scrollbar space-y-2 pr-1 pt-1">
+              {loading ? (
+                <div className="p-8 text-center text-xs text-text-secondary">Memuat antrean...</div>
+              ) : filteredReports.length === 0 ? (
+                <div className="p-8 text-center text-xs text-text-secondary">
+                  {searchQuery ? 'Tidak ada laporan yang cocok dengan pencarian.' : 'Tidak ada laporan dalam antrean.'}
                 </div>
-              ))
-            )}
+              ) : (
+                filteredReports.map((rpt) => (
+                  <div
+                    key={rpt.id}
+                    onClick={() => handleSelectReport(rpt)}
+                    className={`border-l-4 ${getUrgencyBorderColor(rpt.skor_urgensi)} border border-border p-3 rounded cursor-pointer transition-all ${
+                      selectedReport?.id === rpt.id ? 'bg-bg-base ring-1 ring-primary' : 'bg-white hover:bg-bg-base'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between gap-1 mb-1">
+                      <span className="font-mono text-[11px] font-bold text-text-primary shrink-0">{rpt.id}</span>
+                      <div className="shrink-0 scale-95 origin-right">
+                        <UrgencyBadge level={rpt.skor_urgensi} />
+                      </div>
+                    </div>
+                    <div className="text-xs font-semibold text-text-primary line-clamp-1 mb-1 break-words">
+                      {rpt.ringkasan || rpt.deskripsi_masked}
+                    </div>
+                    <div className="text-[10px] text-text-secondary flex items-center justify-between gap-2">
+                      <span className="truncate flex-1 min-w-0">{rpt.dinas_tujuan}</span>
+                      <span className="font-mono text-[10px] font-semibold text-primary shrink-0">
+                        {rpt.status}
+                      </span>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
           </div>
 
           {/* Right Detail Panel (8 Cols) */}
@@ -378,6 +382,62 @@ export function DashboardPetugasPage() {
                   <div className="bg-bg-base p-4 rounded border border-border text-xs text-text-primary leading-relaxed whitespace-pre-wrap font-mono">
                     {selectedReport.deskripsi_masked}
                   </div>
+                </div>
+
+                {/* Lampiran Foto / Bukti Pengaduan */}
+                <div className="bg-white border border-border rounded-lg p-5 shadow-sm space-y-3">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-xs font-bold text-text-primary uppercase tracking-wider flex items-center gap-2">
+                      <Image className="w-4 h-4 text-primary" />
+                      Lampiran Foto / Bukti Pendukung
+                    </h3>
+                    {selectedReport.lampiran_path && (
+                      <a
+                        href={selectedReport.lampiran_path}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-xs text-primary font-semibold hover:underline flex items-center gap-1"
+                      >
+                        <ExternalLink className="w-3.5 h-3.5" />
+                        Buka Ukuran Penuh
+                      </a>
+                    )}
+                  </div>
+
+                  {selectedReport.lampiran_path ? (
+                    <div className="bg-bg-base p-4 rounded border border-border flex flex-col sm:flex-row items-start gap-4">
+                      <div className="w-full sm:w-48 h-40 bg-slate-200 rounded overflow-hidden border border-border shrink-0 flex items-center justify-center">
+                        <img
+                          src={selectedReport.lampiran_path}
+                          alt={`Lampiran Tiket ${selectedReport.id}`}
+                          className="w-full h-full object-cover hover:scale-105 transition-transform cursor-pointer"
+                          onClick={() => window.open(selectedReport.lampiran_path, '_blank')}
+                        />
+                      </div>
+                      <div className="space-y-2 text-xs">
+                        <div className="font-bold text-text-primary flex items-center gap-1.5">
+                          <Paperclip className="w-4 h-4 text-primary" />
+                          <span>Berkas Bukti Terlampir</span>
+                        </div>
+                        <p className="text-text-secondary leading-relaxed">
+                          Foto/dokumen bukti pendukung diunggah oleh pelapor saat pengajuan tiket #{selectedReport.id}.
+                        </p>
+                        <a
+                          href={selectedReport.lampiran_path}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-block bg-primary text-white text-[11px] font-bold px-3 py-1.5 rounded hover:bg-primary-dark transition-colors"
+                        >
+                          Lihat Bukti Foto Asli ↗
+                        </a>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="bg-bg-base p-4 rounded border border-border text-xs text-text-secondary italic flex items-center gap-2">
+                      <Paperclip className="w-4 h-4 text-text-secondary" />
+                      <span>Tidak ada lampiran foto / dokumen bukti yang diunggah oleh pelapor.</span>
+                    </div>
+                  )}
                 </div>
               </div>
             ) : (

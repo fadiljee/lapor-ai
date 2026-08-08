@@ -80,7 +80,7 @@ export function AboutLaporAiPage() {
 
           <p className="text-text-secondary text-sm leading-relaxed">
             LAPOR-AI menambahkan tiga hal ke sistem pengaduan yang sudah ada: laporan darurat naik ke atas antrean secara otomatis, laporan disalurkan ke dinas yang tepat tanpa menunggu petugas membacanya satu per satu, dan laporan ganda/spam tidak lagi membanjiri antrean.{' '}
-            <span className="font-semibold text-text-text-primary">AI tidak pernah menentukan apakah suatu laporan benar atau salah — itu tetap kerja manusia.</span>
+            <span className="font-semibold text-text-text-primary">AI tidak pernah menentukan apakah suatu laporan benar atau salah-itu tetap kerja manusia.</span>
           </p>
         </div>
 
@@ -114,7 +114,7 @@ export function AboutLaporAiPage() {
           Tiga hal yang dikerjakan AI
         </h2>
         <p className="text-xs text-text-secondary mb-6">
-          Ketiganya berjalan paralel — bukan tahapan berurutan.
+          Ketiganya berjalan paralel bukan tahapan berurutan.
         </p>
 
         <div className="space-y-4">
@@ -156,14 +156,14 @@ export function AboutLaporAiPage() {
           Yang <em>tidak</em> dilakukan AI
         </h2>
         <p className="text-xs text-text-secondary mb-6">
-          Bagian ini yang membuat sistem ini kredibel — bukan sekadar promosi.
+          Bagian ini yang membuat sistem ini kredibel bukan sekadar promosi.
         </p>
 
         <div className="space-y-3">
           {[
-            'AI tidak memutuskan apakah suatu laporan benar atau bohong. Menentukan itu perlu verifikasi lapangan oleh manusia — bukan sesuatu yang bisa diandalkan dari model bahasa saja.',
+            'AI tidak memutuskan apakah suatu laporan benar atau bohong. Menentukan itu perlu verifikasi lapangan oleh manusia bukan sesuatu yang bisa diandalkan dari model bahasa saja.',
             'AI tidak menutup kasus atau menolak laporan atas namanya sendiri. Setiap rekomendasi AI (skor urgensi, kategori, tanda duplikat) harus disetujui atau dikoreksi oleh petugas sebelum menjadi keputusan final.',
-            'Identitas pelapor anonim disembunyikan bahkan dari sistem AI itu sendiri — nama, NIK, nomor HP, dan email disamarkan otomatis sebelum teks laporan diproses.',
+            'Identitas pelapor anonim disembunyikan bahkan dari sistem AI itu sendiri. nama, NIK, nomor HP, dan email disamarkan otomatis sebelum teks laporan diproses.',
           ].map((item, i) => (
             <div key={i} className="flex items-start gap-3 bg-bg-base border border-border rounded-lg px-5 py-4">
               <XCircle className="w-4 h-4 text-accent shrink-0 mt-0.5" />

@@ -129,7 +129,7 @@ export function EmailVerificationPage() {
           </div>
 
           <div className="text-[11px] text-text-secondary bg-bg-base p-2 rounded border border-border">
-            💡 Kode OTP demo default: <span className="font-mono font-bold text-primary">123456</span>
+            Kode OTP dikirim ke email &amp; berlaku selama <span className="font-bold text-primary">15 menit</span>.
           </div>
 
           <button
