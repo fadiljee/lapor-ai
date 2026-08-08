@@ -161,7 +161,39 @@ git clone https://github.com/fadiljee/lapor-ai.git
 cd lapor-ai
 ```
 
-### 2. Setup Backend (FastAPI)
+### 🐳 2. Menjalankan dengan Docker & Docker Compose (Rekomendasi)
+
+Proyek ini telah dibungkus menggunakan Docker Containerization (`fadiljee/lapor-ai`):
+
+#### A. Opsi 1: Build & Run Lokal via Docker Compose
+```bash
+# 1. Buat file .env di dalam folder backend/
+cp backend/.env.example backend/.env   # Sesuaikan API Keys jika diperlukan
+
+# 2. Jalankan seluruh stack (PostgreSQL, Redis, Backend, & Frontend Nginx)
+docker compose up -d --build
+```
+
+- 🌐 **Frontend Web App**: `http://localhost` (Port 80 via Nginx Reverse Proxy)
+- ⚡ **Backend API**: `http://localhost:8000` (Port 8000 via FastAPI Uvicorn)
+- 📄 **API Docs (Swagger UI)**: `http://localhost:8000/docs`
+
+#### B. Opsi 2: Pull Image Langsung dari Docker Hub (`fadiljee/lapor-ai`)
+
+```bash
+# Pull Image dari Docker Hub
+docker pull fadiljee/lapor-ai-backend:latest
+docker pull fadiljee/lapor-ai-frontend:latest
+
+# Jalankan via Docker Compose
+docker compose up -d
+```
+
+---
+
+### 💻 3. Setup Manual Lokal (Tanpa Docker)
+
+#### A. Setup Backend (FastAPI)
 
 ```bash
 cd backend
@@ -201,7 +233,7 @@ uvicorn app.main:app --reload --port 8000
 
 Dokumentasi API Interactive (Swagger UI) dapat diakses di `http://localhost:8000/docs`.
 
-### 3. Setup Frontend (React + Vite)
+#### B. Setup Frontend (React + Vite)
 
 ```bash
 cd ../frontend
