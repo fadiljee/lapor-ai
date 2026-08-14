@@ -2,7 +2,10 @@ import os
 from dotenv import load_dotenv
 from pydantic_settings import BaseSettings
 
-load_dotenv()
+# Load .env file from backend/ or root directory
+base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+load_dotenv(os.path.join(base_dir, ".env"))
+load_dotenv(os.path.join(base_dir, "..", ".env"))
 
 class Settings(BaseSettings):
     PROJECT_NAME: str = "LAPOR-AI Backend"
@@ -10,18 +13,18 @@ class Settings(BaseSettings):
     API_V1_STR: str = "/api/v1"
     
     # Security
-    SECRET_KEY: str = os.getenv("SECRET_KEY", "lapor-ai-super-secret-key-2026-fti-fest")
+    SECRET_KEY: str = os.getenv("SECRET_KEY") or "lapor-ai-super-secret-key-2026-fti-fest"
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 # 1 day
     
     # LLM Provider (Gemini)
-    GEMINI_API_KEY: str = os.getenv("GEMINI_API_KEY", "")
-    GEMINI_BASE_URL: str = os.getenv("GEMINI_BASE_URL", "https://generativelanguage.googleapis.com/v1beta")
-    PRIMARY_MODEL: str = os.getenv("PRIMARY_MODEL", "gemini-3.6-flash")
-    FALLBACK_MODEL: str = os.getenv("FALLBACK_MODEL", "gemini-2.0-flash")
+    GEMINI_API_KEY: str = os.getenv("GEMINI_API_KEY") or ""
+    GEMINI_BASE_URL: str = os.getenv("GEMINI_BASE_URL") or "https://generativelanguage.googleapis.com/v1beta"
+    PRIMARY_MODEL: str = os.getenv("PRIMARY_MODEL") or "gemini-3.6-flash"
+    FALLBACK_MODEL: str = os.getenv("FALLBACK_MODEL") or "gemini-2.0-flash"
     
     # Database (PostgreSQL)
-    DATABASE_URL: str = os.getenv("DATABASE_URL", "postgresql://postgres:password@localhost:5432/lapor_ai")
+    DATABASE_URL: str = os.getenv("DATABASE_URL") or "postgresql://postgres:password@localhost:5432/lapor_ai"
     DB_POOL_SIZE: int = 5
     DB_MAX_OVERFLOW: int = 10
 
@@ -29,6 +32,7 @@ class Settings(BaseSettings):
     RESEND_API_KEY: str = os.getenv("RESEND_API_KEY", "")
     RESEND_FROM_EMAIL: str = os.getenv("RESEND_FROM_EMAIL", "LAPOR-AI <noreply@lapor-ai.web.id>")
 
+    APP_BASE_URL: str = os.getenv("APP_BASE_URL", "")
     class Config:
         case_sensitive = True
 

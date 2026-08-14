@@ -6,6 +6,7 @@ from typing import Optional, List
 from fastapi import APIRouter, Depends, HTTPException, status, Query, Form, File, UploadFile
 from sqlalchemy.orm import Session
 
+from app.core.config import settings
 from app.core.database import get_db
 from app.models.report import Report, AIAnalysisLog, Feedback, AuditLog, EmailVerification, User
 from app.schemas.report import ReportResponse, ReportOverride
@@ -269,7 +270,7 @@ def _format_report_response(r: Report) -> ReportResponse:
         confidence_score=r.confidence_score or 0.90,
         entitas=entitas_list,
         lokasi_alamat=r.lokasi_alamat or "Tidak ditentukan",
-        lampiran_path=f"http://localhost:8000/{r.lampiran_path}" if r.lampiran_path else None,
+        lampiran_path=f"{settings.APP_BASE_URL}/{r.lampiran_path}" if r.lampiran_path else None,
         dinas_tujuan=r.dinas_tujuan,
         is_duplikat=r.is_duplikat,
         status=r.status,
