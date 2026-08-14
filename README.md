@@ -145,7 +145,7 @@ lapor-ai/
 │   └── vite.config.js
 │
 ├── PRD/                     # Product Requirements Document
-├── docker-compose.yml       # Docker environment setup
+├── docker-compose.yaml       # Docker environment setup
 ├── .gitignore               # Root git ignore configuration
 └── README.md
 ```
