@@ -145,7 +145,7 @@ lapor-ai/
 │   └── vite.config.js
 │
 ├── PRD/                     # Product Requirements Document
-├── docker-compose.yaml       # Docker environment setup
+├── docker-compose.yaml      # Docker environment setup
 ├── .gitignore               # Root git ignore configuration
 └── README.md
 ```
@@ -213,6 +213,7 @@ PROJECT_NAME="LAPOR-AI Backend"
 VERSION="1.5"
 SECRET_KEY="lapor-ai-super-secret-key-2026"
 DATABASE_URL="postgresql://postgres:password@localhost:5432/lapor_ai"
+APP_BASE_URL="http://localhost"
 
 # Google Gemini LLM Credentials
 GEMINI_API_KEY="YOUR_GEMINI_API_KEY"
