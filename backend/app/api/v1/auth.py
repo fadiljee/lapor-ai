@@ -1,5 +1,5 @@
 import datetime
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Request
 from sqlalchemy.orm import Session
 
 from app.core.database import get_db
@@ -7,11 +7,13 @@ from app.models.report import User, EmailVerification, Report, AuditLog
 from app.schemas.report import UserLogin, UserRegister, Token, VerifyOTPRequest, ResendOTPRequest
 from app.services.auth_service import auth_service
 from app.services.email_service import email_service
+from app.core.rate_limiter import limiter
 
 router = APIRouter(prefix="", tags=["Authentication & OTP"])
 
 @router.post("/auth/login", response_model=Token)
-def login(req: UserLogin, db: Session = Depends(get_db)):
+@limiter.limit("5/minute")
+def login(request: Request, req: UserLogin, db: Session = Depends(get_db)):
     email_clean = req.email.strip().lower()
     
     user = db.query(User).filter(User.email == email_clean).first()
@@ -32,7 +34,8 @@ def login(req: UserLogin, db: Session = Depends(get_db)):
     )
 
 @router.post("/auth/register", response_model=Token, status_code=status.HTTP_201_CREATED)
-def register(req: UserRegister, db: Session = Depends(get_db)):
+@limiter.limit("3/minute")
+def register(request: Request, req: UserRegister, db: Session = Depends(get_db)):
     email_clean = req.email.strip().lower()
     existing = db.query(User).filter(User.email == email_clean).first()
     if existing:
@@ -57,7 +60,8 @@ def register(req: UserRegister, db: Session = Depends(get_db)):
     return Token(access_token=token, role=new_user.role, nama=new_user.nama or "User")
 
 @router.post("/verify-email")
-def verify_email(req: VerifyOTPRequest, db: Session = Depends(get_db)):
+@limiter.limit("10/minute")
+def verify_email(request: Request, req: VerifyOTPRequest, db: Session = Depends(get_db)):
     record = db.query(EmailVerification).filter(
         EmailVerification.email == req.email,
         EmailVerification.status == "pending"
@@ -90,7 +94,8 @@ def verify_email(req: VerifyOTPRequest, db: Session = Depends(get_db)):
     return {"message": "Email berhasil diverifikasi", "verified": True}
 
 @router.post("/resend-otp")
-def resend_otp(req: ResendOTPRequest, db: Session = Depends(get_db)):
+@limiter.limit("3/minute")
+def resend_otp(request: Request, req: ResendOTPRequest, db: Session = Depends(get_db)):
     now = datetime.datetime.utcnow()
     last_req = db.query(EmailVerification).filter(
         EmailVerification.email == req.email
