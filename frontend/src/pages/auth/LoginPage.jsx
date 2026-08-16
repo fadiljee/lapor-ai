@@ -15,6 +15,12 @@ export function LoginPage() {
     { role: 'Petugas Verifikasi', email: 'petugas@lapor.go.id', nama: 'Budi Santoso' },
     { role: 'Admin Dinas PUPR', email: 'dinas.pupr@lapor.go.id', nama: 'Agus PUPR' },
     { role: 'Admin Dinas DLH', email: 'dinas.dlh@lapor.go.id', nama: 'Rini DLH' },
+    { role: 'Admin Dinas Dinkes', email: 'dinas.dinkes@lapor.go.id', nama: 'Dr. Sarah Dinkes' },
+    { role: 'Admin Dinas Disdukcapil', email: 'dinas.disdukcapil@lapor.go.id', nama: 'Andi Disdukcapil' },
+    { role: 'Admin Dinas Dishub', email: 'dinas.dishub@lapor.go.id', nama: 'Tito Dishub' },
+    { role: 'Admin Dinas Dinsos', email: 'dinas.dinsos@lapor.go.id', nama: 'Wati Dinsos' },
+    { role: 'Admin Satpol PP', email: 'dinas.satpolpp@lapor.go.id', nama: 'Bambang Satpol' },
+    { role: 'Admin BPBD', email: 'dinas.bpbd@lapor.go.id', nama: 'Bima BPBD' },
     { role: 'Super Admin Pusat', email: 'admin@lapor.go.id', nama: 'Siti Rahma' }
   ];
 
@@ -70,7 +76,7 @@ export function LoginPage() {
             <UserCheck className="w-4 h-4" />
             <span>Pilih Akun Demo:</span>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 mt-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 mt-2 max-h-40 overflow-y-auto custom-scrollbar pr-1">
             {demoAccounts.map((acc) => (
               <button
                 key={acc.email}
