@@ -21,17 +21,14 @@ export function Sidebar() {
 
   const isActive = (path) => location.pathname === path;
 
-  // Role-specific navigation items definition (Strict isolation per role)
   const allNavItems = [
     { path: '/dashboard/warga', label: 'Ringkasan Laporan Saya', icon: Home, roles: ['warga'] },
     { path: '/dashboard/lapor', label: 'Ajukan Laporan Pengaduan', icon: FilePlus, roles: ['warga'] },
     { path: '/dashboard/lacak', label: 'Lacak Tiket Laporan', icon: Search, roles: ['warga'] },
 
     { path: '/dashboard/antrean', label: 'Antrean Verifikasi AI', icon: ListFilter, roles: ['petugas'] },
-    // 3. Admin Instansi/Dinas Sektoral
     { path: '/dashboard/tugas-dinas', label: 'Daftar Tugas Dinas', icon: Inbox, roles: ['dinas'] },
     
-    // 4. Super Admin Pusat
     { path: '/dashboard/routing', label: 'Routing Unit Kerja / Dinas', icon: MapPin, roles: ['admin'] },
     { path: '/dashboard/sla', label: 'Manajemen SLA Operasional', icon: Clock, roles: ['admin'] },
     { path: '/dashboard/users', label: 'Manajemen User', icon: Users, roles: ['admin'] },

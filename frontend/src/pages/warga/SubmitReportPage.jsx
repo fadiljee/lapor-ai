@@ -156,7 +156,7 @@ export function SubmitReportPage() {
           }
         });
       } else {
-        navigate('/lapor/berhasil', { state: { report: res } });
+        navigate('/dashboard/lapor/berhasil', { state: { report: res } });
       }
     } catch (err) {
       console.error("Detail Error Submit:", err);

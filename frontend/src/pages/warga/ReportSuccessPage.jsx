@@ -60,14 +60,14 @@ export function ReportSuccessPage() {
       {/* CTA Buttons */}
       <div className="flex flex-col sm:flex-row justify-center gap-3">
         <Link
-          to="/lacak"
+          to="/dashboard/lacak"
           className="bg-accent hover:bg-accent-hover text-white px-5 py-2.5 rounded font-bold text-xs flex items-center justify-center gap-2 transition-colors"
         >
           <Search className="w-4 h-4" />
           Lacak Status Tiket Laporan
         </Link>
         <Link
-          to="/lapor"
+          to="/dashboard/lapor"
           className="border-[1.5px] border-primary text-primary hover:bg-slate-100 px-5 py-2.5 rounded font-bold text-xs flex items-center justify-center gap-2 transition-colors"
         >
           <FilePlus className="w-4 h-4" />

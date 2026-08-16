@@ -64,7 +64,7 @@ export function EmailVerificationPage() {
       } catch (_) {
         // fallback to minimal data above if fetch fails
       }
-      navigate('/lapor/berhasil', { state: { report: reportData } });
+      navigate('/dashboard/lapor/berhasil', { state: { report: reportData } });
     } catch (err) {
       setError(err.message || 'Kode OTP salah atau kedaluwarsa.');
     } finally {

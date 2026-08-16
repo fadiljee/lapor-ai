@@ -53,7 +53,7 @@ export function DashboardWargaPage() {
               </p>
             </div>
             <Link
-              to="/lapor"
+              to="/dashboard/lapor"
               className="inline-flex items-center justify-between bg-accent hover:bg-accent-hover text-white px-4 py-2.5 rounded text-xs font-bold transition-colors w-full sm:w-auto"
             >
               <span>Mulai Formulir Pengaduan</span>
@@ -74,7 +74,7 @@ export function DashboardWargaPage() {
               </p>
             </div>
             <Link
-              to="/lacak"
+              to="/dashboard/lacak"
               className="inline-flex items-center justify-between bg-primary hover:bg-primary-dark text-white px-4 py-2.5 rounded text-xs font-bold transition-colors w-full sm:w-auto"
             >
               <span>Lacak Progres Laporan</span>
@@ -106,7 +106,7 @@ export function DashboardWargaPage() {
                   <div>
                     <div className="flex items-center gap-2 mb-1">
                       <Link
-                        to="/lacak"
+                        to="/dashboard/lacak"
                         state={{ ticketId: rpt.id }}
                         className="font-mono font-bold text-primary hover:text-accent hover:underline transition-colors"
                         title="Klik untuk lacak rincian tiket ini"
@@ -120,7 +120,7 @@ export function DashboardWargaPage() {
                     <span className="text-[11px] text-text-secondary">{rpt.lokasi_alamat} → <span className="font-semibold text-text-primary">{rpt.dinas_tujuan}</span></span>
                   </div>
                   <Link
-                    to="/lacak"
+                    to="/dashboard/lacak"
                     state={{ ticketId: rpt.id }}
                     className="inline-flex items-center justify-center gap-1.5 bg-primary text-white hover:bg-primary-dark px-3 py-1.5 rounded text-xs font-bold transition-colors shrink-0 shadow-sm"
                   >

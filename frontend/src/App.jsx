@@ -60,13 +60,13 @@ function AppContent() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/verifikasi-email" element={<EmailVerificationPage />} />
-          <Route path="/lapor/berhasil" element={<ReportSuccessPage />} />
+          <Route path="/dashboard/lapor/berhasil" element={<ReportSuccessPage />} />
           <Route path="/tentang-lapor-ai" element={<AboutLaporAiPage />} />
           <Route path="/hubungi-kami" element={<ContactPage />} />
           <Route path="/masuk" element={<LoginPage />} />
 
           <Route
-            path="/lapor"
+            path="/dashboard/lapor"
             element={
               <RoleProtectedRoute allowedRoles={['warga']}>
                 <SubmitReportPage />
@@ -74,7 +74,7 @@ function AppContent() {
             }
           />
           <Route
-            path="/lacak"
+            path="/dashboard/lacak"
             element={
               <RoleProtectedRoute allowedRoles={['warga']}>
                 <TrackReportPage />

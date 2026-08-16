@@ -221,7 +221,7 @@ export function AboutLaporAiPage() {
         </div>
         <div className="flex flex-col sm:flex-row gap-3 shrink-0 justify-end">
           <Link
-            to="/lapor"
+            to="/dashboard/lapor"
             className="bg-accent hover:bg-accent-hover text-white px-5 py-2.5 rounded font-bold text-sm flex items-center justify-center gap-2 transition-colors"
           >
             <FilePlus className="w-4 h-4" />
