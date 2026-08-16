@@ -1,15 +1,18 @@
 from typing import Dict, Any, List
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Request
 from sqlalchemy.orm import Session
 from sqlalchemy import func
 
 from app.core.database import get_db
-from app.models.report import Report, AuditLog
+from app.models.report import Report, AuditLog, User
+from app.core.rate_limiter import limiter
+from app.core.security import get_current_user, require_roles
 
 router = APIRouter(prefix="", tags=["Dashboard & Analytics"])
 
 @router.get("/dashboard")
-def get_dashboard_stats(db: Session = Depends(get_db)) -> Dict[str, Any]:
+@limiter.limit("20/minute")
+def get_dashboard_stats(request: Request, current_user: User = Depends(require_roles(["supervisor", "admin", "petugas", "auditor"])), db: Session = Depends(get_db)) -> Dict[str, Any]:
     total_reports = db.query(func.count(Report.id)).scalar() or 0
     kritis_count = db.query(func.count(Report.id)).filter(Report.skor_urgensi == "Kritis").scalar() or 0
     tinggi_count = db.query(func.count(Report.id)).filter(Report.skor_urgensi == "Tinggi").scalar() or 0
@@ -109,7 +112,8 @@ def get_dashboard_stats(db: Session = Depends(get_db)) -> Dict[str, Any]:
     }
 
 @router.get("/audit-logs")
-def get_audit_logs(db: Session = Depends(get_db)) -> List[Dict[str, Any]]:
+@limiter.limit("20/minute")
+def get_audit_logs(request: Request, current_user: User = Depends(require_roles(["auditor", "admin", "supervisor"])), db: Session = Depends(get_db)) -> List[Dict[str, Any]]:
     logs = db.query(AuditLog).order_by(AuditLog.timestamp.desc()).limit(100).all()
     return [
         {

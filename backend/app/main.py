@@ -31,9 +31,14 @@ app.add_middleware(
 
 import os
 from fastapi.staticfiles import StaticFiles
+from slowapi.errors import RateLimitExceeded
+from app.core.rate_limiter import limiter, _rate_limit_exceeded_handler
 
 # Create uploads directory if not exists
 os.makedirs("uploads", exist_ok=True)
+
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 # Register Routers
 app.include_router(report_router.router, prefix=settings.API_V1_STR)

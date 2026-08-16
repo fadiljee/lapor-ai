@@ -3,7 +3,7 @@ import random
 import shutil
 import os
 from typing import Optional, List
-from fastapi import APIRouter, Depends, HTTPException, status, Query, Form, File, UploadFile
+from fastapi import APIRouter, Depends, HTTPException, status, Query, Form, File, UploadFile, Request
 from sqlalchemy.orm import Session
 
 from app.core.config import settings
@@ -17,6 +17,8 @@ from app.services.department_routing_service import department_routing_service
 from app.services.duplicate_detection_service import duplicate_detection_service
 from app.services.auth_service import auth_service
 from app.services.email_service import email_service
+from app.core.rate_limiter import limiter
+from app.core.security import get_current_user, require_roles
 
 router = APIRouter(prefix="/reports", tags=["Reports"])
 
@@ -26,7 +28,8 @@ def generate_ticket_id() -> str:
     return f"LP-{now_str}-{seq}"
 
 @router.get("/test-ai")
-def test_ai_connection():
+@limiter.limit("10/minute")
+def test_ai_connection(request: Request, current_user: User = Depends(get_current_user)):
     try:
         dummy_prompt = prompt_injection_guard.sanitize_and_wrap("Test koneksi infrastruktur jalan berlubang")
         ai_res = llm_orchestrator.analyze_report(dummy_prompt, "default")
@@ -35,7 +38,10 @@ def test_ai_connection():
         return {"status": "disconnected", "error": str(e)}
 
 @router.post("", response_model=ReportResponse, status_code=status.HTTP_201_CREATED)
+@limiter.limit("5/minute")
 def create_report(
+    request: Request,
+    current_user: User = Depends(require_roles(["warga"])),
     kategori: str = Form(...),
     deskripsi: str = Form(...),
     lokasi_alamat: Optional[str] = Form(None),
@@ -155,7 +161,10 @@ def create_report(
     return _format_report_response(new_report)
 
 @router.get("", response_model=List[ReportResponse])
+@limiter.limit("30/minute")
 def get_reports(
+    request: Request,
+    current_user: User = Depends(get_current_user),
     status_filter: Optional[str] = Query(None, alias="status"),
     urgensi_filter: Optional[str] = Query(None, alias="urgensi"),
     kategori_filter: Optional[str] = Query(None, alias="kategori"),
@@ -184,14 +193,22 @@ def get_reports(
     return [_format_report_response(r) for r in reports]
 
 @router.get("/{report_id}", response_model=ReportResponse)
-def get_report_detail(report_id: str, db: Session = Depends(get_db)):
+@limiter.limit("30/minute")
+def get_report_detail(request: Request, report_id: str, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     report = db.query(Report).filter(Report.id == report_id).first()
     if not report:
         raise HTTPException(status_code=404, detail="Laporan tidak ditemukan")
     return _format_report_response(report)
 
 @router.patch("/{report_id}", response_model=ReportResponse)
-def override_report(report_id: str, req: ReportOverride, db: Session = Depends(get_db)):
+@limiter.limit("20/minute")
+def override_report(
+    request: Request, 
+    report_id: str, 
+    req: ReportOverride, 
+    current_user: User = Depends(require_roles(["petugas", "admin"])),
+    db: Session = Depends(get_db)
+):
     report = db.query(Report).filter(Report.id == report_id).first()
     if not report:
         raise HTTPException(status_code=404, detail="Laporan tidak ditemukan")
@@ -212,24 +229,10 @@ def override_report(report_id: str, req: ReportOverride, db: Session = Depends(g
         report.status = req.status
         
     report.updated_at = datetime.datetime.utcnow()
-    
-    petugas_user = db.query(User).filter(User.role == "petugas").first()
-    if not petugas_user:
-        petugas_user = db.query(User).first()
-    if not petugas_user:
-        petugas_user = User(
-            email="petugas@lapor.go.id",
-            nama="Budi Santoso",
-            role="petugas",
-            instansi="BPBD",
-            hashed_password=auth_service.hash_password("password123")
-        )
-        db.add(petugas_user)
-        db.flush()
 
     feedback = Feedback(
         report_id=report_id,
-        petugas_id=petugas_user.id,
+        petugas_id=current_user.id,
         keputusan_akhir=report.status,
         koreksi_ai=bool(req.kategori or req.skor_urgensi),
         kategori_lama=kategori_lama,
@@ -242,7 +245,7 @@ def override_report(report_id: str, req: ReportOverride, db: Session = Depends(g
     
     audit = AuditLog(
         report_id=report_id,
-        actor="Petugas Verifikator",
+        actor=current_user.nama or "Petugas Verifikator",
         action="OVERRIDE_REPORT",
         details=f"Status: {report.status}, Kategori: {kategori_lama} -> {report.kategori}, Urgensi: {urgensi_lama} -> {report.skor_urgensi}, Dinas: {report.dinas_tujuan}",
         model_version="Human-in-the-Loop"
