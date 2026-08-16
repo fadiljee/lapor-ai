@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FilePlus, Search, LogIn, LayoutDashboard, Menu, X, Info, LogOut, Shield } from 'lucide-react';
 import { LogoutModal } from './LogoutModal';
 
-import logo from '../../assets/lapor_ai_logo.jpg';
+import logo from '../../assets/lapor-ai.png';
 
 export function Navbar() {
   const location = useLocation();
