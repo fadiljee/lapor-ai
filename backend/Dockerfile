@@ -12,6 +12,7 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y --no-install-recommends \
     gcc \
     libpq-dev \
+    libmagic1 \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
