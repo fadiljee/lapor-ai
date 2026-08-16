@@ -11,7 +11,7 @@ const FLOW = [
   { label: 'Warga dapat kabar', sub: 'Notifikasi email pergerakan status' },
 ];
 
-/* ── FAQ baru per PRD §4.4 ───────────────────────────────────── */
+/* ── FAQ baru ───────────────────────────────────── */
 const FAQ_ITEMS = [
   {
     q: 'Apakah AI bisa membuat kesalahan?',
@@ -80,7 +80,7 @@ export function AboutLaporAiPage() {
 
           <p className="text-text-secondary text-sm leading-relaxed">
             LAPOR-AI menambahkan tiga hal ke sistem pengaduan yang sudah ada: laporan darurat naik ke atas antrean secara otomatis, laporan disalurkan ke dinas yang tepat tanpa menunggu petugas membacanya satu per satu, dan laporan ganda/spam tidak lagi membanjiri antrean.{' '}
-            <span className="font-semibold text-text-text-primary">AI tidak pernah menentukan apakah suatu laporan benar atau salah-itu tetap kerja manusia.</span>
+            <span className="font-semibold text-text-text-primary">AI tidak pernah menentukan apakah suatu laporan benar atau salah. Hal tersebut tetap menjadi tugas manusia.</span>
           </p>
         </div>
 
@@ -114,14 +114,14 @@ export function AboutLaporAiPage() {
           Tiga hal yang dikerjakan AI
         </h2>
         <p className="text-xs text-text-secondary mb-6">
-          Ketiganya berjalan paralel bukan tahapan berurutan.
+          Ketiganya berjalan paralel, bukan tahapan berurutan.
         </p>
 
         <div className="space-y-4">
           {[
             {
               title: 'Triase urgensi',
-              badge: 'Presisi target >90% (G3 PRD)',
+              badge: 'Presisi target >90%',
               body: 'Setiap laporan yang masuk diberi skor Kritis/Tinggi/Sedang/Rendah berdasarkan isi laporannya. Laporan berlabel Kritis (misalnya indikasi kebakaran atau kekerasan yang sedang terjadi) langsung dikirim ke petugas piket, tanpa menunggu giliran antrean.',
             },
             {
@@ -156,14 +156,14 @@ export function AboutLaporAiPage() {
           Yang <em>tidak</em> dilakukan AI
         </h2>
         <p className="text-xs text-text-secondary mb-6">
-          Bagian ini yang membuat sistem ini kredibel bukan sekadar promosi.
+          Bagian ini yang membuat sistem ini kredibel, bukan sekadar promosi.
         </p>
 
         <div className="space-y-3">
           {[
-            'AI tidak memutuskan apakah suatu laporan benar atau bohong. Menentukan itu perlu verifikasi lapangan oleh manusia bukan sesuatu yang bisa diandalkan dari model bahasa saja.',
+            'AI tidak memutuskan apakah suatu laporan benar atau bohong. Menentukan kebenaran memerlukan verifikasi lapangan oleh manusia, bukan sesuatu yang bisa diandalkan dari model bahasa saja.',
             'AI tidak menutup kasus atau menolak laporan atas namanya sendiri. Setiap rekomendasi AI (skor urgensi, kategori, tanda duplikat) harus disetujui atau dikoreksi oleh petugas sebelum menjadi keputusan final.',
-            'Identitas pelapor anonim disembunyikan bahkan dari sistem AI itu sendiri. nama, NIK, nomor HP, dan email disamarkan otomatis sebelum teks laporan diproses.',
+            'Identitas pelapor anonim disembunyikan bahkan dari sistem AI itu sendiri. Nama, NIK, nomor HP, dan email disamarkan secara otomatis sebelum teks laporan diproses.',
           ].map((item, i) => (
             <div key={i} className="flex items-start gap-3 bg-bg-base border border-border rounded-lg px-5 py-4">
               <XCircle className="w-4 h-4 text-accent shrink-0 mt-0.5" />
@@ -200,7 +200,7 @@ export function AboutLaporAiPage() {
       {/* ── FAQ ──────────────────────────────────────────────── */}
       <section className="mb-12">
         <h2 className="font-display text-2xl sm:text-[28px] font-semibold text-text-text-primary mb-6">
-          Pertanyaan yang sering ditanya
+          Pertanyaan yang sering ditanyakan
         </h2>
         <div className="bg-white border border-border rounded-lg px-5">
           {FAQ_ITEMS.map((item, i) => (
@@ -210,16 +210,16 @@ export function AboutLaporAiPage() {
       </section>
 
       {/* ── CTA Penutup ──────────────────────────────────────── */}
-      <section className="bg-white border border-border rounded-lg p-6 sm:p-8 flex flex-col sm:flex-row items-center gap-5">
+      <section className="bg-white border border-border rounded-lg p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-5">
         <div className="flex-1">
           <h3 className="font-display text-xl font-semibold text-text-text-primary mb-2">
             Siap mencoba?
           </h3>
           <p className="text-sm text-text-secondary">
-            Buat laporan pengaduan atau periksa statistik nasional yang menunjukkan kinerja sistem secara transparan.
+            Sampaikan laporan Anda, biarkan sistem memprioritaskan penyelesaiannya.
           </p>
         </div>
-        <div className="flex flex-col sm:flex-row gap-3 shrink-0">
+        <div className="flex flex-col sm:flex-row gap-3 shrink-0 justify-end">
           <Link
             to="/lapor"
             className="bg-accent hover:bg-accent-hover text-white px-5 py-2.5 rounded font-bold text-sm flex items-center justify-center gap-2 transition-colors"
@@ -227,21 +227,9 @@ export function AboutLaporAiPage() {
             <FilePlus className="w-4 h-4" />
             Buat Laporan
           </Link>
-          <Link
-            to="/lacak"
-            className="border-[1.5px] border-primary text-primary hover:bg-slate-100 px-5 py-2.5 rounded font-bold text-sm flex items-center justify-center gap-2 transition-colors"
-          >
-            <BarChart2 className="w-4 h-4" />
-            Lihat Statistik Nasional
-          </Link>
         </div>
       </section>
-
-      {/* Footer Note — Status Prototipe */}
-      <p className="text-center text-[11px] text-text-secondary italic mt-8 leading-relaxed">
-        LAPOR-AI adalah platform pengaduan publik berbasis AI dan saat ini berstatus prototipe;
-        pemetaan ke dinas tujuan bersifat konseptual sampai instansi pilot ditetapkan.
-      </p>
+      
     </div>
   );
 }

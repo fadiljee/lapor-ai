@@ -13,9 +13,7 @@ export function LoginPage() {
   const demoAccounts = [
     { role: 'Warga Pelapor', email: 'warga@lapor.go.id', nama: 'Budi Warga' },
     { role: 'Petugas Triage (Verifikator)', email: 'petugas@lapor.go.id', nama: 'Budi Santoso' },
-    { role: 'Admin Instansi / Dinas', email: 'admin@lapor.go.id', nama: 'Siti Rahma' },
-    { role: 'Supervisor / Pimpinan', email: 'supervisor@lapor.go.id', nama: 'Drs. Hendra' },
-    { role: 'Auditor / Compliance', email: 'auditor@lapor.go.id', nama: 'Rina Wijaya, S.H.' }
+    { role: 'Admin Instansi (PUPR)', email: 'admin.pupr@lapor.go.id', nama: 'Budi Santoso' }
   ];
 
   const handleLogin = async (e) => {
@@ -33,9 +31,7 @@ export function LoginPage() {
       const roleRoutes = {
         warga: '/dashboard/warga',
         petugas: '/dashboard/antrean',
-        admin: '/dashboard/routing',
-        supervisor: '/dashboard/analitik',
-        auditor: '/dashboard/audit-log',
+        admin: '/dashboard/routing'
       };
       navigate(roleRoutes[res.role] || '/dashboard/antrean');
     } catch (err) {
@@ -62,7 +58,7 @@ export function LoginPage() {
           Masuk Akun LAPOR-AI
         </h1>
         <p className="text-xs text-text-secondary text-center mb-6">
-          Akses portal sesuai peran Anda: Warga Pelapor, Petugas Triage, Admin, Supervisor, atau Auditor.
+          Akses portal sesuai peran Anda: Warga Pelapor, Petugas Triage, atau Admin Instansi.
         </p>
 
         {/* Quick Demo Account Selector */}

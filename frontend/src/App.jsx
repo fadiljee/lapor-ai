@@ -11,16 +11,18 @@ import { EmailVerificationPage } from './pages/warga/EmailVerificationPage';
 import { ReportSuccessPage } from './pages/warga/ReportSuccessPage';
 import { TrackReportPage } from './pages/warga/TrackReportPage';
 import { AboutLaporAiPage } from './pages/warga/AboutLaporAiPage';
+import { ContactPage } from './pages/warga/ContactPage';
 
 import { LoginPage } from './pages/auth/LoginPage';
 import { DashboardIndex } from './pages/dashboard/DashboardIndex';
 import { DashboardWargaPage } from './pages/warga/DashboardWargaPage';
 import { DashboardPetugasPage } from './pages/petugas/DashboardPetugasPage';
 import { RoutingManagementPage } from './pages/admin/RoutingManagementPage';
+import { DashboardDinasPage } from './pages/admin/DashboardDinasPage';
 import { SLASettingsPage } from './pages/admin/SLASettingsPage';
 import { UserManagementPage } from './pages/admin/UserManagementPage';
-import { AnalyticsPage } from './pages/supervisor/AnalyticsPage';
-import { AuditLogPage } from './pages/auditor/AuditLogPage';
+import { AnalyticsPage } from './pages/admin/AnalyticsPage';
+import { AuditLogPage } from './pages/admin/AuditLogPage';
 
 function RoleProtectedRoute({ allowedRoles, children }) {
   const token = localStorage.getItem('lapor_ai_token');
@@ -33,9 +35,7 @@ function RoleProtectedRoute({ allowedRoles, children }) {
   const roleRedirectMap = {
     warga: '/dashboard/warga',
     petugas: '/dashboard/antrean',
-    admin: '/dashboard/routing',
-    supervisor: '/dashboard/analitik',
-    auditor: '/dashboard/audit-log'
+    admin: '/dashboard/routing'
   };
 
   if (!allowedRoles.includes(userRole)) {
@@ -58,6 +58,7 @@ export default function App() {
               <Route path="/verifikasi-email" element={<EmailVerificationPage />} />
               <Route path="/lapor/berhasil" element={<ReportSuccessPage />} />
               <Route path="/tentang-lapor-ai" element={<AboutLaporAiPage />} />
+              <Route path="/hubungi-kami" element={<ContactPage />} />
               <Route path="/masuk" element={<LoginPage />} />
 
               <Route
@@ -103,6 +104,14 @@ export default function App() {
                 }
               />
               <Route
+                path="/dashboard/tugas-dinas"
+                element={
+                  <RoleProtectedRoute allowedRoles={['admin']}>
+                    <DashboardDinasPage />
+                  </RoleProtectedRoute>
+                }
+              />
+              <Route
                 path="/dashboard/sla"
                 element={
                   <RoleProtectedRoute allowedRoles={['admin']}>
@@ -121,7 +130,7 @@ export default function App() {
               <Route
                 path="/dashboard/analitik"
                 element={
-                  <RoleProtectedRoute allowedRoles={['supervisor']}>
+                  <RoleProtectedRoute allowedRoles={['admin']}>
                     <AnalyticsPage />
                   </RoleProtectedRoute>
                 }
@@ -129,7 +138,7 @@ export default function App() {
               <Route
                 path="/dashboard/audit-log"
                 element={
-                  <RoleProtectedRoute allowedRoles={['auditor']}>
+                  <RoleProtectedRoute allowedRoles={['admin']}>
                     <AuditLogPage />
                   </RoleProtectedRoute>
                 }

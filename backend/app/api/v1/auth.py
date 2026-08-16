@@ -101,7 +101,7 @@ def resend_otp(request: Request, req: ResendOTPRequest, db: Session = Depends(ge
         EmailVerification.email == req.email
     ).order_by(EmailVerification.created_at.desc()).first()
     
-    # Enforce 60-second cooldown (FR-EV.6)
+    # Enforce 60-second cooldown
     if last_req and (now - last_req.last_requested_at).total_seconds() < 60:
         remaining = 60 - int((now - last_req.last_requested_at).total_seconds())
         raise HTTPException(

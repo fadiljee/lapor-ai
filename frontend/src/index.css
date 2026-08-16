@@ -8,7 +8,7 @@
   --font-sans:    "Public Sans", sans-serif; /* Body, label form, navigasi */
   --font-mono:    "IBM Plex Mono", monospace; /* Nomor tiket, kode, angka tabular */
 
-  /* ── Palet Warna (Redesign PRD) ──────────────────── */
+  /* ── Palet Warna ──────────────────── */
   --color-primary:          #1E3D36;   /* Hijau tua: Navbar, aksi utama */
   --color-primary-dark:     #12211D;   /* Hijau lebih gelap: Footer */
   --color-accent:           #B3382B;   /* Merah bata: Badge, urgensi kritis */

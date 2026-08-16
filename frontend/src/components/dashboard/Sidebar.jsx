@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { ListFilter, MapPin, Clock, BarChart3, ShieldAlert, LogOut, FilePlus, Search, Home, Users } from 'lucide-react';
+import { ListFilter, MapPin, Clock, BarChart3, ShieldAlert, LogOut, FilePlus, Search, Home, Users, Inbox } from 'lucide-react';
 import { LogoutModal } from '../common/LogoutModal';
 
 export function Sidebar() {
@@ -32,15 +32,12 @@ export function Sidebar() {
     { path: '/dashboard/antrean', label: 'Antrean Triage AI', icon: ListFilter, roles: ['petugas'] },
     
     // 3. Admin Instansi/Dinas
+    { path: '/dashboard/tugas-dinas', label: 'Daftar Tugas Dinas', icon: Inbox, roles: ['admin'] },
     { path: '/dashboard/routing', label: 'Routing Unit Kerja / Dinas', icon: MapPin, roles: ['admin'] },
     { path: '/dashboard/sla', label: 'Manajemen SLA Operasional', icon: Clock, roles: ['admin'] },
     { path: '/dashboard/users', label: 'Manajemen User', icon: Users, roles: ['admin'] },
-    
-    // 4. Supervisor/Pimpinan
-    { path: '/dashboard/analitik', label: 'Analitik Agregat & Hotspot', icon: BarChart3, roles: ['supervisor'] },
-    
-    // 5. Auditor/Compliance
-    { path: '/dashboard/audit-log', label: 'Log Transparansi Audit AI', icon: ShieldAlert, roles: ['auditor'] },
+    { path: '/dashboard/analitik', label: 'Analitik Agregat & Hotspot', icon: BarChart3, roles: ['admin'] },
+    { path: '/dashboard/audit-log', label: 'Log Transparansi Audit AI', icon: ShieldAlert, roles: ['admin'] },
   ];
 
   // Filter items matching current user's role
@@ -49,14 +46,12 @@ export function Sidebar() {
   const roleTitles = {
     warga: 'Warga Pelapor',
     petugas: 'Petugas Triage (Verifikator)',
-    admin: 'Admin Instansi / Dinas',
-    supervisor: 'Supervisor / Pimpinan',
-    auditor: 'Auditor / Compliance'
+    admin: 'Admin Instansi / Dinas'
   };
 
   return (
     <>
-      <aside className="w-full md:w-[220px] bg-white border-r border-border shrink-0 min-h-[calc(100vh-4rem)] p-4 flex flex-col justify-between">
+      <aside className="w-full md:w-[220px] bg-white border-r border-border shrink-0 md:h-[calc(100vh-4rem)] md:sticky md:top-16 overflow-y-auto p-4 flex flex-col justify-between">
         <div>
           {/* User Info Card */}
           <div className="bg-black/5 p-3.5 rounded border border-border mb-6 flex items-center gap-3">

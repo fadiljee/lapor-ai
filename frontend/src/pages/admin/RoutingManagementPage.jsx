@@ -22,7 +22,7 @@ export function RoutingManagementPage() {
           <div className="flex items-center gap-2 mb-2">
             <MapPin className="w-5 h-5 text-primary" />
             <h1 className="font-serif font-bold text-xl text-text-primary">
-              Matriks Pemetaan Dinas Tujuan (PRD Section 36)
+              Matriks Pemetaan Dinas Tujuan
             </h1>
           </div>
           <p className="text-xs text-text-secondary">
