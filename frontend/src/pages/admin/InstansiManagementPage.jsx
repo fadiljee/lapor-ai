@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { Building2, Plus, Trash2, ShieldAlert } from 'lucide-react';
+import { Sidebar } from '../../components/dashboard/Sidebar';
+import { Building2, Plus, Edit, Trash2, X, Check, Save } from 'lucide-react';
 import { api } from '../../services/api';
 
 export function InstansiManagementPage() {
   const [instansiList, setInstansiList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [newInstansi, setNewInstansi] = useState({ nama: '', deskripsi: '' });
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  const [showModal, setShowModal] = useState(false);
+  
+  const [formData, setFormData] = useState({
+    nama: '',
+    deskripsi: ''
+  });
 
   useEffect(() => {
     fetchInstansi();
@@ -26,144 +32,164 @@ export function InstansiManagementPage() {
     }
   };
 
-  const handleAddInstansi = async (e) => {
-    e.preventDefault();
-    if (!newInstansi.nama) return;
-    
+  const handleOpenAdd = () => {
+    setFormData({ nama: '', deskripsi: '' });
+    setShowModal(true);
+  };
+
+  const handleDelete = async (id) => {
+    if (!window.confirm("Yakin ingin menghapus instansi ini? User yang terhubung mungkin akan terdampak.")) return;
     try {
-      setIsSubmitting(true);
-      const res = await api.createInstansi(newInstansi);
-      setInstansiList([...instansiList, res]);
-      setNewInstansi({ nama: '', deskripsi: '' });
-      setError(null);
+      await api.deleteInstansi(id);
+      fetchInstansi();
     } catch (err) {
-      setError(err.message || 'Gagal menambahkan instansi');
-    } finally {
-      setIsSubmitting(false);
+      alert(err.message || "Gagal menghapus instansi");
     }
   };
 
-  const handleDeleteInstansi = async (id) => {
-    if (!window.confirm('Yakin ingin menghapus instansi ini? User yang menggunakan instansi ini mungkin akan terdampak.')) return;
-    
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!formData.nama) return;
     try {
-      await api.deleteInstansi(id);
-      setInstansiList(instansiList.filter(i => i.id !== id));
+      await api.createInstansi(formData);
+      setShowModal(false);
+      fetchInstansi();
     } catch (err) {
-      alert(err.message || 'Gagal menghapus instansi');
+      alert(err.message || "Gagal menyimpan instansi");
     }
   };
 
   return (
-    <div className="p-6 md:p-10 max-w-7xl mx-auto space-y-8 animate-fade-in">
-      <div className="flex flex-col gap-2">
-        <h1 className="text-3xl font-bold font-heading text-text-primary flex items-center gap-3">
-          <Building2 className="w-8 h-8 text-primary" />
-          Manajemen Instansi
-        </h1>
-        <p className="text-text-secondary">
-          Kelola daftar instansi atau dinas teknis yang menjadi tujuan disposisi pengaduan.
-        </p>
-      </div>
-
-      {error && (
-        <div className="p-4 bg-red-50 border border-red-200 text-red-700 rounded-xl flex items-start gap-3">
-          <ShieldAlert className="w-5 h-5 flex-shrink-0 mt-0.5" />
-          <p>{error}</p>
+    <div className="flex flex-col md:flex-row min-h-[calc(100vh-4rem)]">
+      <Sidebar />
+      <main className="flex-1 p-4 sm:p-6 bg-bg-base">
+        <div className="bg-white border border-border p-5 rounded-lg mb-6 shadow-sm flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Building2 className="w-5 h-5 text-primary" />
+            <div>
+              <h1 className="font-serif font-bold text-xl text-text-primary">
+                Manajemen Instansi
+              </h1>
+              <p className="text-xs text-text-secondary mt-1">
+                Kelola daftar instansi atau dinas teknis yang menjadi tujuan disposisi pengaduan.
+              </p>
+            </div>
+          </div>
+          <button
+            onClick={handleOpenAdd}
+            className="flex items-center gap-2 bg-primary hover:bg-primary-dark text-white px-4 py-2 rounded-md text-sm font-bold transition-colors"
+          >
+            <Plus className="w-4 h-4" />
+            Tambah Instansi
+          </button>
         </div>
-      )}
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-1">
-          <div className="bg-white rounded-2xl shadow-sm border border-border-color p-6">
-            <h2 className="text-lg font-bold text-text-primary mb-4 flex items-center gap-2">
-              <Plus className="w-5 h-5 text-primary" />
-              Tambah Instansi Baru
-            </h2>
-            <form onSubmit={handleAddInstansi} className="space-y-4">
+        {error && (
+          <div className="bg-red-50 text-red-600 p-3 rounded mb-4 text-sm font-semibold border border-red-200">
+            {error}
+          </div>
+        )}
+
+        <div className="bg-white border border-border rounded-lg overflow-x-auto shadow-sm">
+          <table className="w-full text-left text-sm border-collapse">
+            <thead>
+              <tr className="bg-primary text-white">
+                <th className="p-3 font-bold">Nama Instansi</th>
+                <th className="p-3 font-bold">Deskripsi</th>
+                <th className="p-3 font-bold">Tanggal Dibuat</th>
+                <th className="p-3 font-bold text-right">Aksi</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-border">
+              {loading ? (
+                <tr>
+                  <td colSpan="4" className="p-6 text-center text-text-secondary animate-pulse font-medium">
+                    Memuat data...
+                  </td>
+                </tr>
+              ) : instansiList.length === 0 ? (
+                <tr>
+                  <td colSpan="4" className="p-6 text-center text-text-secondary">
+                    Belum ada data instansi.
+                  </td>
+                </tr>
+              ) : (
+                instansiList.map(inst => (
+                  <tr key={inst.id} className="hover:bg-bg-base transition-colors">
+                    <td className="p-3 font-semibold text-text-primary">{inst.nama}</td>
+                    <td className="p-3 text-text-secondary">{inst.deskripsi || '-'}</td>
+                    <td className="p-3 text-text-secondary">{new Date(inst.created_at).toLocaleDateString('id-ID')}</td>
+                    <td className="p-3 flex items-center justify-end gap-2">
+                      <button 
+                        onClick={() => handleDelete(inst.id)}
+                        className="p-1.5 text-red-600 hover:bg-red-50 rounded transition-colors"
+                        title="Hapus Instansi"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      </main>
+
+      {showModal && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+          <div className="bg-white rounded-lg shadow-xl w-full max-w-md overflow-hidden flex flex-col">
+            <div className="flex items-center justify-between p-4 border-b border-border bg-primary text-white">
+              <h2 className="font-bold font-serif">Tambah Instansi Baru</h2>
+              <button onClick={() => setShowModal(false)} className="hover:bg-primary-dark p-1 rounded">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <form onSubmit={handleSubmit} className="p-5 flex flex-col gap-4">
               <div>
-                <label className="block text-sm font-semibold text-text-primary mb-1">
-                  Nama Instansi <span className="text-red-500">*</span>
-                </label>
-                <input
+                <label className="block text-xs font-bold text-text-secondary mb-1">Nama Instansi</label>
+                <input 
                   type="text"
                   required
-                  value={newInstansi.nama}
-                  onChange={e => setNewInstansi({...newInstansi, nama: e.target.value})}
-                  className="w-full px-4 py-2 border border-border-color rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"
+                  value={formData.nama}
+                  onChange={(e) => setFormData({...formData, nama: e.target.value})}
+                  className="w-full px-3 py-2 border border-border rounded focus:border-accent focus:ring-1 focus:ring-accent outline-none transition-all text-sm"
                   placeholder="Misal: Dinas Sosial (Dinsos)"
                 />
               </div>
+              
               <div>
-                <label className="block text-sm font-semibold text-text-primary mb-1">
-                  Deskripsi Singkat
-                </label>
-                <textarea
-                  value={newInstansi.deskripsi}
-                  onChange={e => setNewInstansi({...newInstansi, deskripsi: e.target.value})}
-                  className="w-full px-4 py-2 border border-border-color rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"
+                <label className="block text-xs font-bold text-text-secondary mb-1">Deskripsi Singkat</label>
+                <textarea 
+                  value={formData.deskripsi}
+                  onChange={(e) => setFormData({...formData, deskripsi: e.target.value})}
+                  className="w-full px-3 py-2 border border-border rounded focus:border-accent focus:ring-1 focus:ring-accent outline-none transition-all text-sm"
                   placeholder="Keterangan opsional"
                   rows={3}
                 />
               </div>
-              <button
-                type="submit"
-                disabled={isSubmitting || !newInstansi.nama}
-                className="w-full py-2 bg-primary text-white rounded-xl font-bold hover:bg-primary-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {isSubmitting ? 'Menyimpan...' : 'Simpan Instansi'}
-              </button>
+
+              <div className="flex justify-end gap-3 mt-4 pt-4 border-t border-border">
+                <button 
+                  type="button" 
+                  onClick={() => setShowModal(false)}
+                  className="px-4 py-2 border border-border rounded text-sm font-semibold hover:bg-bg-base transition-colors"
+                >
+                  Batal
+                </button>
+                <button 
+                  type="submit"
+                  disabled={!formData.nama}
+                  className="flex items-center gap-2 px-4 py-2 bg-accent hover:opacity-90 text-white rounded text-sm font-bold transition-colors shadow-sm disabled:opacity-50"
+                >
+                  <Save className="w-4 h-4" />
+                  Simpan
+                </button>
+              </div>
             </form>
           </div>
         </div>
-
-        <div className="lg:col-span-2">
-          <div className="bg-white rounded-2xl shadow-sm border border-border-color overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse">
-                <thead>
-                  <tr className="bg-bg-base border-b border-border-color">
-                    <th className="py-4 px-6 text-sm font-bold text-text-primary">Nama Instansi</th>
-                    <th className="py-4 px-6 text-sm font-bold text-text-primary">Deskripsi</th>
-                    <th className="py-4 px-6 text-sm font-bold text-text-primary text-right">Aksi</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {loading ? (
-                    <tr>
-                      <td colSpan="3" className="py-8 text-center text-text-secondary">Memuat data...</td>
-                    </tr>
-                  ) : instansiList.length === 0 ? (
-                    <tr>
-                      <td colSpan="3" className="py-8 text-center text-text-secondary">Belum ada data instansi</td>
-                    </tr>
-                  ) : (
-                    instansiList.map((inst) => (
-                      <tr key={inst.id} className="border-b border-border-color last:border-0 hover:bg-slate-50 transition-colors">
-                        <td className="py-4 px-6">
-                          <span className="font-semibold text-text-primary">{inst.nama}</span>
-                        </td>
-                        <td className="py-4 px-6 text-sm text-text-secondary">
-                          {inst.deskripsi || '-'}
-                        </td>
-                        <td className="py-4 px-6 text-right">
-                          <button
-                            onClick={() => handleDeleteInstansi(inst.id)}
-                            className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors"
-                            title="Hapus"
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </button>
-                        </td>
-                      </tr>
-                    ))
-                  )}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
+      )}
     </div>
   );
 }
