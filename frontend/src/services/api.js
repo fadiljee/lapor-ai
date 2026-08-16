@@ -117,4 +117,9 @@ export const api = {
   createUser: (data) => fetchAPI('/users', { method: 'POST', body: JSON.stringify(data) }),
   updateUser: (id, data) => fetchAPI(`/users/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
   deleteUser: (id) => fetchAPI(`/users/${id}`, { method: 'DELETE' }),
+
+  // Instansi API
+  getInstansi: () => fetchAPI('/instansi'),
+  createInstansi: (data) => fetchAPI('/instansi', { method: 'POST', body: JSON.stringify(data) }),
+  deleteInstansi: (id) => fetchAPI(`/instansi/${id}`, { method: 'DELETE' }),
 };

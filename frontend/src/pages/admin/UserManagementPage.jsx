@@ -42,8 +42,8 @@ export function UserManagementPage() {
 
   const fetchInstansi = async () => {
     try {
-      const res = await api.get('/instansi');
-      setInstansiList(res.data);
+      const res = await api.getInstansi();
+      setInstansiList(res || []);
     } catch (err) {
       console.error("Gagal memuat daftar instansi", err);
     }
