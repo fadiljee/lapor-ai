@@ -94,7 +94,7 @@ export function Navbar() {
                     className="ml-3 border border-border hover:bg-white hover:text-primary text-white px-3 py-1.5 rounded text-xs font-semibold flex items-center gap-1.5 transition-colors"
                   >
                     <LogIn className="w-4 h-4" />
-                    <span>Masuk Staff / Warga</span>
+                    <span>Masuk</span>
                   </Link>
                 )}
               </>
@@ -171,7 +171,7 @@ export function Navbar() {
                       className="flex items-center gap-2 px-3 py-2 rounded text-sm font-semibold border border-border text-white hover:bg-white hover:text-primary"
                     >
                       <LogIn className="w-4 h-4" />
-                      Masuk Staff / Warga
+                      Masuk
                     </Link>
                   )}
                 </div>

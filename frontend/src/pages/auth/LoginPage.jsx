@@ -126,7 +126,7 @@ export function LoginPage() {
             className="w-full bg-primary hover:bg-primary-dark text-white py-2.5 rounded font-bold text-xs flex items-center justify-center gap-2 transition-colors disabled:opacity-50"
           >
             <Key className="w-4 h-4" />
-            <span>Masuk ke Dashboard Role</span>
+            <span>Masuk</span>
           </button>
         </form>
       </div>
