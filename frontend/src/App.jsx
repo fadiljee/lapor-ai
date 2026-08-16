@@ -21,8 +21,8 @@ import { RoutingManagementPage } from './pages/admin/RoutingManagementPage';
 import { DashboardDinasPage } from './pages/admin/DashboardDinasPage';
 import { SLASettingsPage } from './pages/admin/SLASettingsPage';
 import { UserManagementPage } from './pages/admin/UserManagementPage';
-import { AnalyticsPage } from './pages/supervisor/AnalyticsPage';
-import { AuditLogPage } from './pages/auditor/AuditLogPage';
+import { AnalyticsPage } from './pages/admin/AnalyticsPage';
+import { AuditLogPage } from './pages/admin/AuditLogPage';
 
 function RoleProtectedRoute({ allowedRoles, children }) {
   const token = localStorage.getItem('lapor_ai_token');
@@ -35,9 +35,7 @@ function RoleProtectedRoute({ allowedRoles, children }) {
   const roleRedirectMap = {
     warga: '/dashboard/warga',
     petugas: '/dashboard/antrean',
-    admin: '/dashboard/routing',
-    supervisor: '/dashboard/analitik',
-    auditor: '/dashboard/audit-log'
+    admin: '/dashboard/routing'
   };
 
   if (!allowedRoles.includes(userRole)) {
@@ -132,7 +130,7 @@ export default function App() {
               <Route
                 path="/dashboard/analitik"
                 element={
-                  <RoleProtectedRoute allowedRoles={['supervisor']}>
+                  <RoleProtectedRoute allowedRoles={['admin']}>
                     <AnalyticsPage />
                   </RoleProtectedRoute>
                 }
@@ -140,7 +138,7 @@ export default function App() {
               <Route
                 path="/dashboard/audit-log"
                 element={
-                  <RoleProtectedRoute allowedRoles={['auditor']}>
+                  <RoleProtectedRoute allowedRoles={['admin']}>
                     <AuditLogPage />
                   </RoleProtectedRoute>
                 }

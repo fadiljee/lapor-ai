@@ -31,25 +31,21 @@ export function Navbar() {
   };
 
   const getRoleLabel = (role) => {
-    const roleMap = {
+    const roleTitles = {
       warga: 'Warga Pelapor',
       petugas: 'Petugas Triage',
-      admin: 'Admin Instansi',
-      supervisor: 'Supervisor / Pimpinan',
-      auditor: 'Auditor Compliance'
+      admin: 'Admin Instansi'
     };
-    return roleMap[role] || role;
+    return roleTitles[role] || role;
   };
 
   const getDashboardTarget = () => {
-    const map = {
+    const roleRedirectMap = {
       warga: '/dashboard/warga',
       petugas: '/dashboard/antrean',
-      admin: '/dashboard/routing',
-      supervisor: '/dashboard/analitik',
-      auditor: '/dashboard/audit-log'
+      admin: '/dashboard/routing'
     };
-    return map[userRole] || '/dashboard/antrean';
+    return roleRedirectMap[userRole] || '/dashboard/antrean';
   };
 
   return (

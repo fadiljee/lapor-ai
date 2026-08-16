@@ -57,7 +57,7 @@ Project ini dikembangkan sebagai prototipe solusi untuk **FTI FEST 2026** dengan
 - ✏️ **Koreksi Manusia (Human Override)**: Hak akses petugas untuk menyetujui rekomendasi AI, mengoreksi kategori/urgensi, atau menandai laporan tidak relevan.
 - 📜 **Log Audit Transparan**: Jejak audit kronologis mencatat setiap prediksi AI dan keputusan koreksi petugas.
 
-## 📊 Supervisor & Admin Portal
+## 📊 Admin Portal
 - 📈 **Grafik Tren Laporan Harian**: Visualisasi interaktif volume harian laporan pengaduan masuk dan rasio pengaduan berurgensi Kritis.
 - 🗺️ **Peta Sebaran Lokasi Spasial (OpenStreetMap & Leaflet)**: Peta geospasial titik lokasi pengaduan warga dengan indikator warna level urgensi.
 - 📈 **Dashboard Analitik Eksekutif**: Visualisasi KPI agregat real-time dari PostgreSQL (rasio urgensi, akurasi *human agreement*, distribusi dinas).
@@ -258,9 +258,7 @@ Tersedia akun default untuk pengujian dashboard berdasarkan peran (Password defa
 |---|---|---|---|
 | **Warga Pelapor** | `warga@lapor.go.id` | Budi Warga | Portal Warga & Form Lapor |
 | **Petugas Triage** | `petugas@lapor.go.id` | Budi Santoso | Antrean Triage Pengaduan |
-| **Admin Instansi** | `admin@lapor.go.id` | Siti Rahma | Routing Dinas & SLA |
-| **Supervisor** | `supervisor@lapor.go.id` | Drs. Hendra | Analitik KPI Executif |
-| **Auditor Compliance** | `auditor@lapor.go.id` | Rina Wijaya, S.H. | Log Audit AI & Override |
+| **Admin Instansi** | `admin.pupr@lapor.go.id` | Budi Santoso | Routing Laporan, User Management, Log Audit, Analitik |
 
 ---
 

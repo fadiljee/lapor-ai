@@ -89,14 +89,12 @@ export function UserManagementPage() {
   };
 
   const getRoleLabel = (role) => {
-    const roles = {
-      admin: 'Admin Instansi',
-      petugas: 'Petugas Triage',
-      warga: 'Warga Pelapor',
-      supervisor: 'Supervisor',
-      auditor: 'Auditor'
+    const roleTitles = {
+      warga: 'Warga',
+      petugas: 'Petugas',
+      admin: 'Admin'
     };
-    return roles[role] || role;
+    return roleTitles[role] || role;
   };
 
   return (
@@ -237,9 +235,7 @@ export function UserManagementPage() {
                   >
                     <option value="warga">Warga</option>
                     <option value="petugas">Petugas Triage</option>
-                    <option value="admin">Admin</option>
-                    <option value="supervisor">Supervisor</option>
-                    <option value="auditor">Auditor</option>
+                    <option value="admin">Admin Instansi</option>
                   </select>
                 </div>
                 <div>

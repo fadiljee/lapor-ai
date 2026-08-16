@@ -36,12 +36,8 @@ export function Sidebar() {
     { path: '/dashboard/routing', label: 'Routing Unit Kerja / Dinas', icon: MapPin, roles: ['admin'] },
     { path: '/dashboard/sla', label: 'Manajemen SLA Operasional', icon: Clock, roles: ['admin'] },
     { path: '/dashboard/users', label: 'Manajemen User', icon: Users, roles: ['admin'] },
-    
-    // 4. Supervisor/Pimpinan
-    { path: '/dashboard/analitik', label: 'Analitik Agregat & Hotspot', icon: BarChart3, roles: ['supervisor'] },
-    
-    // 5. Auditor/Compliance
-    { path: '/dashboard/audit-log', label: 'Log Transparansi Audit AI', icon: ShieldAlert, roles: ['auditor'] },
+    { path: '/dashboard/analitik', label: 'Analitik Agregat & Hotspot', icon: BarChart3, roles: ['admin'] },
+    { path: '/dashboard/audit-log', label: 'Log Transparansi Audit AI', icon: ShieldAlert, roles: ['admin'] },
   ];
 
   // Filter items matching current user's role
@@ -50,9 +46,7 @@ export function Sidebar() {
   const roleTitles = {
     warga: 'Warga Pelapor',
     petugas: 'Petugas Triage (Verifikator)',
-    admin: 'Admin Instansi / Dinas',
-    supervisor: 'Supervisor / Pimpinan',
-    auditor: 'Auditor / Compliance'
+    admin: 'Admin Instansi / Dinas'
   };
 
   return (
