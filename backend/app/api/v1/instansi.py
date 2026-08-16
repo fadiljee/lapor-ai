@@ -46,3 +46,26 @@ def delete_instansi(instansi_id: int, db: Session = Depends(get_db)):
     db.delete(db_instansi)
     db.commit()
     return {"message": "Instansi berhasil dihapus"}
+
+@router.put("/{instansi_id}", response_model=InstansiResponse)
+def update_instansi(instansi_id: int, instansi: InstansiCreate, db: Session = Depends(get_db)):
+    db_instansi = db.query(Instansi).filter(Instansi.id == instansi_id).first()
+    if not db_instansi:
+        raise HTTPException(status_code=404, detail="Instansi tidak ditemukan")
+    
+    # Cek duplikat nama instansi
+    if instansi.nama != db_instansi.nama:
+        duplicate = db.query(Instansi).filter(Instansi.nama == instansi.nama).first()
+        if duplicate:
+            raise HTTPException(status_code=400, detail="Instansi dengan nama tersebut sudah ada")
+            
+    db_instansi.nama = instansi.nama
+    db_instansi.deskripsi = instansi.deskripsi
+    db.commit()
+    db.refresh(db_instansi)
+    return {
+        "id": db_instansi.id,
+        "nama": db_instansi.nama,
+        "deskripsi": db_instansi.deskripsi,
+        "created_at": db_instansi.created_at.isoformat()
+    }

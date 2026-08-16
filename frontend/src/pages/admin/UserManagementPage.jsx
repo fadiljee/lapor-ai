@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Sidebar } from '../../components/dashboard/Sidebar';
 import { Users, Plus, Edit, Trash2, X, Check, Save } from 'lucide-react';
 import { api } from '../../services/api';
+import { SearchableSelect } from '../../components/common/SearchableSelect';
 
 export function UserManagementPage() {
   const [users, setUsers] = useState([]);
@@ -171,7 +172,7 @@ export function UserManagementPage() {
                   <tr key={u.id} className="hover:bg-bg-base transition-colors">
                     <td className="p-3 font-semibold text-text-primary">{u.nama}</td>
                     <td className="p-3 text-text-secondary">{u.email}</td>
-                    <td className="p-3">
+                    <td className="p-3 whitespace-nowrap">
                       <span className="bg-accent/10 text-accent font-bold px-2 py-1 rounded text-xs">
                         {getRoleLabel(u.role)}
                       </span>
@@ -252,22 +253,19 @@ export function UserManagementPage() {
                     <option value="admin">Super Admin Pusat</option>
                   </select>
                 </div>
-                <div>
+                <div className={formData.role === 'dinas' ? 'opacity-100' : 'opacity-50 pointer-events-none'}>
                   <label className="block text-xs font-bold text-text-secondary mb-1">Instansi (Opsional)</label>
-                  <select 
+                  <SearchableSelect 
+                    options={[
+                      { value: '', label: '-- Pilih Instansi --' },
+                      ...instansiList.map(inst => ({ value: inst.nama, label: inst.nama })),
+                      { value: 'Masyarakat', label: 'Masyarakat (Warga)' },
+                      { value: 'Verifikator Pusat', label: 'Verifikator Pusat (Petugas)' },
+                      { value: 'Kominfo (Pusat)', label: 'Kominfo (Admin)' }
+                    ]}
                     value={formData.instansi}
-                    onChange={(e) => setFormData({...formData, instansi: e.target.value})}
-                    className="w-full px-3 py-2 border border-border rounded focus:border-accent outline-none bg-white text-sm"
-                    disabled={formData.role !== 'dinas'}
-                  >
-                    <option value="">-- Pilih Instansi --</option>
-                    {instansiList.map(inst => (
-                      <option key={inst.id} value={inst.nama}>{inst.nama}</option>
-                    ))}
-                    <option value="Masyarakat">Masyarakat (Warga)</option>
-                    <option value="Verifikator Pusat">Verifikator Pusat (Petugas)</option>
-                    <option value="Kominfo (Pusat)">Kominfo (Admin)</option>
-                  </select>
+                    onChange={(val) => setFormData({...formData, instansi: val})}
+                  />
                 </div>
               </div>
 

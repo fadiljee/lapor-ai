@@ -75,7 +75,13 @@ def seed_initial_users():
             {"email": "petugas@lapor.go.id", "nama": "Budi Santoso", "role": "petugas", "instansi": "Verifikator Pusat"},
             {"email": "admin@lapor.go.id", "nama": "Siti Rahma", "role": "admin", "instansi": "Kominfo (Pusat)"},
             {"email": "dinas.pupr@lapor.go.id", "nama": "Agus PUPR", "role": "dinas", "instansi": "Dinas Pekerjaan Umum dan Penataan Ruang (PUPR)"},
-            {"email": "dinas.dlh@lapor.go.id", "nama": "Rini DLH", "role": "dinas", "instansi": "Dinas Lingkungan Hidup (DLH)"}
+            {"email": "dinas.dlh@lapor.go.id", "nama": "Rini DLH", "role": "dinas", "instansi": "Dinas Lingkungan Hidup (DLH)"},
+            {"email": "dinas.dinkes@lapor.go.id", "nama": "Dr. Sarah Dinkes", "role": "dinas", "instansi": "Dinas Kesehatan (Dinkes)"},
+            {"email": "dinas.disdukcapil@lapor.go.id", "nama": "Andi Disdukcapil", "role": "dinas", "instansi": "Dinas Kependudukan dan Pencatatan Sipil (Disdukcapil)"},
+            {"email": "dinas.dishub@lapor.go.id", "nama": "Tito Dishub", "role": "dinas", "instansi": "Dinas Perhubungan (Dishub)"},
+            {"email": "dinas.dinsos@lapor.go.id", "nama": "Wati Dinsos", "role": "dinas", "instansi": "Dinas Sosial (Dinsos)"},
+            {"email": "dinas.satpolpp@lapor.go.id", "nama": "Bambang Satpol", "role": "dinas", "instansi": "Satuan Polisi Pamong Praja (Satpol PP)"},
+            {"email": "dinas.bpbd@lapor.go.id", "nama": "Bima BPBD", "role": "dinas", "instansi": "Badan Penanggulangan Bencana Daerah (BPBD)"}
         ]
         
         for u in initial_users:
