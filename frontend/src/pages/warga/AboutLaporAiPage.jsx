@@ -11,7 +11,7 @@ const FLOW = [
   { label: 'Warga dapat kabar', sub: 'Notifikasi email pergerakan status' },
 ];
 
-/* ── FAQ baru per PRD §4.4 ───────────────────────────────────── */
+/* ── FAQ baru ───────────────────────────────────── */
 const FAQ_ITEMS = [
   {
     q: 'Apakah AI bisa membuat kesalahan?',
@@ -121,7 +121,7 @@ export function AboutLaporAiPage() {
           {[
             {
               title: 'Triase urgensi',
-              badge: 'Presisi target >90% (G3 PRD)',
+              badge: 'Presisi target >90%',
               body: 'Setiap laporan yang masuk diberi skor Kritis/Tinggi/Sedang/Rendah berdasarkan isi laporannya. Laporan berlabel Kritis (misalnya indikasi kebakaran atau kekerasan yang sedang terjadi) langsung dikirim ke petugas piket, tanpa menunggu giliran antrean.',
             },
             {

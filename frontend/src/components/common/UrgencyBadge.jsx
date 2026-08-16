@@ -2,7 +2,7 @@ import React from 'react';
 
 /**
  * UrgencyBadge — Badge status urgensi AI.
- * Palet warna dari PRD §2.1: kritis=merah garuda, tinggi=soga/ochre,
+ * Palet warna: kritis=merah garuda, tinggi=soga/ochre,
  * sedang=hijau lumut, rendah=indigo pudar.
  * Font mono 12px uppercase per spek komponen §5.
  */

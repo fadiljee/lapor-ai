@@ -1,10 +1,9 @@
 import React from 'react';
 
 /**
- * AiStampCap — "Cap AI" signature component (PRD §3).
- * Badge bulat bergaya stempel dinas, dirotasi 3-5°.
- * SELALU disertai sub-label "Rekomendasi AI, keputusan akhir oleh petugas"
- * untuk menegakkan prinsip human-in-the-loop (PRD §10).
+ * AiStampCap — "Cap AI" signature component.
+ * Digunakan sebagai penanda visual bahwa AI telah memproses laporan,
+ * untuk menegakkan prinsip human-in-the-loop.
  *
  * Varian (variant prop):
  *   'verified'  → TERVERIFIKASI AI  (navy)

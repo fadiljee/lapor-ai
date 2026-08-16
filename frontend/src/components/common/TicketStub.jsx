@@ -3,7 +3,7 @@ import { Copy, Check, FileText } from 'lucide-react';
 import { AiStampCap } from './AiStampCap';
 
 /**
- * TicketStub — "Resi Laporan" signature component (PRD §3).
+ * TicketStub — "Resi Laporan" signature component.
  * Bergaya boarding-pass: header navy-dinas, nomor tiket mono besar,
  * garis perforasi putus-putus dengan notch kiri-kanan (dari index.css),
  * dan Cap AI di sudut kanan.

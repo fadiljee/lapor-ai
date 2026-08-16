@@ -264,9 +264,9 @@ Tersedia akun default untuk pengujian dashboard berdasarkan peran (Password defa
 
 ---
 
-# 📊 Matriks Target Kinerja (PRD Metrics)
+# 📊 Matriks Target Kinerja
 
-| Metrik | Target PRD | Status Realisasi |
+| Metrik | Target | Status Realisasi |
 |---|---|---|
 | **Waktu Triage AI (G1)** | < 10 Detik | ✅ ~1.5–3.8 Detik (Gemini 3.6 Flash) |
 | **Presisi Klasifikasi Kritis (G3)** | > 90% | ✅ Tested dengan Bangka Dialect & Indonesian |
