@@ -60,9 +60,28 @@ def create_report(
     # Tangani penyimpanan file lampiran fisik (jika ada)
     lampiran_path = None
     if lampiran and lampiran.filename:
+        # File Validation
+        lampiran.file.seek(0, 2)
+        file_size = lampiran.file.tell()
+        lampiran.file.seek(0)
+        
+        if file_size > 5 * 1024 * 1024:
+            raise HTTPException(status_code=400, detail="Ukuran file maksimal 5MB")
+            
+        import magic
+        mime_type = magic.from_buffer(lampiran.file.read(2048), mime=True)
+        lampiran.file.seek(0)
+        
+        allowed_mimes = ["image/jpeg", "image/png", "application/pdf"]
+        if mime_type not in allowed_mimes:
+            raise HTTPException(status_code=400, detail="Tipe file tidak didukung. Gunakan JPG, PNG, atau PDF.")
+            
+        import uuid
         upload_dir = "uploads"
         os.makedirs(upload_dir, exist_ok=True)
-        lampiran_path = f"{upload_dir}/{ticket_id}_{lampiran.filename}"
+        file_ext = os.path.splitext(lampiran.filename)[1]
+        unique_filename = f"{uuid.uuid4().hex}{file_ext}"
+        lampiran_path = f"{upload_dir}/{unique_filename}"
         with open(lampiran_path, "wb") as buffer:
             shutil.copyfileobj(lampiran.file, buffer)
     

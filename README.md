@@ -170,7 +170,7 @@ Proyek ini telah dibungkus menggunakan Docker Containerization (`fadiljee/lapor-
 # 1. Buat file .env di dalam folder backend/
 cp backend/.env.example backend/.env   # Sesuaikan API Keys jika diperlukan
 
-# 2. Jalankan seluruh stack (PostgreSQL, Redis, Backend, & Frontend Nginx)
+# 2. Jalankan seluruh stack (PostgreSQL, Backend, & Frontend Nginx)
 docker compose up -d --build
 ```
 

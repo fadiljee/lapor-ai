@@ -50,7 +50,6 @@ backend/uploads/
 *.sqlite3
 backend/*.db
 postgres_data/
-redis_data/
 
 # ── Logs & Debugging ──
 *.log

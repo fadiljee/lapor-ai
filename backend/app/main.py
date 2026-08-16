@@ -8,6 +8,7 @@ from app.core.database import engine, Base, SessionLocal
 from app.api.v1 import report as report_router
 from app.api.v1 import auth as auth_router
 from app.api.v1 import dashboard as dashboard_router
+from app.api.v1 import users as users_router
 from app.models.report import User, AuditLog
 from app.services.auth_service import auth_service
 
@@ -44,6 +45,7 @@ app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 app.include_router(report_router.router, prefix=settings.API_V1_STR)
 app.include_router(auth_router.router, prefix=settings.API_V1_STR)
 app.include_router(dashboard_router.router, prefix=settings.API_V1_STR)
+app.include_router(users_router.router, prefix=settings.API_V1_STR)
 
 # Serve uploaded attachments statically
 app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")

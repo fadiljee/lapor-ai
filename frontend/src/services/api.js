@@ -111,4 +111,10 @@ export const api = {
   getDashboardStats: () => fetchAPI('/dashboard'),
 
   getAuditLogs: () => fetchAPI('/audit-logs'),
+
+  // ── Users (Admin)
+  getUsers: () => fetchAPI('/users'),
+  createUser: (data) => fetchAPI('/users', { method: 'POST', body: JSON.stringify(data) }),
+  updateUser: (id, data) => fetchAPI(`/users/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
+  deleteUser: (id) => fetchAPI(`/users/${id}`, { method: 'DELETE' }),
 };
