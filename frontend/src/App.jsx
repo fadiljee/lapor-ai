@@ -19,6 +19,7 @@ import { DashboardWargaPage } from './pages/warga/DashboardWargaPage';
 import { DashboardPetugasPage } from './pages/petugas/DashboardPetugasPage';
 import { RoutingManagementPage } from './pages/admin/RoutingManagementPage';
 import { SLASettingsPage } from './pages/admin/SLASettingsPage';
+import { UserManagementPage } from './pages/admin/UserManagementPage';
 import { AnalyticsPage } from './pages/supervisor/AnalyticsPage';
 import { AuditLogPage } from './pages/auditor/AuditLogPage';
 
@@ -110,6 +111,14 @@ export default function App() {
                 element={
                   <RoleProtectedRoute allowedRoles={['admin']}>
                     <SLASettingsPage />
+                  </RoleProtectedRoute>
+                }
+              />
+              <Route
+                path="/dashboard/users"
+                element={
+                  <RoleProtectedRoute allowedRoles={['admin']}>
+                    <UserManagementPage />
                   </RoleProtectedRoute>
                 }
               />
