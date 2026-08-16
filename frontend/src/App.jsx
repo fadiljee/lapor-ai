@@ -5,7 +5,6 @@ import { Footer } from './components/common/Footer';
 
 import { LenisGsapProvider } from './providers/LenisGsapProvider';
 
-// Pages
 import { HomePage } from './pages/warga/HomePage';
 import { SubmitReportPage } from './pages/warga/SubmitReportPage';
 import { EmailVerificationPage } from './pages/warga/EmailVerificationPage';
@@ -55,14 +54,12 @@ export default function App() {
           <Navbar />
           <div className="flex-1">
             <Routes>
-              {/* Public Info & Auth Routes */}
               <Route path="/" element={<HomePage />} />
               <Route path="/verifikasi-email" element={<EmailVerificationPage />} />
               <Route path="/lapor/berhasil" element={<ReportSuccessPage />} />
               <Route path="/tentang-lapor-ai" element={<AboutLaporAiPage />} />
               <Route path="/masuk" element={<LoginPage />} />
 
-              {/* Warga Only Protected Routes */}
               <Route
                 path="/lapor"
                 element={
@@ -80,7 +77,6 @@ export default function App() {
                 }
               />
 
-              {/* Role Dashboard Routes (Strictly Isolated per Role) */}
               <Route path="/dashboard" element={<DashboardIndex />} />
               <Route
                 path="/dashboard/warga"

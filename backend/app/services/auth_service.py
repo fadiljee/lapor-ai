@@ -16,8 +16,7 @@ class AuthService:
         try:
             return pwd_context.verify(plain_password, hashed_password)
         except Exception:
-            # Fallback direct string compare for legacy test strings if any
-            return plain_password == hashed_password
+            return False
 
     def create_access_token(self, data: dict, expires_delta: Optional[datetime.timedelta] = None) -> str:
         to_encode = data.copy()
