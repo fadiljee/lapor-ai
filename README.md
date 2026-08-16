@@ -258,7 +258,9 @@ Tersedia akun default untuk pengujian dashboard berdasarkan peran (Password defa
 |---|---|---|---|
 | **Warga Pelapor** | `warga@lapor.go.id` | Budi Warga | Portal Warga & Form Lapor |
 | **Petugas Verifikasi** | `petugas@lapor.go.id` | Budi Santoso | Antrean Verifikasi Pengaduan |
-| **Admin Instansi** | `admin.pupr@lapor.go.id` | Budi Santoso | Routing Laporan, User Management, Log Audit, Analitik |
+| **Admin Dinas PUPR** | `dinas.pupr@lapor.go.id` | Agus PUPR | Daftar Tugas Dinas (Sektoral) |
+| **Admin Dinas DLH** | `dinas.dlh@lapor.go.id` | Rini DLH | Daftar Tugas Dinas (Sektoral) |
+| **Super Admin Pusat** | `admin@lapor.go.id` | Siti Rahma | Routing, Manajemen User, SLA, Audit Log, Analitik |
 
 ---
 
