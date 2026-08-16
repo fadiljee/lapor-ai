@@ -75,7 +75,7 @@ export function LoginPage() {
             <UserCheck className="w-4 h-4" />
             <span>Pilih Akun Demo:</span>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 mt-2 max-h-52 overflow-y-auto custom-scrollbar pr-1 content-start">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 mt-2 max-h-52 overflow-y-auto custom-scrollbar pr-1 content-start" data-lenis-prevent="true" data-gsap-ignore="true">
             {demoAccounts.map((acc) => (
               <button
                 key={acc.email}
