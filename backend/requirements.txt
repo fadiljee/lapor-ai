@@ -3,30 +3,22 @@ uvicorn>=0.30.1
 python-dotenv>=1.0.1
 pydantic>=2.7.1
 pydantic-settings>=2.0.0
-
-# PostgreSQL driver
+pydantic[email]>=2.7.1
 psycopg2-binary>=2.9.9
 
-# HTTP Client (LLM calls)
 httpx>=0.27.0
 
-# Auth & Security
 python-multipart>=0.0.9
 python-jose[cryptography]>=3.3.0
 passlib[bcrypt]>=1.7.4
 
-# Rate Limiting
 slowapi>=0.1.9
 
-# File Handling
 python-magic>=0.4.27
 aiofiles>=23.2.1
 
-# Production Server
 gunicorn>=21.2.0
 
-# Database ORM
 sqlalchemy>=2.0.0
 
-# Migrations
 alembic>=1.13.0
