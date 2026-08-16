@@ -271,7 +271,7 @@ Tersedia akun default untuk pengujian dashboard berdasarkan peran (Password defa
 | **Waktu Triage AI (G1)** | < 10 Detik | ✅ ~1.5–3.8 Detik (Gemini 3.6 Flash) |
 | **Presisi Klasifikasi Kritis (G3)** | > 90% | ✅ Tested dengan Bangka Dialect & Indonesian |
 | **Pengamanan PII (G4)** | 100% Text Masked | ✅ Regular Expression & Pattern Masking |
-| **Masa Berlaku OTP (FR-EV.6)** | 15 Menit | ✅ Resend API Email Integration (`lapor-ai.web.id`) |
+| **Masa Berlaku OTP** | 15 Menit | ✅ Resend API Email Integration (`lapor-ai.web.id`) |
 | **Ketersediaan Layanan** | 99.5% | ✅ Multi-Tier Fallback System |
 
 ---

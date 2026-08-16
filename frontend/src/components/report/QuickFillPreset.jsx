@@ -62,7 +62,7 @@ export function QuickFillPreset({ onSelectPreset }) {
       <div className="flex items-center gap-2 mb-2">
         <Zap className="w-4 h-4 text-primary" />
         <span className="text-xs font-semibold uppercase tracking-wider text-primary">
-          Mode Demo: Quick-Fill Preset (FR-1.9)
+          Mode Demo: Quick-Fill Preset
         </span>
         <span className="bg-primary text-white text-[10px] px-1.5 py-0.5 rounded">Preset Presentasi</span>
       </div>

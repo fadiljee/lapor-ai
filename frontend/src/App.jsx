@@ -18,6 +18,7 @@ import { DashboardIndex } from './pages/dashboard/DashboardIndex';
 import { DashboardWargaPage } from './pages/warga/DashboardWargaPage';
 import { DashboardPetugasPage } from './pages/petugas/DashboardPetugasPage';
 import { RoutingManagementPage } from './pages/admin/RoutingManagementPage';
+import { DashboardDinasPage } from './pages/admin/DashboardDinasPage';
 import { SLASettingsPage } from './pages/admin/SLASettingsPage';
 import { UserManagementPage } from './pages/admin/UserManagementPage';
 import { AnalyticsPage } from './pages/supervisor/AnalyticsPage';
@@ -101,6 +102,14 @@ export default function App() {
                 element={
                   <RoleProtectedRoute allowedRoles={['admin']}>
                     <RoutingManagementPage />
+                  </RoleProtectedRoute>
+                }
+              />
+              <Route
+                path="/dashboard/tugas-dinas"
+                element={
+                  <RoleProtectedRoute allowedRoles={['admin']}>
+                    <DashboardDinasPage />
                   </RoleProtectedRoute>
                 }
               />
