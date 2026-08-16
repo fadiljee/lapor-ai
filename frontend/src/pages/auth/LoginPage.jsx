@@ -12,8 +12,10 @@ export function LoginPage() {
 
   const demoAccounts = [
     { role: 'Warga Pelapor', email: 'warga@lapor.go.id', nama: 'Budi Warga' },
-    { role: 'Petugas Verifikasi (Verifikator)', email: 'petugas@lapor.go.id', nama: 'Budi Santoso' },
-    { role: 'Admin Instansi (PUPR)', email: 'admin.pupr@lapor.go.id', nama: 'Budi Santoso' }
+    { role: 'Petugas Verifikasi', email: 'petugas@lapor.go.id', nama: 'Budi Santoso' },
+    { role: 'Admin Dinas PUPR', email: 'dinas.pupr@lapor.go.id', nama: 'Agus PUPR' },
+    { role: 'Admin Dinas DLH', email: 'dinas.dlh@lapor.go.id', nama: 'Rini DLH' },
+    { role: 'Super Admin Pusat', email: 'admin@lapor.go.id', nama: 'Siti Rahma' }
   ];
 
   const handleLogin = async (e) => {
@@ -31,6 +33,7 @@ export function LoginPage() {
       const roleRoutes = {
         warga: '/dashboard/warga',
         petugas: '/dashboard/antrean',
+        dinas: '/dashboard/tugas-dinas',
         admin: '/dashboard/routing'
       };
       navigate(roleRoutes[res.role] || '/dashboard/antrean');

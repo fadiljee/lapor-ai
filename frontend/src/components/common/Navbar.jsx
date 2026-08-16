@@ -34,7 +34,8 @@ export function Navbar() {
     const roleTitles = {
       warga: 'Warga Pelapor',
       petugas: 'Petugas Verifikasi',
-      admin: 'Admin Instansi'
+      dinas: 'Admin Dinas',
+      admin: 'Super Admin Pusat'
     };
     return roleTitles[role] || role;
   };
@@ -43,6 +44,7 @@ export function Navbar() {
     const roleRedirectMap = {
       warga: '/dashboard/warga',
       petugas: '/dashboard/antrean',
+      dinas: '/dashboard/tugas-dinas',
       admin: '/dashboard/routing'
     };
     return roleRedirectMap[userRole] || '/dashboard/antrean';

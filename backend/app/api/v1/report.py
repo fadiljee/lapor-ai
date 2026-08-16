@@ -180,6 +180,9 @@ def get_reports(
 ):
     query = db.query(Report)
     
+    if current_user.role == "dinas":
+        query = query.filter(Report.dinas_tujuan == current_user.instansi)
+        
     if status_filter:
         query = query.filter(Report.status == status_filter)
     if urgensi_filter:
@@ -213,12 +216,18 @@ def override_report(
     request: Request, 
     report_id: str, 
     req: ReportOverride, 
-    current_user: User = Depends(require_roles(["petugas", "admin"])),
+    current_user: User = Depends(require_roles(["petugas", "admin", "dinas"])),
     db: Session = Depends(get_db)
 ):
     report = db.query(Report).filter(Report.id == report_id).first()
     if not report:
         raise HTTPException(status_code=404, detail="Laporan tidak ditemukan")
+        
+    if current_user.role == "dinas":
+        if report.dinas_tujuan != current_user.instansi:
+            raise HTTPException(status_code=403, detail="Akses ditolak: Anda hanya dapat memproses tiket untuk instansi Anda sendiri.")
+        if req.kategori or req.skor_urgensi or req.dinas_tujuan:
+             raise HTTPException(status_code=403, detail="Admin Dinas hanya diizinkan untuk mengubah status tiket.")
         
     kategori_lama = report.kategori
     urgensi_lama = report.skor_urgensi

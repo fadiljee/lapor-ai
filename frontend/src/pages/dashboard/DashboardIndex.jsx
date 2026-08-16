@@ -7,7 +7,8 @@ export function DashboardIndex() {
   const roleRedirectMap = {
     warga: '/dashboard/warga',
     petugas: '/dashboard/antrean',
-    admin: '/dashboard/tugas-dinas'
+    dinas: '/dashboard/tugas-dinas',
+    admin: '/dashboard/routing'
   };
 
   const targetPath = roleRedirectMap[role] || '/dashboard/antrean';

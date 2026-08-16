@@ -28,8 +28,10 @@ export function Sidebar() {
     { path: '/dashboard/lacak', label: 'Lacak Tiket Laporan', icon: Search, roles: ['warga'] },
 
     { path: '/dashboard/antrean', label: 'Antrean Verifikasi AI', icon: ListFilter, roles: ['petugas'] },
+    // 3. Admin Instansi/Dinas Sektoral
+    { path: '/dashboard/tugas-dinas', label: 'Daftar Tugas Dinas', icon: Inbox, roles: ['dinas'] },
     
-    { path: '/dashboard/tugas-dinas', label: 'Daftar Tugas Dinas', icon: Inbox, roles: ['admin'] },
+    // 4. Super Admin Pusat
     { path: '/dashboard/routing', label: 'Routing Unit Kerja / Dinas', icon: MapPin, roles: ['admin'] },
     { path: '/dashboard/sla', label: 'Manajemen SLA Operasional', icon: Clock, roles: ['admin'] },
     { path: '/dashboard/users', label: 'Manajemen User', icon: Users, roles: ['admin'] },
@@ -37,12 +39,14 @@ export function Sidebar() {
     { path: '/dashboard/audit-log', label: 'Log Transparansi Audit AI', icon: ShieldAlert, roles: ['admin'] },
   ];
 
+  // Filter items matching current user's role
   const allowedNavItems = allNavItems.filter((item) => item.roles.includes(role));
 
   const roleTitles = {
     warga: 'Warga Pelapor',
-    petugas: 'Petugas Verifikasi (Verifikator)',
-    admin: 'Admin Instansi / Dinas'
+    petugas: 'Petugas Verifikasi',
+    dinas: 'Admin Dinas',
+    admin: 'Super Admin Pusat'
   };
 
   return (

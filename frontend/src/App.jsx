@@ -35,6 +35,7 @@ function RoleProtectedRoute({ allowedRoles, children }) {
   const roleRedirectMap = {
     warga: '/dashboard/warga',
     petugas: '/dashboard/antrean',
+    dinas: '/dashboard/tugas-dinas',
     admin: '/dashboard/routing'
   };
 
@@ -109,7 +110,7 @@ function AppContent() {
           <Route
             path="/dashboard/tugas-dinas"
             element={
-              <RoleProtectedRoute allowedRoles={['admin']}>
+              <RoleProtectedRoute allowedRoles={['dinas']}>
                 <DashboardDinasPage />
               </RoleProtectedRoute>
             }
