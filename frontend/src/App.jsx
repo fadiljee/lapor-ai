@@ -23,6 +23,7 @@ import { SLASettingsPage } from './pages/admin/SLASettingsPage';
 import { UserManagementPage } from './pages/admin/UserManagementPage';
 import { AnalyticsPage } from './pages/admin/AnalyticsPage';
 import { AuditLogPage } from './pages/admin/AuditLogPage';
+import { InstansiManagementPage } from './pages/admin/InstansiManagementPage';
 
 function RoleProtectedRoute({ allowedRoles, children }) {
   const token = localStorage.getItem('lapor_ai_token');
@@ -124,10 +125,18 @@ function AppContent() {
             }
           />
           <Route
-            path="/dashboard/users"
+            path="/dashboard/manajemen-user"
             element={
               <RoleProtectedRoute allowedRoles={['admin']}>
                 <UserManagementPage />
+              </RoleProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard/manajemen-instansi"
+            element={
+              <RoleProtectedRoute allowedRoles={['admin']}>
+                <InstansiManagementPage />
               </RoleProtectedRoute>
             }
           />

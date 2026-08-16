@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { ListFilter, MapPin, Clock, BarChart3, ShieldAlert, LogOut, FilePlus, Search, Home, Users, Inbox } from 'lucide-react';
+import { ListFilter, MapPin, Clock, BarChart3, ShieldAlert, LogOut, FilePlus, Search, Home, Users, Inbox, Building2 } from 'lucide-react';
 import { LogoutModal } from '../common/LogoutModal';
 
 export function Sidebar() {
@@ -31,7 +31,8 @@ export function Sidebar() {
     
     { path: '/dashboard/routing', label: 'Routing Unit Kerja / Dinas', icon: MapPin, roles: ['admin'] },
     { path: '/dashboard/sla', label: 'Manajemen SLA Operasional', icon: Clock, roles: ['admin'] },
-    { path: '/dashboard/users', label: 'Manajemen User', icon: Users, roles: ['admin'] },
+    { path: '/dashboard/manajemen-user', label: 'Manajemen User', icon: Users, roles: ['admin'] },
+    { path: '/dashboard/manajemen-instansi', label: 'Manajemen Instansi', icon: Building2, roles: ['admin'] },
     { path: '/dashboard/analitik', label: 'Analitik Agregat & Hotspot', icon: BarChart3, roles: ['admin'] },
     { path: '/dashboard/audit-log', label: 'Log Transparansi Audit AI', icon: ShieldAlert, roles: ['admin'] },
   ];

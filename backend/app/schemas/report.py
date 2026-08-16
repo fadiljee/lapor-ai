@@ -63,3 +63,17 @@ class Token(BaseModel):
     token_type: str = "bearer"
     role: str
     nama: str
+
+class InstansiBase(BaseModel):
+    nama: str
+    deskripsi: Optional[str] = None
+
+class InstansiCreate(InstansiBase):
+    pass
+
+class InstansiResponse(InstansiBase):
+    id: int
+    created_at: str
+
+    class Config:
+        from_attributes = True

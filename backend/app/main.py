@@ -9,7 +9,8 @@ from app.api.v1 import report as report_router
 from app.api.v1 import auth as auth_router
 from app.api.v1 import dashboard as dashboard_router
 from app.api.v1 import users as users_router
-from app.models.report import User, AuditLog
+from app.api.v1 import instansi as instansi_router
+from app.models.report import User, AuditLog, Instansi
 from app.services.auth_service import auth_service
 
 Base.metadata.create_all(bind=engine)
@@ -42,6 +43,7 @@ app.include_router(report_router.router, prefix=settings.API_V1_STR)
 app.include_router(auth_router.router, prefix=settings.API_V1_STR)
 app.include_router(dashboard_router.router, prefix=settings.API_V1_STR)
 app.include_router(users_router.router, prefix=settings.API_V1_STR)
+app.include_router(instansi_router.router, prefix=settings.API_V1_STR + "/instansi", tags=["Instansi"])
 
 app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 
@@ -52,6 +54,22 @@ def health_check():
 def seed_initial_users():
     db: Session = SessionLocal()
     try:
+        initial_instansi = [
+            "Dinas Pekerjaan Umum dan Penataan Ruang (PUPR)",
+            "Dinas Lingkungan Hidup (DLH)",
+            "Dinas Kesehatan (Dinkes)",
+            "Dinas Kependudukan dan Pencatatan Sipil (Disdukcapil)",
+            "Dinas Perhubungan (Dishub)",
+            "Dinas Sosial (Dinsos)",
+            "Satuan Polisi Pamong Praja (Satpol PP)",
+            "Badan Penanggulangan Bencana Daerah (BPBD)"
+        ]
+
+        for inst in initial_instansi:
+            existing_inst = db.query(Instansi).filter(Instansi.nama == inst).first()
+            if not existing_inst:
+                db.add(Instansi(nama=inst, deskripsi="Dinas Pemerintah Daerah"))
+
         initial_users = [
             {"email": "warga@lapor.go.id", "nama": "Budi Warga", "role": "warga", "instansi": "Masyarakat"},
             {"email": "petugas@lapor.go.id", "nama": "Budi Santoso", "role": "petugas", "instansi": "Verifikator Pusat"},

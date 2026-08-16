@@ -5,10 +5,11 @@ import os
 from typing import Optional, List
 from fastapi import APIRouter, Depends, HTTPException, status, Query, Form, File, UploadFile, Request
 from sqlalchemy.orm import Session
+from sqlalchemy import func
 
 from app.core.config import settings
 from app.core.database import get_db
-from app.models.report import Report, AIAnalysisLog, Feedback, AuditLog, EmailVerification, User
+from app.models.report import Report, AIAnalysisLog, Feedback, AuditLog, EmailVerification, User, Instansi
 from app.schemas.report import ReportResponse, ReportOverride
 from app.services.pii_masking_service import pii_masking_service
 from app.services.prompt_injection_guard import prompt_injection_guard
@@ -89,10 +90,17 @@ def create_report(
     existing_duplicate = db.query(Report).filter(Report.text_fingerprint == fingerprint).first()
     is_duplicate = existing_duplicate is not None
     
-    wrapped_prompt = prompt_injection_guard.sanitize_and_wrap(masked_desc)
-    ai_res = llm_orchestrator.analyze_report(wrapped_prompt, preset_type)
+    # Fetch active instansi for LLM context
+    active_instansi = [i.nama for i in db.query(Instansi).all()]
     
-    dinas = department_routing_service.get_department(ai_res.get("kategori", "Lainnya"))
+    wrapped_prompt = prompt_injection_guard.sanitize_and_wrap(masked_desc)
+    ai_res = llm_orchestrator.analyze_report(wrapped_prompt, preset_type, active_instansi)
+    
+    # We now trust the LLM to pick dinas_tujuan based on the provided list
+    # If the LLM didn't return it or failed, fallback to department_routing_service
+    dinas = ai_res.get("dinas_tujuan")
+    if not dinas or dinas == "[PILIH SALAH SATU DARI DAFTAR INSTANSI DI BAWAH INI]":
+        dinas = department_routing_service.get_department(ai_res.get("kategori", "Lainnya"))
     
     initial_status = "Pending Email Verification" if (not is_anonim and target_email) else "Terverifikasi AI"
     if is_duplicate:
