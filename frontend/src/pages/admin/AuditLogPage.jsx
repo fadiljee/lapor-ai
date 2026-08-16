@@ -109,7 +109,7 @@ export function AuditLogPage() {
 
         
         <div className="bg-white border border-border rounded-lg overflow-hidden shadow-sm mb-4">
-          <div data-lenis-prevent className="overflow-x-auto custom-scrollbar">
+          <div className="overflow-x-auto custom-scrollbar">
             <table className="w-full text-left border-collapse text-xs min-w-[700px]">
               <thead>
                 <tr className="bg-primary text-white">
