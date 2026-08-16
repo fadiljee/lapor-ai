@@ -403,44 +403,54 @@ export function SubmitReportPage() {
             
             {step === 4 && (
               <div className="space-y-4">
-                <h3 className="text-xs font-bold text-text-primary uppercase tracking-wider mb-3">
-                  Ringkasan Data Pengaduan
-                </h3>
+                {loading ? (
+                  <div className="flex flex-col items-center justify-center py-12 px-4 text-center">
+                    <div className="w-12 h-12 border-4 border-slate-100 border-t-primary rounded-full animate-spin mb-4"></div>
+                    <h3 className="font-bold text-text-primary mb-2 text-lg">AI Sedang Menganalisis...</h3>
+                    <p className="text-sm text-text-secondary">Mohon tunggu sebentar, sistem sedang melakukan klasifikasi dan menentukan dinas tujuan laporan Anda.</p>
+                  </div>
+                ) : (
+                  <>
+                    <h3 className="text-xs font-bold text-text-primary uppercase tracking-wider mb-3">
+                      Ringkasan Data Pengaduan
+                    </h3>
 
-                <div className="bg-bg-base border border-border rounded-lg p-4 text-sm space-y-3">
-                  <div className="flex gap-2">
-                    <span className="text-text-secondary w-24 shrink-0 text-xs">Kategori:</span>
-                    <span className="font-bold text-primary">{formData.kategori}</span>
-                  </div>
-                  <div className="border-t border-border pt-3">
-                    <span className="text-text-secondary block text-xs mb-1">Deskripsi Masalah:</span>
-                    <p className="text-text-primary text-sm leading-relaxed">{formData.deskripsi}</p>
-                  </div>
-                  <div className="border-t border-border pt-3 grid grid-cols-2 gap-3 text-xs">
-                    <div>
-                      <span className="text-text-secondary block">Lokasi:</span>
-                      <span className="text-text-primary font-medium">{formData.lokasi_alamat || 'Tidak ditentukan'}</span>
+                    <div className="bg-bg-base border border-border rounded-lg p-4 text-sm space-y-3">
+                      <div className="flex gap-2">
+                        <span className="text-text-secondary w-24 shrink-0 text-xs">Kategori:</span>
+                        <span className="font-bold text-primary">{formData.kategori}</span>
+                      </div>
+                      <div className="border-t border-border pt-3">
+                        <span className="text-text-secondary block text-xs mb-1">Deskripsi Masalah:</span>
+                        <p className="text-text-primary text-sm leading-relaxed">{formData.deskripsi}</p>
+                      </div>
+                      <div className="border-t border-border pt-3 grid grid-cols-2 gap-3 text-xs">
+                        <div>
+                          <span className="text-text-secondary block">Lokasi:</span>
+                          <span className="text-text-primary font-medium">{formData.lokasi_alamat || 'Tidak ditentukan'}</span>
+                        </div>
+                        <div>
+                          <span className="text-text-secondary block">Mode Identitas:</span>
+                          <span className="font-semibold text-text-primary">
+                            {formData.is_anonim ? 'Mode Anonim' : `Non-Anonim (${formData.pelapor_email})`}
+                          </span>
+                        </div>
+                      </div>
                     </div>
-                    <div>
-                      <span className="text-text-secondary block">Mode Identitas:</span>
-                      <span className="font-semibold text-text-primary">
-                        {formData.is_anonim ? 'Mode Anonim' : `Non-Anonim (${formData.pelapor_email})`}
-                      </span>
-                    </div>
-                  </div>
-                </div>
 
-                <div className="bg-slate-100 border border-border rounded-lg p-3 text-xs text-text-secondary flex items-start gap-2">
-                  <Bot className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-                  <p>
-                    Setelah dikirim, AI Klasifikasi akan menganalisis urgensi (<span className="font-bold">Kritis/Tinggi/Sedang/Rendah</span>) &amp; merekomendasikan dinas tujuan secara otomatis.
-                  </p>
-                </div>
+                    <div className="bg-slate-100 border border-border rounded-lg p-3 text-xs text-text-secondary flex items-start gap-2">
+                      <Bot className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                      <p>
+                        Setelah dikirim, AI Klasifikasi akan menganalisis urgensi (<span className="font-bold">Kritis/Tinggi/Sedang/Rendah</span>) &amp; merekomendasikan dinas tujuan secara otomatis.
+                      </p>
+                    </div>
+                  </>
+                )}
               </div>
             )}
 
             
-            <div className="flex items-center justify-between border-t border-border pt-5 mt-6">
+            <div className={`flex items-center justify-between border-t border-border pt-5 mt-6 ${loading ? 'hidden' : ''}`}>
               {step > 1 ? (
                 <button
                   type="button"

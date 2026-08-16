@@ -121,10 +121,16 @@ export function DashboardPetugasPage() {
   };
 
   
-  const handleMarkIrrelevant = async () => {
-    if (!selectedReport) return;
-    if (!window.confirm(`Konfirmasi: Tandai Tiket #${selectedReport.id} sebagai Tidak Relevan / Spam?`)) return;
+  const [spamModalOpen, setSpamModalOpen] = useState(false);
 
+  const handleMarkIrrelevant = () => {
+    if (!selectedReport) return;
+    setSpamModalOpen(true);
+  };
+
+  const handleConfirmSpam = async () => {
+    if (!selectedReport) return;
+    setSpamModalOpen(false);
     setActionNotice(null);
     setActionError('');
 
@@ -285,7 +291,7 @@ export function DashboardPetugasPage() {
         
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
           
-          <div className="lg:col-span-4 bg-white border border-border rounded-lg p-3.5 shadow-sm flex flex-col max-h-[calc(100vh-6rem)] sticky top-4 overflow-hidden">
+          <div className="lg:col-span-4 bg-white border border-border rounded-lg p-3.5 shadow-sm flex flex-col max-h-80 lg:max-h-[calc(100vh-6rem)] lg:sticky lg:top-4 overflow-hidden">
             <div className="text-[11px] font-bold text-text-secondary uppercase tracking-wider px-1 py-1 pb-2.5 mb-1 border-b border-border flex items-center justify-between shrink-0">
               <span>Daftar Antrean</span>
               <span className="font-mono text-primary font-bold">({filteredReports.length} Laporan)</span>
@@ -544,6 +550,36 @@ export function DashboardPetugasPage() {
                   </button>
                 </div>
               </form>
+            </div>
+          </div>
+        )}
+
+        {spamModalOpen && (
+          <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+            <div className="bg-white border border-border rounded-lg max-w-sm w-full p-6 shadow-xl flex flex-col">
+              <div className="flex items-center gap-3 mb-4 text-accent">
+                <AlertCircle className="w-6 h-6" />
+                <h3 className="font-serif font-bold text-lg text-text-primary">Tandai Tidak Relevan</h3>
+              </div>
+              <p className="text-sm text-text-secondary mb-6">
+                Apakah Anda yakin ingin menandai Tiket #{selectedReport?.id} sebagai <strong>Tidak Relevan / Spam</strong>? Status tiket akan diubah menjadi Closed dan tidak akan diproses lebih lanjut.
+              </p>
+              <div className="flex justify-end gap-3 mt-auto">
+                <button
+                  type="button"
+                  onClick={() => setSpamModalOpen(false)}
+                  className="px-4 py-2 border border-border rounded text-sm font-semibold hover:bg-bg-base transition-colors"
+                >
+                  Batal
+                </button>
+                <button
+                  type="button"
+                  onClick={handleConfirmSpam}
+                  className="px-4 py-2 bg-accent hover:opacity-90 text-white rounded text-sm font-bold transition-colors shadow-sm"
+                >
+                  Ya, Tandai
+                </button>
+              </div>
             </div>
           </div>
         )}
