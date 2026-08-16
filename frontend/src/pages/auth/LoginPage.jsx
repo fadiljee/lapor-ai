@@ -34,13 +34,12 @@ export function LoginPage() {
       localStorage.setItem('lapor_ai_token', res.access_token);
       localStorage.setItem('lapor_ai_role', res.role);
       localStorage.setItem('lapor_ai_nama', res.nama);
-      
-      
+            
       const roleRoutes = {
         warga: '/dashboard/warga',
         petugas: '/dashboard/antrean',
         dinas: '/dashboard/tugas-dinas',
-        admin: '/dashboard/routing'
+        admin: '/dashboard/admin'
       };
       navigate(roleRoutes[res.role] || '/dashboard/antrean');
     } catch (err) {
