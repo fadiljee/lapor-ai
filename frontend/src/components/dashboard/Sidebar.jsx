@@ -29,10 +29,10 @@ export function Sidebar() {
     { path: '/dashboard/antrean', label: 'Antrean Verifikasi AI', icon: ListFilter, roles: ['petugas'] },
     { path: '/dashboard/tugas-dinas', label: 'Daftar Tugas Dinas', icon: Inbox, roles: ['dinas'] },
     
+    { path: '/dashboard/manajemen-instansi', label: 'Manajemen Instansi', icon: Building2, roles: ['admin'] },
+    { path: '/dashboard/manajemen-user', label: 'Manajemen User', icon: Users, roles: ['admin'] },
     { path: '/dashboard/routing', label: 'Routing Unit Kerja / Dinas', icon: MapPin, roles: ['admin'] },
     { path: '/dashboard/sla', label: 'Manajemen SLA Operasional', icon: Clock, roles: ['admin'] },
-    { path: '/dashboard/manajemen-user', label: 'Manajemen User', icon: Users, roles: ['admin'] },
-    { path: '/dashboard/manajemen-instansi', label: 'Manajemen Instansi', icon: Building2, roles: ['admin'] },
     { path: '/dashboard/analitik', label: 'Analitik Agregat & Hotspot', icon: BarChart3, roles: ['admin'] },
     { path: '/dashboard/audit-log', label: 'Log Transparansi Audit AI', icon: ShieldAlert, roles: ['admin'] },
   ];
