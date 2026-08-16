@@ -5,7 +5,7 @@ export function ContactPage() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
       <div className="max-w-3xl mx-auto">
-        {/* Header */}
+        
         <div className="text-center mb-12">
           <h1 className="font-display text-3xl md:text-4xl font-semibold text-text-primary mb-4">
             Hubungi Kami
@@ -16,7 +16,7 @@ export function ContactPage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Contact Info */}
+          
           <div className="md:col-span-1 space-y-6">
             <div className="bg-white border border-border rounded-lg p-5">
               <div className="w-10 h-10 rounded flex items-center justify-center bg-blue-50 text-accent mb-4">
@@ -46,7 +46,7 @@ export function ContactPage() {
             </div>
           </div>
 
-          {/* Contact Form */}
+          
           <div className="md:col-span-2 bg-white border border-border rounded-lg p-6 sm:p-8">
             <h2 className="font-display text-xl font-semibold text-text-primary mb-6">
               Kirim Pesan Bantuan

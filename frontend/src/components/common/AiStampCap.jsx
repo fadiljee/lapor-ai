@@ -1,41 +1,31 @@
 import React from 'react';
 
-/**
- * AiStampCap — "Cap AI" signature component.
- * Digunakan sebagai penanda visual bahwa AI telah memproses laporan,
- * untuk menegakkan prinsip human-in-the-loop.
- *
- * Varian (variant prop):
- *   'verified'  → TERVERIFIKASI AI  (navy)
- *   'waiting'   → MENUNGGU PETUGAS  (ochre/soga)
- *   'critical'  → KRITIS — ESKALASI (merah garuda)
- *   'analyzing' → MENGANALISIS...   (muted)
- */
+
 
 const VARIANTS = {
   verified: {
-    color: '#1F3A52',       /* navy-dinas */
+    color: '#1F3A52',       
     bgColor: '#E7ECEF',
     line1: 'TERVERIFIKASI',
     line2: 'AI',
     rotate: '-4deg',
   },
   waiting: {
-    color: '#B5732A',       /* soga/ochre */
+    color: '#B5732A',       
     bgColor: '#FDF3E0',
     line1: 'MENUNGGU',
     line2: 'PETUGAS',
     rotate: '3deg',
   },
   critical: {
-    color: '#A32A21',       /* merah garuda */
+    color: '#A32A21',       
     bgColor: '#FAEAEA',
     line1: 'KRITIS',
     line2: 'ESKALASI',
     rotate: '-5deg',
   },
   analyzing: {
-    color: '#6B6862',       /* muted */
+    color: '#6B6862',       
     bgColor: '#F4F3EE',
     line1: 'MENGANA',
     line2: 'LISIS...',

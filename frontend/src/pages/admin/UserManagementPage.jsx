@@ -11,7 +11,7 @@ export function UserManagementPage() {
   const [showModal, setShowModal] = useState(false);
   const [editingUser, setEditingUser] = useState(null);
   
-  // Form State
+  
   const [formData, setFormData] = useState({
     nama: '',
     email: '',
@@ -50,7 +50,7 @@ export function UserManagementPage() {
       email: u.email || '',
       role: u.role || 'warga',
       instansi: u.instansi || '',
-      password: '' // Kosongkan password saat edit, isi jika ingin mengubah
+      password: '' 
     });
     setShowModal(true);
   };
@@ -69,12 +69,12 @@ export function UserManagementPage() {
     e.preventDefault();
     try {
       if (editingUser) {
-        // Edit mode
+        
         const dataToUpdate = { ...formData };
         if (!dataToUpdate.password) delete dataToUpdate.password;
         await api.updateUser(editingUser.id, dataToUpdate);
       } else {
-        // Create mode
+        
         if (!formData.password) {
           alert('Password wajib diisi untuk pengguna baru');
           return;
@@ -190,7 +190,7 @@ export function UserManagementPage() {
         </div>
       </main>
 
-      {/* Modal User Form */}
+      
       {showModal && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
           <div className="bg-white rounded-lg shadow-xl w-full max-w-md overflow-hidden flex flex-col">

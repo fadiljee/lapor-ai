@@ -8,31 +8,31 @@ from alembic import context
 import sys
 import os
 
-# Tambahkan path root backend ke sys.path agar bisa import app
+                                                              
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-# Import settings dan models agar Alembic bisa mendeteksi skema
+                                                               
 from app.core.config import settings
 from app.core.database import Base
 
-# Import semua models supaya Base.metadata mengetahui seluruh tabel
-import app.models.report  # noqa: F401
+                                                                   
+import app.models.report              
 
 config = context.config
 
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
-# Set DATABASE_URL dari settings (baca dari .env)
+                                                 
 config.set_main_option("sqlalchemy.url", settings.DATABASE_URL)
 
 target_metadata = Base.metadata
 
 
-# other values from the config, defined by the needs of env.py,
-# can be acquired:
-# my_important_option = config.get_main_option("my_important_option")
-# ... etc.
+                                                               
+                  
+                                                                     
+          
 
 
 def run_migrations_offline() -> None:

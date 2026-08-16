@@ -36,7 +36,7 @@ export function Sidebar() {
     { path: '/dashboard/audit-log', label: 'Log Transparansi Audit AI', icon: ShieldAlert, roles: ['admin'] },
   ];
 
-  // Filter items matching current user's role
+  
   const allowedNavItems = allNavItems.filter((item) => item.roles.includes(role));
 
   const roleTitles = {
@@ -50,7 +50,7 @@ export function Sidebar() {
     <>
       <aside className="w-full md:w-[220px] bg-white border-r border-border shrink-0 md:h-[calc(100vh-4rem)] md:sticky md:top-16 overflow-y-auto p-4 flex flex-col justify-between">
         <div>
-          {/* User Info Card */}
+          
           <div className="bg-black/5 p-3.5 rounded border border-border mb-6 flex items-center gap-3">
             <div className="w-9 h-9 rounded bg-primary text-white flex items-center justify-center font-bold text-sm shrink-0">
               {name.charAt(0).toUpperCase()}
@@ -63,7 +63,7 @@ export function Sidebar() {
             </div>
           </div>
 
-          {/* Navigation Section */}
+          
           <div className="text-[10px] font-bold uppercase tracking-widest text-text-secondary mb-2 px-2">
             Menu Navigasi
           </div>
@@ -89,7 +89,7 @@ export function Sidebar() {
           </nav>
         </div>
 
-        {/* Logout button */}
+        
         <div className="pt-4 border-t border-border mt-6">
           <button
             type="button"

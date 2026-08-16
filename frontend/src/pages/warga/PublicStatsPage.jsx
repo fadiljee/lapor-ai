@@ -4,7 +4,7 @@ export function PublicStatsPage() {
   return (
     <div style={{ backgroundColor: '#ECEADF' }} className="min-h-screen pb-20">
       <div className="max-w-7xl mx-auto px-5 md:px-10 pt-12">
-        {/* Header */}
+        
         <p
           style={{
             fontFamily: '"Inter", sans-serif',
@@ -43,7 +43,7 @@ export function PublicStatsPage() {
           Data agregat riil dari seluruh pengaduan warga yang diterima, diklasifikasi secara otomatis oleh sistem AI, serta ditindaklanjuti langsung oleh dinas terkait.
         </p>
 
-        {/* 4 Big Stat Cards */}
+        
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
           <div style={{ backgroundColor: '#FFFFFF', border: '1px solid #D6D3C7', padding: '24px' }}>
             <p style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: '36px', fontWeight: 900, color: '#1A1A18', lineHeight: 1 }}>
@@ -82,11 +82,11 @@ export function PublicStatsPage() {
           </div>
         </div>
 
-        {/* 2 Column Main Grid */}
+        
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          {/* Left Column (8 cols): Charts */}
+          
           <div className="lg:col-span-8 flex flex-col gap-8">
-            {/* Pengaduan Berdasarkan Kategori */}
+            
             <div style={{ backgroundColor: '#FFFFFF', border: '1px solid #D6D3C7', padding: '28px' }}>
               <h3 style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: '18px', fontWeight: 700, color: '#1A1A18', marginBottom: '24px' }}>
                 Pengaduan Berdasarkan Kategori
@@ -115,7 +115,7 @@ export function PublicStatsPage() {
               </div>
             </div>
 
-            {/* Status Penanganan Pengaduan (Bulan Ini) */}
+            
             <div style={{ backgroundColor: '#FFFFFF', border: '1px solid #D6D3C7', padding: '28px' }}>
               <h3 style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: '18px', fontWeight: 700, color: '#1A1A18', marginBottom: '20px' }}>
                 Status Penanganan Pengaduan (Bulan Ini)
@@ -149,7 +149,7 @@ export function PublicStatsPage() {
             </div>
           </div>
 
-          {/* Right Column (4 cols): Metrik Performa Triase AI */}
+          
           <div className="lg:col-span-4">
             <div style={{ backgroundColor: '#FFFFFF', border: '1px solid #D6D3C7', padding: '28px' }}>
               <h3 style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: '18px', fontWeight: 700, color: '#1A1A18', marginBottom: '24px' }}>

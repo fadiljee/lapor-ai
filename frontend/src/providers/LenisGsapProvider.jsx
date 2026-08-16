@@ -11,7 +11,7 @@ export function LenisGsapProvider({ children }) {
   const lenisRef = useRef(null);
 
   useEffect(() => {
-    // 1. Initialize Lenis Smooth Scroll
+    
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -20,16 +20,16 @@ export function LenisGsapProvider({ children }) {
     });
     lenisRef.current = lenis;
 
-    // 2. Connect Lenis scroll events to GSAP ScrollTrigger
+    
     lenis.on('scroll', ScrollTrigger.update);
 
-    // 3. Add Lenis to GSAP Ticker for 60+ FPS synchronization
+    
     const updateGsapTicker = (time) => {
       lenis.raf(time * 1000);
     };
     gsap.ticker.add(updateGsapTicker);
 
-    // Disable GSAP lag smoothing to keep Lenis and GSAP perfectly in sync
+    
     gsap.ticker.lagSmoothing(0);
 
     return () => {
@@ -39,7 +39,7 @@ export function LenisGsapProvider({ children }) {
     };
   }, []);
 
-  // 4. Scroll to top on route change
+  
   useEffect(() => {
     if (lenisRef.current) {
       lenisRef.current.scrollTo(0, { immediate: true });
@@ -51,7 +51,7 @@ export function LenisGsapProvider({ children }) {
     return () => clearTimeout(timer);
   }, [location.pathname]);
 
-  // 5. Global ScrollTrigger Batch Reveal Animations for all pages
+  
   useEffect(() => {
     const ctx = gsap.context(() => {
       const elements = document.querySelectorAll(
@@ -59,7 +59,7 @@ export function LenisGsapProvider({ children }) {
       );
 
       elements.forEach((el) => {
-        // Skip fixed navbar, sidebar, or footer
+        
         if (el.closest('header') || el.closest('aside') || el.closest('footer')) return;
 
         gsap.fromTo(

@@ -49,7 +49,7 @@ class LLMOrchestrator:
     def analyze_report(self, wrapped_text: str, preset_type: str = None) -> Dict[str, Any]:
         start_time = time.time()
 
-        # 1. Attempt Primary Gemini model
+                                         
         if settings.GEMINI_API_KEY and len(settings.GEMINI_API_KEY.strip()) > 5:
             try:
                 res = self._call_gemini_api(wrapped_text, model=settings.PRIMARY_MODEL)
@@ -60,7 +60,7 @@ class LLMOrchestrator:
             except Exception as e:
                 print(f"[LLMOrchestrator] Gemini API ({settings.PRIMARY_MODEL}) error: {e}")
 
-            # 2. Attempt Fallback Gemini model
+                                              
             try:
                 res = self._call_gemini_api(wrapped_text, model=settings.FALLBACK_MODEL)
                 if res:
@@ -70,7 +70,7 @@ class LLMOrchestrator:
             except Exception as e:
                 print(f"[LLMOrchestrator] Gemini API Fallback ({settings.FALLBACK_MODEL}) error: {e}")
 
-        # 3. Local Rule-based Fallback
+                                      
         res = self._local_fallback_analysis(wrapped_text, preset_type)
         res["provider"] = f"Local Engine ({settings.FALLBACK_MODEL} Fallback Tier)"
         res["latency_ms"] = int((time.time() - start_time) * 1000)
@@ -116,16 +116,16 @@ class LLMOrchestrator:
     def _local_fallback_analysis(self, wrapped_text: str, preset_type: str = None) -> Dict[str, Any]:
         text_lower = wrapped_text.lower()
 
-        # Check Bangka language indicators
+                                          
         bangka_keywords = ["nak", "kelak", "dide", "banyu", "jeme", "uma", "cak mane", "nambang", "nian", "ade", "katek"]
         is_bangka = any(kw in text_lower for kw in bangka_keywords)
         bahasa = "Bahasa Bangka" if is_bangka else "Bahasa Indonesia"
 
-        # Critical keywords
+                           
         critical_keywords = ["kebakaran", "terbakar", "api", "ancaman jiwa", "kecelakaan massal", "korban", "darurat", "meledak"]
-        # High keywords
+                       
         high_keywords = ["ambles", "kabel listrik", "terkelupas", "roboh", "bahaya", "banjir besar", "putus", "longsor"]
-        # Medium keywords
+                         
         medium_keywords = ["mati", "rusak", "mampet", "pelayanan lambat", "sampah", "berlubang", "lampu jalan"]
 
         if any(kw in text_lower for kw in critical_keywords) or (preset_type and "kritis" in preset_type.lower()):
@@ -145,7 +145,7 @@ class LLMOrchestrator:
             alasan = "Keluhan administratif, pengaduan ringan, atau keluhan estetika lingkungan."
             confidence = 0.85
 
-        # Determine Category
+                            
         if any(k in text_lower for k in ["kebakaran", "bencana", "banjir", "longsor", "kecelakaan"]):
             kategori = "Keamanan/Bencana"
         elif any(k in text_lower for k in ["jalan", "jembatan", "kabel", "drainase", "lampu jalan", "berlubang"]):
@@ -161,7 +161,7 @@ class LLMOrchestrator:
         else:
             kategori = "Lainnya"
 
-        # Generate summary
+                          
         summary = text_lower.replace("<user_report>", "").replace("</user_report>", "").strip()
         if len(summary) > 120:
             summary = summary[:117] + "..."

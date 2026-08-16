@@ -29,7 +29,7 @@ export function LoginPage() {
       localStorage.setItem('lapor_ai_role', res.role);
       localStorage.setItem('lapor_ai_nama', res.nama);
       
-      // Role-aware redirect according to exact user prompt roles:
+      
       const roleRoutes = {
         warga: '/dashboard/warga',
         petugas: '/dashboard/antrean',
@@ -64,7 +64,7 @@ export function LoginPage() {
           Akses portal LAPOR-AI untuk pengaduan publik.
         </p>
 
-        {/* Quick Demo Account Selector */}
+        
         <div className="bg-slate-50 border border-border p-3.5 rounded mb-6 text-xs">
           <div className="font-bold text-primary mb-1 flex items-center gap-1">
             <UserCheck className="w-4 h-4" />

@@ -2,12 +2,7 @@ import React from 'react';
 import { Copy, Check, FileText } from 'lucide-react';
 import { AiStampCap } from './AiStampCap';
 
-/**
- * TicketStub — "Resi Laporan" signature component.
- * Bergaya boarding-pass: header navy-dinas, nomor tiket mono besar,
- * garis perforasi putus-putus dengan notch kiri-kanan (dari index.css),
- * dan Cap AI di sudut kanan.
- */
+
 
 function getStampVariant(status) {
   if (!status) return 'waiting';
@@ -35,7 +30,7 @@ export function TicketStub({ ticketId, status, createdAt, pelaporEmail, isAnonim
   return (
     <div className="w-full max-w-md mx-auto bg-white border border-border rounded-lg overflow-visible my-4" style={{ boxShadow: '0 1px 2px rgba(0,0,0,.06)' }}>
 
-      {/* Ticket Header — Navy Dinas */}
+      
       <div className="bg-primary text-white px-5 py-3 flex items-center justify-between rounded-t-lg">
         <div className="flex items-center gap-2">
           <FileText className="w-4 h-4 text-slate-300" />
@@ -48,13 +43,13 @@ export function TicketStub({ ticketId, status, createdAt, pelaporEmail, isAnonim
         </span>
       </div>
 
-      {/* Ticket Body */}
+      
       <div className="px-6 pt-5 pb-4">
         <div className="text-[10px] text-text-secondary font-mono-ticket uppercase tracking-widest mb-1">
           Nomor Tiket Laporan
         </div>
 
-        {/* Ticket Number — Mono Bold */}
+        
         <div className="flex items-center justify-between gap-2 bg-bg-base p-3 rounded border border-border mb-5">
           <span className="font-mono-ticket text-lg font-bold text-text-text-primary tracking-wider">
             {ticketId || 'LPR-2026-0088231'}
@@ -68,10 +63,10 @@ export function TicketStub({ ticketId, status, createdAt, pelaporEmail, isAnonim
           </button>
         </div>
 
-        {/* Perforation Line with Notch — from index.css */}
+        
         <div className="ticket-perforation my-4 mx-2" />
 
-        {/* Details Grid + AI Stamp Cap */}
+        
         <div className="flex items-start justify-between gap-3 mt-5">
           <div className="grid grid-cols-2 gap-x-4 gap-y-3 text-[11px] flex-1">
             <div>
@@ -94,7 +89,7 @@ export function TicketStub({ ticketId, status, createdAt, pelaporEmail, isAnonim
             </div>
           </div>
 
-          {/* AI Stamp Cap — sudut kanan */}
+          
           <div className="shrink-0">
             <AiStampCap variant={stampVariant} size={64} showLabel={false} />
           </div>

@@ -9,7 +9,7 @@ export function AIJustificationCard({ report }) {
 
   return (
     <div className="bg-white border border-border rounded-lg p-5 shadow-sm mb-6">
-      {/* Header Panel */}
+      
       <div className="flex items-center justify-between border-b border-border pb-3 mb-4">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 rounded bg-primary text-white flex items-center justify-center">
@@ -27,7 +27,7 @@ export function AIJustificationCard({ report }) {
         <UrgencyBadge level={report.skor_urgensi} />
       </div>
 
-      {/* Mandatory Responsible AI Disclaimer Banner */}
+      
       <div className="bg-amber-50 border-l-4 border-amber-700 p-3 rounded text-xs text-amber-700 mb-4 flex items-start gap-2">
         <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" />
         <div>
@@ -36,7 +36,7 @@ export function AIJustificationCard({ report }) {
         </div>
       </div>
 
-      {/* Key AI Metadata Grid */}
+      
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4 text-xs">
         <div className="bg-bg-base p-2.5 rounded border border-border">
           <span className="text-text-secondary block mb-0.5">Rekomendasi Dinas Tujuan:</span>
@@ -57,7 +57,7 @@ export function AIJustificationCard({ report }) {
         </div>
       </div>
 
-      {/* Ringkasan AI */}
+      
       <div className="mb-4">
         <h4 className="text-xs font-bold text-text-primary uppercase tracking-wider mb-1">
           Ringkasan Ekstraksi AI:
@@ -67,7 +67,7 @@ export function AIJustificationCard({ report }) {
         </p>
       </div>
 
-      {/* Collapsible Explainable AI Justification */}
+      
       <div className="border border-border rounded overflow-hidden">
         <button
           type="button"

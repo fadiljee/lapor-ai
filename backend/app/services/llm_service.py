@@ -24,13 +24,13 @@ class LLMService:
         ]
 
         self.max_retries = 3
-        self.base_backoff = 1  # seconds
+        self.base_backoff = 1           
 
     async def analyze_report(self, text: str, bahasa: str = 'id') -> Optional[Dict[str, Any]]:
         """Analyze a report using DeepSeek LLM with fallback support."""
         masked_text = mask_pii(text)
 
-        # Try primary DeepSeek model
+                                    
         result = await self._call_provider(
             provider=self.primary_provider,
             model=self.primary_model,
@@ -43,7 +43,7 @@ class LLMService:
         if result:
             return result
 
-        # Fallback to secondary DeepSeek model configuration
+                                                            
         for provider_config in self.fallback_providers:
             result = await self._call_provider(
                 provider=provider_config['name'],

@@ -6,7 +6,7 @@ import { ReportTrendChart } from '../../components/analytics/ReportTrendChart';
 import { ReportDistributionMap } from '../../components/analytics/ReportDistributionMap';
 import { api } from '../../services/api';
 
-/* ── Resi horizontal — alur laporan 5 tahap ───────────────────── */
+
 const FLOW_STEPS = [
   { num: '01', label: 'Tulis Laporan', sub: 'Bahasa Indonesia atau Bahasa Bangka' },
   { num: '02', label: 'Klasifikasi AI', sub: '< 10 detik skoring urgensi' },
@@ -21,7 +21,7 @@ export function HomePage() {
   useEffect(() => {
     api.getDashboardStats()
       .then((d) => setDashboardData(d))
-      .catch(() => null); // silently fail — fallback shown
+      .catch(() => null); 
   }, []);
 
   const kpi = dashboardData?.kpi;
@@ -44,15 +44,15 @@ export function HomePage() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
 
-      {/* ── Hero Section ──────────────────────────────────────── */}
+      
       <section className="mb-10 grid grid-cols-1 lg:grid-cols-5 gap-8 items-center">
         <div className="lg:col-span-3">
-          {/* Eyebrow */}
+          
           <div className="inline-flex items-center gap-2 border border-border bg-slate-100 text-primary px-3 py-1 rounded text-[10px] font-mono-ticket font-semibold uppercase tracking-widest mb-5">
             Sistem Pengaduan Publik Berbasis AI
           </div>
 
-          {/* H1 — Fraunces Display */}
+          
           <h1 className="font-display text-[32px] sm:text-[42px] lg:text-[52px] font-semibold text-text-primary leading-[1.12] tracking-tight mb-5">
             Laporkan.<br />
             Diprioritaskan<br className="hidden sm:block" /> otomatis.<br />
@@ -66,7 +66,7 @@ export function HomePage() {
             <span className="font-semibold text-text-primary">AI tidak pernah menentukan apakah suatu laporan benar atau salah. Hal tersebut tetap menjadi tugas manusia.</span>
           </p>
 
-          {/* CTA Buttons */}
+          
           <div className="flex flex-col sm:flex-row gap-3">
             <Link
               to="/masuk"
@@ -78,10 +78,10 @@ export function HomePage() {
           </div>
         </div>
 
-        {/* Hero Illustration — Resi sedang diproses */}
+        
         <div className="lg:col-span-2 flex flex-col items-center gap-4">
           <div className="relative bg-white border border-border rounded-lg p-5 w-full max-w-xs" style={{ boxShadow: '0 1px 3px rgba(0,0,0,.07)' }}>
-            {/* Mini ticket preview */}
+            
             <div className="bg-primary-dark -mx-5 -mt-5 px-5 py-2.5 rounded-t-lg mb-4 flex items-center justify-between">
               <span className="text-[9px] font-mono-ticket text-slate-400 uppercase tracking-widest">LAPOR-AI · Resi</span>
               <span className="text-[9px] font-mono-ticket bg-accent text-white px-1.5 py-0.5 rounded uppercase tracking-widest">RESMI</span>
@@ -97,12 +97,12 @@ export function HomePage() {
               <div><span className="text-text-secondary">Kategori:</span><br /><span className="font-semibold text-text-primary">Infrastruktur</span></div>
             </div>
           </div>
-          {/* Cap AI sebagai ilustrasi hero */}
+          
           <AiStampCap variant="analyzing" size={80} showLabel={true} />
         </div>
       </section>
 
-      {/* ── Strip 3 Fitur AI ──────────────────────────────────── */}
+      
       <section className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
         {[
           {
@@ -140,7 +140,7 @@ export function HomePage() {
         ))}
       </section>
 
-      {/* ── Resi Horizontal — Alur Laporan ───────────────────── */}
+      
       <section className="mb-10">
         <h2 className="font-display text-xl sm:text-2xl font-semibold text-text-primary mb-5">
           Alur Laporan Warga
@@ -158,7 +158,7 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* ── Statistik Live (Real DB) ───────────────────────── */}
+      
       <section className="mb-10 border-y-4 border-accent py-6 bg-white">
         <div className="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-border">
           {liveStats.map((s, i) => (
@@ -170,13 +170,13 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* ── Daily Trend & Spatial Distribution Map ─────────────── */}
+      
       <section className="mb-10 grid grid-cols-1 lg:grid-cols-2 gap-6">
         <ReportTrendChart dailyData={dashboardData?.daily_trend} />
         <ReportDistributionMap locations={dashboardData?.locations} />
       </section>
 
-      {/* ── Human-in-the-Loop Disclaimer ─────────────────────── */}
+      
       <section className="bg-slate-50 border border-border rounded-lg p-5">
         <div className="flex items-start gap-3">
           <ShieldCheck className="w-5 h-5 text-primary shrink-0 mt-0.5" />

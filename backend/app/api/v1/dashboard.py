@@ -22,15 +22,15 @@ def get_dashboard_stats(request: Request, current_user: User = Depends(require_r
     open_cases = db.query(func.count(Report.id)).filter(Report.status.notin_(["Closed", "Resolved"])).scalar() or 0
     duplicate_count = db.query(func.count(Report.id)).filter(Report.is_duplikat == True).scalar() or 0
     
-    # Category breakdown
+                        
     cat_rows = db.query(Report.kategori, func.count(Report.id)).group_by(Report.kategori).all()
     by_category = {cat: count for cat, count in cat_rows}
     
-    # Department breakdown
+                          
     dept_rows = db.query(Report.dinas_tujuan, func.count(Report.id)).group_by(Report.dinas_tujuan).all()
     by_department = {dept: count for dept, count in dept_rows}
 
-    # Daily trend calculation (last 7 days)
+                                           
     from datetime import datetime, timedelta
     today = datetime.utcnow().date()
     daily_trend = []
@@ -55,7 +55,7 @@ def get_dashboard_stats(request: Request, current_user: User = Depends(require_r
             "kritis": kritis_cnt
         })
 
-    # Location distribution
+                           
     location_reports = db.query(Report).all()
     locations = []
     

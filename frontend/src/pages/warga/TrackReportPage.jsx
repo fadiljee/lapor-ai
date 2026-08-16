@@ -7,7 +7,7 @@ import { UrgencyBadge } from '../../components/common/UrgencyBadge';
 import { AiStampCap } from '../../components/common/AiStampCap';
 import { Search, Loader2, CheckCircle2, Image, Paperclip, ExternalLink } from 'lucide-react';
 
-/* ── Alur status laporan ─────────────────────────────────────── */
+
 const STATUS_STEPS = [
   { key: 'Pending Email Verification', label: 'Verifikasi Email' },
   { key: 'Menunggu Verifikasi AI',     label: 'Antrean AI' },
@@ -91,7 +91,7 @@ export function TrackReportPage() {
       <main className="flex-1 p-4 sm:p-6 bg-bg-base overflow-x-hidden">
         <div className="max-w-4xl mx-auto space-y-6">
 
-      {/* ── Search Section ─────────────────────────────────────── */}
+      
       <div className="bg-white border border-border rounded-lg p-6 mb-8 text-center">
         <h1 className="font-display text-2xl sm:text-3xl font-semibold text-text-primary mb-2">
           Lacak Status Pengaduan Warga
@@ -129,11 +129,11 @@ export function TrackReportPage() {
         )}
       </div>
 
-      {/* ── Report Result ──────────────────────────────────────── */}
+      
       {report && (
         <div className="space-y-6">
 
-          {/* Status Timeline — Resi horizontal */}
+          
           <div className="bg-white border border-border rounded-lg overflow-hidden">
             <div className="px-5 py-3 border-b border-border flex items-center justify-between">
               <h3 className="text-[11px] font-bold text-text-primary uppercase tracking-wider">
@@ -152,7 +152,7 @@ export function TrackReportPage() {
               </div>
             </div>
 
-            {/* Resi strip steps */}
+            
             <div className="grid grid-cols-3 sm:grid-cols-6 divide-x divide-dashed divide-border">
               {STATUS_STEPS.map((stepItem, idx) => {
                 const st = getStepStatus(stepItem.key, report.status);
@@ -183,7 +183,7 @@ export function TrackReportPage() {
             </div>
           </div>
 
-          {/* Ticket Stub & Details */}
+          
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <TicketStub
               ticketId={report.id}

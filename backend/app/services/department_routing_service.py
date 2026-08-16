@@ -14,7 +14,7 @@ class DepartmentRoutingService:
         if not category:
             return "Disposisi Manual"
             
-        # Match exact or case-insensitive keyword
+                                                 
         category_clean = category.strip()
         if category_clean in self.MAPPING:
             return self.MAPPING[category_clean]

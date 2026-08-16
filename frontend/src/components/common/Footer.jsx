@@ -7,7 +7,7 @@ export function Footer() {
     <footer className="bg-primary-dark text-border py-12 text-sm mt-auto">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between gap-12">
 
-        {/* Brand */}
+        
         <div className="max-w-sm">
           <h4 className="font-display font-bold text-white text-lg mb-4 tracking-wide">LAPOR-AI</h4>
           <p className="text-text-secondary leading-relaxed">
@@ -17,7 +17,7 @@ export function Footer() {
         </div>
 
         <div className="flex gap-16">
-          {/* Dukungan */}
+          
           <div>
             <h4 className="font-mono-ticket font-bold text-white text-xs uppercase tracking-wider mb-4">Dukungan</h4>
             <ul className="space-y-2.5 text-border">
