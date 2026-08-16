@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Building2, Plus, Trash2, ShieldAlert } from 'lucide-react';
-import api from '../../services/api';
+import { api } from '../../services/api';
 
 export function InstansiManagementPage() {
   const [instansiList, setInstansiList] = useState([]);
@@ -16,11 +16,11 @@ export function InstansiManagementPage() {
   const fetchInstansi = async () => {
     try {
       setLoading(true);
-      const res = await api.get('/instansi');
-      setInstansiList(res.data);
+      const res = await api.getInstansi();
+      setInstansiList(res || []);
       setError(null);
     } catch (err) {
-      setError(err.response?.data?.detail || 'Gagal memuat data instansi');
+      setError(err.message || 'Gagal memuat data instansi');
     } finally {
       setLoading(false);
     }
@@ -32,12 +32,12 @@ export function InstansiManagementPage() {
     
     try {
       setIsSubmitting(true);
-      const res = await api.post('/instansi', newInstansi);
-      setInstansiList([...instansiList, res.data]);
+      const res = await api.createInstansi(newInstansi);
+      setInstansiList([...instansiList, res]);
       setNewInstansi({ nama: '', deskripsi: '' });
       setError(null);
     } catch (err) {
-      setError(err.response?.data?.detail || 'Gagal menambahkan instansi');
+      setError(err.message || 'Gagal menambahkan instansi');
     } finally {
       setIsSubmitting(false);
     }
@@ -47,10 +47,10 @@ export function InstansiManagementPage() {
     if (!window.confirm('Yakin ingin menghapus instansi ini? User yang menggunakan instansi ini mungkin akan terdampak.')) return;
     
     try {
-      await api.delete(`/instansi/${id}`);
+      await api.deleteInstansi(id);
       setInstansiList(instansiList.filter(i => i.id !== id));
     } catch (err) {
-      alert(err.response?.data?.detail || 'Gagal menghapus instansi');
+      alert(err.message || 'Gagal menghapus instansi');
     }
   };
 
