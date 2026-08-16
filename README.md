@@ -13,7 +13,7 @@
 ---
 
 ## 📌 Deskripsi
-
+![Landing Page](docs/landing_page.png)
 **LAPOR-AI** merupakan sistem pengaduan masyarakat tingkat lanjut berbasis Artificial Intelligence yang memanfaatkan **Large Language Model (Google Gemini API)** untuk membantu proses **verifikasi laporan secara otomatis**.
 
 Sistem ini bertindak sebagai platform pengaduan masyarakat pintar berbasis AI dengan kemampuan:
