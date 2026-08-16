@@ -122,7 +122,7 @@ class LLMService:
 
     def _build_system_prompt(self, bahasa: str) -> str:
         """Build the system prompt for LLM analysis."""
-        return """Anda adalah asisten triage untuk sistem pengaduan warga LAPOR-AI.
+        return """Anda adalah asisten verifikasi untuk sistem pengaduan warga LAPOR-AI.
 
 ATURAN DASAR & GUARDRAILS:
 1. Tugas Anda HANYA: (a) mengklasifikasikan kategori laporan, (b) menentukan skor urgensi, (c) mengekstrak entitas, (d) membuat ringkasan singkat.

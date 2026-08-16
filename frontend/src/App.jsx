@@ -35,6 +35,7 @@ function RoleProtectedRoute({ allowedRoles, children }) {
   const roleRedirectMap = {
     warga: '/dashboard/warga',
     petugas: '/dashboard/antrean',
+    dinas: '/dashboard/tugas-dinas',
     admin: '/dashboard/routing'
   };
 
@@ -46,107 +47,118 @@ function RoleProtectedRoute({ allowedRoles, children }) {
   return children;
 }
 
+import { useLocation } from 'react-router-dom';
+
+function AppContent() {
+  const location = useLocation();
+  const isDashboard = location.pathname.startsWith('/dashboard');
+
+  return (
+    <div className="flex flex-col min-h-screen bg-bg-base text-text-primary">
+      <Navbar />
+      <div className="flex-1">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/verifikasi-email" element={<EmailVerificationPage />} />
+          <Route path="/lapor/berhasil" element={<ReportSuccessPage />} />
+          <Route path="/tentang-lapor-ai" element={<AboutLaporAiPage />} />
+          <Route path="/hubungi-kami" element={<ContactPage />} />
+          <Route path="/masuk" element={<LoginPage />} />
+
+          <Route
+            path="/lapor"
+            element={
+              <RoleProtectedRoute allowedRoles={['warga']}>
+                <SubmitReportPage />
+              </RoleProtectedRoute>
+            }
+          />
+          <Route
+            path="/lacak"
+            element={
+              <RoleProtectedRoute allowedRoles={['warga']}>
+                <TrackReportPage />
+              </RoleProtectedRoute>
+            }
+          />
+
+          <Route path="/dashboard" element={<DashboardIndex />} />
+          <Route
+            path="/dashboard/warga"
+            element={
+              <RoleProtectedRoute allowedRoles={['warga']}>
+                <DashboardWargaPage />
+              </RoleProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard/antrean"
+            element={
+              <RoleProtectedRoute allowedRoles={['petugas']}>
+                <DashboardPetugasPage />
+              </RoleProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard/routing"
+            element={
+              <RoleProtectedRoute allowedRoles={['admin']}>
+                <RoutingManagementPage />
+              </RoleProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard/tugas-dinas"
+            element={
+              <RoleProtectedRoute allowedRoles={['dinas']}>
+                <DashboardDinasPage />
+              </RoleProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard/sla"
+            element={
+              <RoleProtectedRoute allowedRoles={['admin']}>
+                <SLASettingsPage />
+              </RoleProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard/users"
+            element={
+              <RoleProtectedRoute allowedRoles={['admin']}>
+                <UserManagementPage />
+              </RoleProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard/analitik"
+            element={
+              <RoleProtectedRoute allowedRoles={['admin']}>
+                <AnalyticsPage />
+              </RoleProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard/audit-log"
+            element={
+              <RoleProtectedRoute allowedRoles={['admin']}>
+                <AuditLogPage />
+              </RoleProtectedRoute>
+            }
+          />
+        </Routes>
+      </div>
+      {!isDashboard && <Footer />}
+    </div>
+  );
+}
+
 export default function App() {
   return (
     <BrowserRouter>
       <LenisGsapProvider>
-        <div className="flex flex-col min-h-screen bg-bg-base text-text-primary">
-          <Navbar />
-          <div className="flex-1">
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/verifikasi-email" element={<EmailVerificationPage />} />
-              <Route path="/lapor/berhasil" element={<ReportSuccessPage />} />
-              <Route path="/tentang-lapor-ai" element={<AboutLaporAiPage />} />
-              <Route path="/hubungi-kami" element={<ContactPage />} />
-              <Route path="/masuk" element={<LoginPage />} />
-
-              <Route
-                path="/lapor"
-                element={
-                  <RoleProtectedRoute allowedRoles={['warga']}>
-                    <SubmitReportPage />
-                  </RoleProtectedRoute>
-                }
-              />
-              <Route
-                path="/lacak"
-                element={
-                  <RoleProtectedRoute allowedRoles={['warga']}>
-                    <TrackReportPage />
-                  </RoleProtectedRoute>
-                }
-              />
-
-              <Route path="/dashboard" element={<DashboardIndex />} />
-              <Route
-                path="/dashboard/warga"
-                element={
-                  <RoleProtectedRoute allowedRoles={['warga']}>
-                    <DashboardWargaPage />
-                  </RoleProtectedRoute>
-                }
-              />
-              <Route
-                path="/dashboard/antrean"
-                element={
-                  <RoleProtectedRoute allowedRoles={['petugas']}>
-                    <DashboardPetugasPage />
-                  </RoleProtectedRoute>
-                }
-              />
-              <Route
-                path="/dashboard/routing"
-                element={
-                  <RoleProtectedRoute allowedRoles={['admin']}>
-                    <RoutingManagementPage />
-                  </RoleProtectedRoute>
-                }
-              />
-              <Route
-                path="/dashboard/tugas-dinas"
-                element={
-                  <RoleProtectedRoute allowedRoles={['admin']}>
-                    <DashboardDinasPage />
-                  </RoleProtectedRoute>
-                }
-              />
-              <Route
-                path="/dashboard/sla"
-                element={
-                  <RoleProtectedRoute allowedRoles={['admin']}>
-                    <SLASettingsPage />
-                  </RoleProtectedRoute>
-                }
-              />
-              <Route
-                path="/dashboard/users"
-                element={
-                  <RoleProtectedRoute allowedRoles={['admin']}>
-                    <UserManagementPage />
-                  </RoleProtectedRoute>
-                }
-              />
-              <Route
-                path="/dashboard/analitik"
-                element={
-                  <RoleProtectedRoute allowedRoles={['admin']}>
-                    <AnalyticsPage />
-                  </RoleProtectedRoute>
-                }
-              />
-              <Route
-                path="/dashboard/audit-log"
-                element={
-                  <RoleProtectedRoute allowedRoles={['admin']}>
-                    <AuditLogPage />
-                  </RoleProtectedRoute>
-                }
-              />
-            </Routes>
-          </div>
-          <Footer />
-        </div>
+        <AppContent />
       </LenisGsapProvider>
     </BrowserRouter>
   );

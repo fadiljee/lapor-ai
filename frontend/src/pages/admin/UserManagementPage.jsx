@@ -92,7 +92,8 @@ export function UserManagementPage() {
     const roleTitles = {
       warga: 'Warga',
       petugas: 'Petugas',
-      admin: 'Admin'
+      dinas: 'Admin Dinas',
+      admin: 'Super Admin'
     };
     return roleTitles[role] || role;
   };
@@ -234,8 +235,9 @@ export function UserManagementPage() {
                     className="w-full px-3 py-2 border border-border rounded focus:border-accent outline-none bg-white text-sm"
                   >
                     <option value="warga">Warga</option>
-                    <option value="petugas">Petugas Triage</option>
-                    <option value="admin">Admin Instansi</option>
+                    <option value="petugas">Petugas Verifikasi</option>
+                    <option value="dinas">Admin Dinas Sektoral</option>
+                    <option value="admin">Super Admin Pusat</option>
                   </select>
                 </div>
                 <div>

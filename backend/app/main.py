@@ -54,8 +54,10 @@ def seed_initial_users():
     try:
         initial_users = [
             {"email": "warga@lapor.go.id", "nama": "Budi Warga", "role": "warga", "instansi": "Masyarakat"},
-            {"email": "petugas@lapor.go.id", "nama": "Budi Santoso", "role": "petugas", "instansi": "BPBD"},
-            {"email": "admin.pupr@lapor.go.id", "nama": "Budi Santoso", "role": "admin", "instansi": "Dinas Pekerjaan Umum dan Penataan Ruang (PUPR)"}
+            {"email": "petugas@lapor.go.id", "nama": "Budi Santoso", "role": "petugas", "instansi": "Verifikator Pusat"},
+            {"email": "admin@lapor.go.id", "nama": "Siti Rahma", "role": "admin", "instansi": "Kominfo (Pusat)"},
+            {"email": "dinas.pupr@lapor.go.id", "nama": "Agus PUPR", "role": "dinas", "instansi": "Dinas Pekerjaan Umum dan Penataan Ruang (PUPR)"},
+            {"email": "dinas.dlh@lapor.go.id", "nama": "Rini DLH", "role": "dinas", "instansi": "Dinas Lingkungan Hidup (DLH)"}
         ]
         
         for u in initial_users:

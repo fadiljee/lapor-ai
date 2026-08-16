@@ -33,8 +33,9 @@ export function Navbar() {
   const getRoleLabel = (role) => {
     const roleTitles = {
       warga: 'Warga Pelapor',
-      petugas: 'Petugas Triage',
-      admin: 'Admin Instansi'
+      petugas: 'Petugas Verifikasi',
+      dinas: 'Admin Dinas',
+      admin: 'Super Admin Pusat'
     };
     return roleTitles[role] || role;
   };
@@ -43,6 +44,7 @@ export function Navbar() {
     const roleRedirectMap = {
       warga: '/dashboard/warga',
       petugas: '/dashboard/antrean',
+      dinas: '/dashboard/tugas-dinas',
       admin: '/dashboard/routing'
     };
     return roleRedirectMap[userRole] || '/dashboard/antrean';

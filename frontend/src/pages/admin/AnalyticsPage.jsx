@@ -80,7 +80,7 @@ export function AnalyticsPage() {
               </h1>
             </div>
             <p className="text-xs text-text-secondary">
-              Statistik performa triage AI, kepatuhan SLA, dan distribusi laporan warga per dinas — data real-time dari database.
+              Statistik performa Klasifikasi AI, kepatuhan SLA, dan distribusi laporan warga per dinas — data real-time dari database.
             </p>
           </div>
           <button
@@ -115,7 +115,7 @@ export function AnalyticsPage() {
           <StatCard
             label="Kasus Kritis Aktif"
             value={loading ? '...' : kpi.critical_cases ?? 0}
-            sub="Triage Real-Time Notified"
+            sub="Verifikasi Real-Time Notified"
             accentClass="text-accent"
             leftBorder="border-l-4 border-l-accent"
           />

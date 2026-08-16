@@ -203,7 +203,7 @@ export function DashboardPetugasPage() {
           <div className="flex items-center gap-2">
             <ListFilter className="w-5 h-5 text-primary" />
             <h1 className="font-serif font-bold text-lg text-text-primary">
-              Antrean Triage Pengaduan Warga
+              Antrean Verifikasi Pengaduan Warga
             </h1>
           </div>
 

@@ -10,7 +10,7 @@ class User(Base):
     nama = Column(String, nullable=True)
     email = Column(String, unique=True, index=True, nullable=False)
     hashed_password = Column(String, nullable=False)
-    role = Column(String, default="warga") # warga, petugas, admin
+    role = Column(String, default="warga") # warga, petugas, dinas, admin
     instansi = Column(String, nullable=True)
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
 
