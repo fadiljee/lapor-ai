@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Sidebar } from '../../components/dashboard/Sidebar';
 import { AIJustificationCard } from '../../components/dashboard/AIJustificationCard';
 import { UrgencyBadge } from '../../components/common/UrgencyBadge';
+import { SearchableSelect } from '../../components/common/SearchableSelect';
 import { api } from '../../services/api';
 import { ListFilter, Search, CheckCircle2, Edit3, XCircle, Clock, MapPin, Building, RefreshCw, AlertCircle, CheckCircle, Image, Paperclip, ExternalLink } from 'lucide-react';
 
@@ -33,6 +34,8 @@ export function DashboardPetugasPage() {
     catatan: ''
   });
 
+  const [instansiOptions, setInstansiOptions] = useState([]);
+
   const loadReports = async () => {
     setLoading(true);
     try {
@@ -42,7 +45,6 @@ export function DashboardPetugasPage() {
       });
       setReports(data);
       if (data.length > 0) {
-        
         const found = data.find((r) => r.id === selectedReport?.id);
         setSelectedReport(found || data[0]);
       } else {
@@ -55,8 +57,23 @@ export function DashboardPetugasPage() {
     }
   };
 
+  const loadInstansi = async () => {
+    try {
+      const res = await api.getInstansi();
+      const options = (res || []).map(i => ({ value: i.nama, label: i.nama }));
+      setInstansiOptions([
+        { value: 'Disposisi Manual (Antrean Admin)', label: 'Disposisi Manual (Antrean Admin)' },
+        ...options
+      ]);
+    } catch (err) {
+      console.error('Error loading instansi:', err);
+      setInstansiOptions([{ value: 'Disposisi Manual (Antrean Admin)', label: 'Disposisi Manual (Antrean Admin)' }]);
+    }
+  };
+
   useEffect(() => {
     loadReports();
+    loadInstansi();
   }, [urgencyFilter]);
 
   
@@ -490,12 +507,11 @@ export function DashboardPetugasPage() {
                   <label className="block text-xs font-bold text-text-primary uppercase tracking-wider mb-1">
                     Dinas Tujuan Disposisi
                   </label>
-                  <input
-                    type="text"
+                  <SearchableSelect
+                    options={instansiOptions}
                     value={editForm.dinas_tujuan}
-                    onChange={(e) => setEditForm({ ...editForm, dinas_tujuan: e.target.value })}
-                    className="w-full bg-bg-base border border-border rounded px-3 py-2 text-xs text-text-primary"
-                    placeholder="Contoh: Dinas PUPR"
+                    onChange={(val) => setEditForm({ ...editForm, dinas_tujuan: val })}
+                    placeholder="Pilih Dinas Tujuan..."
                   />
                 </div>
 
