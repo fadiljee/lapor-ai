@@ -17,31 +17,18 @@ export function Footer() {
         </div>
 
         <div className="flex gap-16">
-          {/* Lembaga Terkait */}
-          <div>
-            <h4 className="font-mono-ticket font-bold text-white text-xs uppercase tracking-wider mb-4">Lembaga Terkait</h4>
-            <ul className="space-y-2.5 text-border">
-              <li><Link to="#" className="hover:text-white transition-colors">Kementerian PANRB</Link></li>
-              <li><Link to="#" className="hover:text-white transition-colors">Kantor Staf Presiden</Link></li>
-              <li><Link to="#" className="hover:text-white transition-colors">Ombudsman RI</Link></li>
-            </ul>
-          </div>
-
           {/* Dukungan */}
           <div>
             <h4 className="font-mono-ticket font-bold text-white text-xs uppercase tracking-wider mb-4">Dukungan</h4>
             <ul className="space-y-2.5 text-border">
-              <li><Link to="#" className="hover:text-white transition-colors">Panduan Warga</Link></li>
-              <li><Link to="#" className="hover:text-white transition-colors">Keamanan Data</Link></li>
-              <li><Link to="#" className="hover:text-white transition-colors">Hubungi Kami</Link></li>
+              <li><Link to="/hubungi-kami" className="hover:text-white transition-colors">Hubungi Kami</Link></li>
             </ul>
           </div>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 mt-12 border-t border-border/10 flex flex-col sm:flex-row items-center justify-between text-[11px] text-text-secondary">
-        <div className="font-mono-ticket tracking-wider uppercase">LAPOR-AI COMPLIANT · © 2026 REPUBLIK INDONESIA</div>
-        <div className="mt-2 sm:mt-0">Sistem ini diawasi oleh petugas dinas dan mematuhi regulasi perlindungan data pribadi.</div>
+        <div className="font-mono-ticket tracking-wider uppercase">LAPOR-AI · © 2026 </div>
       </div>
     </footer>
   );

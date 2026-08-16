@@ -11,6 +11,7 @@ import { EmailVerificationPage } from './pages/warga/EmailVerificationPage';
 import { ReportSuccessPage } from './pages/warga/ReportSuccessPage';
 import { TrackReportPage } from './pages/warga/TrackReportPage';
 import { AboutLaporAiPage } from './pages/warga/AboutLaporAiPage';
+import { ContactPage } from './pages/warga/ContactPage';
 
 import { LoginPage } from './pages/auth/LoginPage';
 import { DashboardIndex } from './pages/dashboard/DashboardIndex';
@@ -58,6 +59,7 @@ export default function App() {
               <Route path="/verifikasi-email" element={<EmailVerificationPage />} />
               <Route path="/lapor/berhasil" element={<ReportSuccessPage />} />
               <Route path="/tentang-lapor-ai" element={<AboutLaporAiPage />} />
+              <Route path="/hubungi-kami" element={<ContactPage />} />
               <Route path="/masuk" element={<LoginPage />} />
 
               <Route
