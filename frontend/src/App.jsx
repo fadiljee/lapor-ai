@@ -141,7 +141,7 @@ function AppContent() {
             }
           />
           <Route
-            path="/dashboard/analitik"
+            path="/dashboard/admin"
             element={
               <RoleProtectedRoute allowedRoles={['admin']}>
                 <AnalyticsPage />

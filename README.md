@@ -60,8 +60,10 @@ Project ini dikembangkan sebagai prototipe solusi untuk **FTI FEST 2026** dengan
 ## 📊 Admin Portal
 - 📈 **Grafik Tren Laporan Harian**: Visualisasi interaktif volume harian laporan pengaduan masuk dan rasio pengaduan berurgensi Kritis.
 - 🗺️ **Peta Sebaran Lokasi Spasial (OpenStreetMap & Leaflet)**: Peta geospasial titik lokasi pengaduan warga dengan indikator warna level urgensi.
-- 📈 **Dashboard Analitik Eksekutif**: Visualisasi KPI agregat real-time dari PostgreSQL (rasio urgensi, akurasi *human agreement*, distribusi dinas).
+- 📈 **Dashboard **: Visualisasi KPI agregat real-time dari PostgreSQL (rasio urgensi, akurasi *human agreement*, distribusi dinas).
 - ⏱️ **Manajemen SLA**: Matriks target waktu respons pertama dan penyelesaian berdasarkan level urgensi.
+- 🏢 **Manajemen Instansi**: Modul CRUD untuk mengelola daftar instansi atau dinas teknis secara dinamis yang menjadi tujuan disposisi pengaduan.
+- 👥 **Manajemen Pengguna**: Pengelolaan hak akses multi-peran (Super Admin, Petugas Verifikator, Admin Dinas).
 
 ---
 
@@ -125,9 +127,9 @@ Project ini dikembangkan sebagai prototipe solusi untuk **FTI FEST 2026** dengan
 lapor-ai/
 ├── backend/
 │   ├── app/
-│   │   ├── api/v1/          # Endpoint API (auth, report, dashboard)
+│   │   ├── api/v1/          # Endpoint API (auth, report, dashboard, instansi)
 │   │   ├── core/            # Config, database setup, security
-│   │   ├── models/          # SQLAlchemy ORM models (Report, User, AuditLog, EmailVerification)
+│   │   ├── models/          # SQLAlchemy ORM models (Report, User, AuditLog, EmailVerification, Instansi)
 │   │   ├── schemas/         # Pydantic validation schemas
 │   │   └── services/        # Business logic (llm_orchestrator, email_service, pii_masking, etc.)
 │   ├── uploads/             # Berkas lampiran foto/PDF warga (Diabaikan Git)
@@ -138,7 +140,7 @@ lapor-ai/
 ├── frontend/
 │   ├── src/
 │   │   ├── components/      # UI components (ReportTrendChart, ReportDistributionMap, TicketStub, AIJustificationCard)
-│   │   ├── pages/           # Pages (HomePage, SubmitReport, TrackReport, DashboardPetugas, Analytics)
+│   │   ├── pages/           # Pages (HomePage, SubmitReport, TrackReport, DashboardPetugas, Analytics, InstansiManagement)
 │   │   ├── providers/       # LenisGsapProvider (Smooth Scroll & Reveal Animations)
 │   │   └── services/        # API client service layer (api.js)
 │   ├── package.json
@@ -260,7 +262,13 @@ Tersedia akun default untuk pengujian dashboard berdasarkan peran (Password defa
 | **Petugas Verifikasi** | `petugas@lapor.go.id` | Budi Santoso | Antrean Verifikasi Pengaduan |
 | **Admin Dinas PUPR** | `dinas.pupr@lapor.go.id` | Agus PUPR | Daftar Tugas Dinas (Sektoral) |
 | **Admin Dinas DLH** | `dinas.dlh@lapor.go.id` | Rini DLH | Daftar Tugas Dinas (Sektoral) |
-| **Super Admin Pusat** | `admin@lapor.go.id` | Siti Rahma | Routing, Manajemen User, SLA, Audit Log, Analitik |
+| **Admin Dinas Dinkes** | `dinas.dinkes@lapor.go.id` | Dr. Sarah Dinkes | Daftar Tugas Dinas (Sektoral) |
+| **Admin Dinas Disdukcapil** | `dinas.disdukcapil@lapor.go.id` | Andi Disdukcapil | Daftar Tugas Dinas (Sektoral) |
+| **Admin Dinas Dishub** | `dinas.dishub@lapor.go.id` | Tito Dishub | Daftar Tugas Dinas (Sektoral) |
+| **Admin Dinas Dinsos** | `dinas.dinsos@lapor.go.id` | Wati Dinsos | Daftar Tugas Dinas (Sektoral) |
+| **Admin Satpol PP** | `dinas.satpolpp@lapor.go.id` | Bambang Satpol | Daftar Tugas Dinas (Sektoral) |
+| **Admin BPBD** | `dinas.bpbd@lapor.go.id` | Bima BPBD | Daftar Tugas Dinas (Sektoral) |
+| **Super Admin Pusat** | `admin@lapor.go.id` | Siti Rahma | Routing, Manajemen Instansi, User, SLA, Audit, Analitik |
 
 ---
 
