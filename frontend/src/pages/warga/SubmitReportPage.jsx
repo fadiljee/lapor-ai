@@ -187,7 +187,7 @@ export function SubmitReportPage() {
               Formulir Pengaduan Warga
             </h1>
             <p className="text-xs text-text-secondary">
-              Isi rincian masalah Anda. Laporan akan dianalisis secara otomatis oleh AI Triage untuk menentukan tingkat urgensi.
+              Isi rincian masalah Anda. Laporan akan dianalisis secara otomatis oleh AI Klasifikasi untuk menentukan tingkat urgensi.
             </p>
           </div>
 
@@ -433,7 +433,7 @@ export function SubmitReportPage() {
                 <div className="bg-slate-100 border border-border rounded-lg p-3 text-xs text-text-secondary flex items-start gap-2">
                   <Bot className="w-4 h-4 text-primary shrink-0 mt-0.5" />
                   <p>
-                    Setelah dikirim, AI Triage akan menganalisis urgensi (<span className="font-bold">Kritis/Tinggi/Sedang/Rendah</span>) &amp; merekomendasikan dinas tujuan secara otomatis.
+                    Setelah dikirim, AI Klasifikasi akan menganalisis urgensi (<span className="font-bold">Kritis/Tinggi/Sedang/Rendah</span>) &amp; merekomendasikan dinas tujuan secara otomatis.
                   </p>
                 </div>
               </div>
@@ -470,7 +470,7 @@ export function SubmitReportPage() {
                   {loading ? (
                     <>
                       <Loader2 className="w-4 h-4 animate-spin" />
-                      Memproses AI Triage...
+                      Memproses AI Klasifikasi...
                     </>
                   ) : (
                     <>

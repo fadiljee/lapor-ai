@@ -31,7 +31,7 @@ const FAQ_ITEMS = [
   },
   {
     q: 'Berapa lama laporan saya akan diproses?',
-    a: 'Triage AI berlangsung dalam hitungan detik setelah pengiriman. Verifikasi petugas ditargetkan dalam 3 hari kerja, tindak lanjut dinas dalam 5 hari kerja, dan tanggapan resmi maksimal 10 hari kerja — sesuai target standar pelayanan publik.'
+    a: 'Klasifikasi AI berlangsung dalam hitungan detik setelah pengiriman. Verifikasi petugas ditargetkan dalam 3 hari kerja, tindak lanjut dinas dalam 5 hari kerja, dan tanggapan resmi maksimal 10 hari kerja — sesuai target standar pelayanan publik.'
   },
 ];
 

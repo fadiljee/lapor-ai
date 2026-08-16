@@ -12,7 +12,7 @@ export function LoginPage() {
 
   const demoAccounts = [
     { role: 'Warga Pelapor', email: 'warga@lapor.go.id', nama: 'Budi Warga' },
-    { role: 'Petugas Triage (Verifikator)', email: 'petugas@lapor.go.id', nama: 'Budi Santoso' },
+    { role: 'Petugas Verifikasi (Verifikator)', email: 'petugas@lapor.go.id', nama: 'Budi Santoso' },
     { role: 'Admin Instansi (PUPR)', email: 'admin.pupr@lapor.go.id', nama: 'Budi Santoso' }
   ];
 
@@ -58,14 +58,14 @@ export function LoginPage() {
           Masuk Akun LAPOR-AI
         </h1>
         <p className="text-xs text-text-secondary text-center mb-6">
-          Akses portal sesuai peran Anda: Warga Pelapor, Petugas Triage, atau Admin Instansi.
+          Akses portal LAPOR-AI untuk pengaduan publik.
         </p>
 
         {/* Quick Demo Account Selector */}
         <div className="bg-slate-50 border border-border p-3.5 rounded mb-6 text-xs">
           <div className="font-bold text-primary mb-1 flex items-center gap-1">
             <UserCheck className="w-4 h-4" />
-            <span>Pilih Akun Demo (5 Role):</span>
+            <span>Pilih Akun Demo:</span>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 mt-2">
             {demoAccounts.map((acc) => (

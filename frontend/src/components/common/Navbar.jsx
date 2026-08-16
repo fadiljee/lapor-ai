@@ -33,7 +33,7 @@ export function Navbar() {
   const getRoleLabel = (role) => {
     const roleTitles = {
       warga: 'Warga Pelapor',
-      petugas: 'Petugas Triage',
+      petugas: 'Petugas Verifikasi',
       admin: 'Admin Instansi'
     };
     return roleTitles[role] || role;

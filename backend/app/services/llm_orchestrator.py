@@ -4,7 +4,7 @@ import httpx
 from typing import Dict, Any, Optional
 from app.core.config import settings
 
-SYSTEM_PROMPT = """Anda adalah asisten triage untuk sistem pengaduan warga LAPOR-AI.
+SYSTEM_PROMPT = """Anda adalah asisten verifikasi untuk sistem pengaduan warga LAPOR-AI.
 
 ATURAN DASAR & GUARDRAILS:
 1. Tugas Anda HANYA: (a) mengklasifikasikan kategori laporan, (b) menentukan skor urgensi, (c) mengekstrak entitas, (d) membuat ringkasan singkat.

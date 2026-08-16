@@ -23,15 +23,12 @@ export function Sidebar() {
 
   // Role-specific navigation items definition (Strict isolation per role)
   const allNavItems = [
-    // 1. Warga Pelapor
     { path: '/dashboard/warga', label: 'Ringkasan Laporan Saya', icon: Home, roles: ['warga'] },
-    { path: '/lapor', label: 'Ajukan Laporan Pengaduan', icon: FilePlus, roles: ['warga'] },
-    { path: '/lacak', label: 'Lacak Tiket Laporan', icon: Search, roles: ['warga'] },
+    { path: '/dashboard/lapor', label: 'Ajukan Laporan Pengaduan', icon: FilePlus, roles: ['warga'] },
+    { path: '/dashboard/lacak', label: 'Lacak Tiket Laporan', icon: Search, roles: ['warga'] },
 
-    // 2. Petugas Triage (Verifikator)
-    { path: '/dashboard/antrean', label: 'Antrean Triage AI', icon: ListFilter, roles: ['petugas'] },
+    { path: '/dashboard/antrean', label: 'Antrean Verifikasi AI', icon: ListFilter, roles: ['petugas'] },
     
-    // 3. Admin Instansi/Dinas
     { path: '/dashboard/tugas-dinas', label: 'Daftar Tugas Dinas', icon: Inbox, roles: ['admin'] },
     { path: '/dashboard/routing', label: 'Routing Unit Kerja / Dinas', icon: MapPin, roles: ['admin'] },
     { path: '/dashboard/sla', label: 'Manajemen SLA Operasional', icon: Clock, roles: ['admin'] },
@@ -40,12 +37,11 @@ export function Sidebar() {
     { path: '/dashboard/audit-log', label: 'Log Transparansi Audit AI', icon: ShieldAlert, roles: ['admin'] },
   ];
 
-  // Filter items matching current user's role
   const allowedNavItems = allNavItems.filter((item) => item.roles.includes(role));
 
   const roleTitles = {
     warga: 'Warga Pelapor',
-    petugas: 'Petugas Triage (Verifikator)',
+    petugas: 'Petugas Verifikasi (Verifikator)',
     admin: 'Admin Instansi / Dinas'
   };
 

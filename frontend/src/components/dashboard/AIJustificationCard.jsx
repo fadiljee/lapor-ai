@@ -17,7 +17,7 @@ export function AIJustificationCard({ report }) {
           </div>
           <div>
             <h3 className="text-sm font-bold text-text-primary flex items-center gap-2">
-              Panel Analisis AI Triage & Safeguard
+              Panel Analisis AI Klasifikasi & Safeguard
             </h3>
             <p className="text-xs text-text-secondary">
               Multi-Provider Engine · Confidence: {Math.round((report.confidence_score || 0.92) * 100)}%
@@ -76,7 +76,7 @@ export function AIJustificationCard({ report }) {
         >
           <span className="flex items-center gap-1.5">
             <Sparkles className="w-3.5 h-3.5" />
-            Justifikasi / Reasoning LLM Triage (Klik untuk {isOpen ? 'menyembunyikan' : 'membuka'})
+            Justifikasi / Reasoning LLM Verifikasi (Klik untuk {isOpen ? 'menyembunyikan' : 'membuka'})
           </span>
           {isOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
         </button>

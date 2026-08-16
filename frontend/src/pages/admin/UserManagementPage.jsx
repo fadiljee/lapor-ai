@@ -234,7 +234,7 @@ export function UserManagementPage() {
                     className="w-full px-3 py-2 border border-border rounded focus:border-accent outline-none bg-white text-sm"
                   >
                     <option value="warga">Warga</option>
-                    <option value="petugas">Petugas Triage</option>
+                    <option value="petugas">Petugas Verifikasi</option>
                     <option value="admin">Admin Instansi</option>
                   </select>
                 </div>

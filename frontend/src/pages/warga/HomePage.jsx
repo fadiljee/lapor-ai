@@ -9,7 +9,7 @@ import { api } from '../../services/api';
 /* ── Resi horizontal — alur laporan 5 tahap ───────────────────── */
 const FLOW_STEPS = [
   { num: '01', label: 'Tulis Laporan', sub: 'Bahasa Indonesia atau Bahasa Bangka' },
-  { num: '02', label: 'Triage AI', sub: '< 10 detik skoring urgensi' },
+  { num: '02', label: 'Klasifikasi AI', sub: '< 10 detik skoring urgensi' },
   { num: '03', label: 'Tinjauan Petugas', sub: '3 hari verifikasi' },
   { num: '04', label: 'Tindak Lanjut', sub: '5 hari penanganan dinas' },
   { num: '05', label: 'Tanggapan Resmi', sub: '10 hari tanggapan maksimal' },
@@ -108,7 +108,7 @@ export function HomePage() {
           {
             icon: <Zap className="w-5 h-5" />,
             iconBg: 'bg-red-50 text-accent',
-            title: 'Triage Urgensi Kritis',
+            title: 'Klasifikasi Urgensi Kritis',
             desc: 'Laporan kritis (kebakaran, kekerasan berlangsung) langsung dikirim ke petugas piket tanpa menunggu antrean.',
             badge: 'Presisi target >90% (G3)',
           },

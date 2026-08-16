@@ -142,7 +142,7 @@ def create_report(
     
     audit = AuditLog(
         report_id=ticket_id,
-        actor="AI Triage Engine",
+        actor="AI Klasifikasi Engine",
         action="CREATE_AND_TRIAGE",
         details=f"Klasifikasi: {new_report.kategori}, Urgensi: {new_report.skor_urgensi}, Status: {new_report.status}",
         model_version=ai_res.get("provider", "Google Gemini API")
@@ -246,7 +246,7 @@ def override_report(
         kategori_baru=report.kategori,
         urgensi_lama=urgensi_lama,
         urgensi_baru=report.skor_urgensi,
-        catatan=req.catatan or "Dikoreksi oleh Petugas Triage"
+        catatan=req.catatan or "Dikoreksi oleh Petugas Verifikasi"
     )
     db.add(feedback)
     

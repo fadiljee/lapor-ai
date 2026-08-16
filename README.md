@@ -1,5 +1,5 @@
 # 🚨 LAPOR-AI
-### Sistem Pengaduan Warga Terintegrasi LLM untuk Triage Urgensi & Routing Penanganan
+### Sistem Pengaduan Warga Terintegrasi LLM untuk Klasifikasi Urgensi & Routing Penanganan
 
 ![Python](https://img.shields.io/badge/Python-3.11%2B-blue)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.115-green)
@@ -14,12 +14,12 @@
 
 ## 📌 Deskripsi
 
-**LAPOR-AI** merupakan sistem pengaduan masyarakat tingkat lanjut berbasis Artificial Intelligence yang memanfaatkan **Large Language Model (Google Gemini API)** untuk membantu proses **triage laporan secara otomatis**.
+**LAPOR-AI** merupakan sistem pengaduan masyarakat tingkat lanjut berbasis Artificial Intelligence yang memanfaatkan **Large Language Model (Google Gemini API)** untuk membantu proses **verifikasi laporan secara otomatis**.
 
 Sistem ini bertindak sebagai platform pengaduan masyarakat pintar berbasis AI dengan kemampuan:
 
 - 🧠 **Klasifikasi Kategori Multi-Domain**: Mengkategorikan pengaduan ke 8 domain dinas teknis (Infrastruktur, Keamanan/Bencana, Layanan Publik, Lingkungan, Kesehatan, Pendidikan, Ketertiban Umum, Lainnya).
-- 🚨 **Triage Urgensi Multi-Tier**: Menentukan skor urgensi (*Kritis*, *Tinggi*, *Sedang*, *Rendah*) secara real-time. Laporan darurat otomatis diangkat ke puncak antrean.
+- 🚨 **Klasifikasi Urgensi Multi-Tier**: Menentukan skor urgensi (*Kritis*, *Tinggi*, *Sedang*, *Rendah*) secara real-time. Laporan darurat otomatis diangkat ke puncak antrean.
 - 📍 **Ekstraksi Entitas & Lokasi**: Mengidentifikasi entitas kunci (lokasi kejadian, pihak terlibat, waktu).
 - 📄 **Ringkasan Otomatis (Executive Summary)**: Menghasilkan ringkasan narasional singkat untuk percepatan baca petugas.
 - 🔁 **Routing Otomatis & Deterministik**: Menentukan rekomendasi awal dinas/instansi tujuan secara presisi.
@@ -50,8 +50,8 @@ Project ini dikembangkan sebagai prototipe solusi untuk **FTI FEST 2026** dengan
 - 🔄 **Multi-Tier Model Fallback**: Skema failover dari Primary Model (`gemini-3.6-flash`) ke Fallback Model (`gemini-2.0-flash`) hingga Local Rule-Based Engine jika terjadi gangguan koneksi.
 - 🔎 **Deteksi Laporan Ganda (Duplicate Detection)**: Hashing teks fingerprint untuk menandai laporan serupa yang berpotensi membanjiri antrean.
 
-## 👨‍💼 Petugas & Staff Dashboard (Triage AI)
-- 📋 **Antrean Triage Berbasis Urgensi**: Tampilan master-detail yang presisi dengan urutan prioritas otomatis (Kritis terlebih dahulu).
+## 👨‍💼 Petugas & Staff Dashboard (Klasifikasi AI)
+- 📋 **Antrean Verifikasi Berbasis Urgensi**: Tampilan master-detail yang presisi dengan urutan prioritas otomatis (Kritis terlebih dahulu).
 - 🔍 **Pencarian Real-Time Multi-Kolom**: Pencarian instan berdasarkan nomor tiket, deskripsi, kategori, dinas, dan lokasi.
 - 🖼️ **Preview Lampiran Bukti Foto**: Penayangan foto/dokumen bukti terlampir langsung pada panel rincian pengaduan.
 - ✏️ **Koreksi Manusia (Human Override)**: Hak akses petugas untuk menyetujui rekomendasi AI, mengoreksi kategori/urgensi, atau menandai laporan tidak relevan.
@@ -115,7 +115,7 @@ Project ini dikembangkan sebagai prototipe solusi untuk **FTI FEST 2026** dengan
 ### Large Language Model (AI)
 - **Primary LLM**: Google Gemini API (`gemini-3.6-flash`)
 - **Fallback LLM**: Google Gemini API (`gemini-2.0-flash`)
-- **Emergency Local Engine**: Rule-based Keyword & Heuristic Triage Engine
+- **Emergency Local Engine**: Rule-based Keyword & Heuristic Mesin Klasifikasi
 
 ---
 
@@ -257,7 +257,7 @@ Tersedia akun default untuk pengujian dashboard berdasarkan peran (Password defa
 | Peran / Role | Email | Nama Demo | Akses Halaman |
 |---|---|---|---|
 | **Warga Pelapor** | `warga@lapor.go.id` | Budi Warga | Portal Warga & Form Lapor |
-| **Petugas Triage** | `petugas@lapor.go.id` | Budi Santoso | Antrean Triage Pengaduan |
+| **Petugas Verifikasi** | `petugas@lapor.go.id` | Budi Santoso | Antrean Verifikasi Pengaduan |
 | **Admin Instansi** | `admin.pupr@lapor.go.id` | Budi Santoso | Routing Laporan, User Management, Log Audit, Analitik |
 
 ---
@@ -266,7 +266,7 @@ Tersedia akun default untuk pengujian dashboard berdasarkan peran (Password defa
 
 | Metrik | Target | Status Realisasi |
 |---|---|---|
-| **Waktu Triage AI (G1)** | < 10 Detik | ✅ ~1.5–3.8 Detik (Gemini 3.6 Flash) |
+| **Waktu Klasifikasi AI (G1)** | < 10 Detik | ✅ ~1.5–3.8 Detik (Gemini 3.6 Flash) |
 | **Presisi Klasifikasi Kritis (G3)** | > 90% | ✅ Tested dengan Bangka Dialect & Indonesian |
 | **Pengamanan PII (G4)** | 100% Text Masked | ✅ Regular Expression & Pattern Masking |
 | **Masa Berlaku OTP** | 15 Menit | ✅ Resend API Email Integration (`lapor-ai.web.id`) |

@@ -28,7 +28,7 @@ export function ReportSuccessPage() {
           Pengaduan Berhasil Diterima
         </h1>
         <p className="text-xs text-text-secondary max-w-sm mx-auto">
-          Laporan Anda telah masuk ke sistem LAPOR-AI dan sedang diproses melalui pipeline triage otomatis. Simpan tanda terima di bawah ini.
+          Laporan Anda telah masuk ke sistem LAPOR-AI dan sedang diproses melalui pipeline verifikasi otomatis. Simpan tanda terima di bawah ini.
         </p>
       </div>
 

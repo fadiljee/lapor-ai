@@ -33,7 +33,7 @@ export function DashboardWargaPage() {
               Selamat datang, {userName}!
             </h1>
             <p className="text-xs text-slate-300 max-w-2xl leading-relaxed">
-              Platform layanan pengaduan publik berbasis AI Triage. Sampaikan permasalahan infrastruktur, pelayanan publik, lingkungan, hingga keamanan wilayah Anda secara mudah dan transparan.
+              Platform layanan pengaduan publik berbasis AI Klasifikasi. Sampaikan permasalahan infrastruktur, pelayanan publik, lingkungan, hingga keamanan wilayah Anda secara mudah dan transparan.
             </p>
           </div>
         </div>
@@ -145,7 +145,7 @@ export function DashboardWargaPage() {
             <div className="bg-bg-base p-4 rounded border border-border space-y-1.5">
               <div className="font-bold text-primary flex items-center gap-1.5">
                 <Bot className="w-4 h-4" />
-                <span>1. Masking PII &amp; AI Triage</span>
+                <span>1. Masking PII &amp; AI Klasifikasi</span>
               </div>
               <p className="text-text-secondary">
                 Identitas pribadi Anda disamarkan secara otomatis. AI mengekstrak kategori, lokasi, dan menentukan tingkat urgensi awal.
@@ -155,7 +155,7 @@ export function DashboardWargaPage() {
             <div className="bg-bg-base p-4 rounded border border-border space-y-1.5">
               <div className="font-bold text-primary flex items-center gap-1.5">
                 <ShieldCheck className="w-4 h-4" />
-                <span>2. Validasi Petugas Triage</span>
+                <span>2. Validasi Petugas Verifikasi</span>
               </div>
               <p className="text-text-secondary">
                 Petugas verifikator meninjau hasil evaluasi AI untuk memastikan keakuratan klasifikasi sebelum diteruskan ke dinas teknis.
