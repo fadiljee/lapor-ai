@@ -56,7 +56,7 @@ export function Sidebar() {
 
   return (
     <>
-      <aside className="w-full md:w-[220px] bg-white border-r border-border shrink-0 min-h-[calc(100vh-4rem)] p-4 flex flex-col justify-between">
+      <aside className="w-full md:w-[220px] bg-white border-r border-border shrink-0 md:h-[calc(100vh-4rem)] md:sticky md:top-16 overflow-y-auto p-4 flex flex-col justify-between">
         <div>
           {/* User Info Card */}
           <div className="bg-black/5 p-3.5 rounded border border-border mb-6 flex items-center gap-3">
