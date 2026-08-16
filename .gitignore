@@ -40,7 +40,6 @@ backend/uploads/
 *.pdf
 *.jpg
 *.jpeg
-*.png
 *.gif
 *.webp
 
