@@ -20,8 +20,11 @@ export function UserManagementPage() {
     password: ''
   });
   
+  const [instansiList, setInstansiList] = useState([]);
+
   useEffect(() => {
     fetchUsers();
+    fetchInstansi();
   }, []);
 
   const fetchUsers = async () => {
@@ -34,6 +37,15 @@ export function UserManagementPage() {
       setError(err.message || 'Gagal memuat data pengguna');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchInstansi = async () => {
+    try {
+      const res = await api.get('/instansi');
+      setInstansiList(res.data);
+    } catch (err) {
+      console.error("Gagal memuat daftar instansi", err);
     }
   };
 
@@ -242,13 +254,20 @@ export function UserManagementPage() {
                 </div>
                 <div>
                   <label className="block text-xs font-bold text-text-secondary mb-1">Instansi (Opsional)</label>
-                  <input 
-                    type="text"
+                  <select 
                     value={formData.instansi}
                     onChange={(e) => setFormData({...formData, instansi: e.target.value})}
-                    className="w-full px-3 py-2 border border-border rounded focus:border-accent outline-none text-sm"
-                    placeholder="Contoh: BPBD"
-                  />
+                    className="w-full px-3 py-2 border border-border rounded focus:border-accent outline-none bg-white text-sm"
+                    disabled={formData.role !== 'dinas'}
+                  >
+                    <option value="">-- Pilih Instansi --</option>
+                    {instansiList.map(inst => (
+                      <option key={inst.id} value={inst.nama}>{inst.nama}</option>
+                    ))}
+                    <option value="Masyarakat">Masyarakat (Warga)</option>
+                    <option value="Verifikator Pusat">Verifikator Pusat (Petugas)</option>
+                    <option value="Kominfo (Pusat)">Kominfo (Admin)</option>
+                  </select>
                 </div>
               </div>
 

@@ -14,6 +14,15 @@ class User(Base):
     instansi = Column(String, nullable=True)
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
 
+class Instansi(Base):
+    __tablename__ = "instansi"
+
+    id = Column(Integer, primary_key=True, index=True)
+    nama = Column(String, unique=True, index=True, nullable=False)
+    deskripsi = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+
+
 class EmailVerification(Base):
     __tablename__ = "email_verifications"
 
