@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FilePlus, Search, LogIn, LayoutDashboard, Menu, X, Info, LogOut, Shield } from 'lucide-react';
 import { LogoutModal } from './LogoutModal';
 
-import logoWhite from '../../assets/lapor-ai-white.png';
+import logo from '../../assets/lapor_ai_logo.jpg';
 
 export function Navbar() {
   const location = useLocation();
@@ -57,9 +57,7 @@ export function Navbar() {
 
           
           <Link to="/" className="flex items-center gap-2.5 group shrink-0">
-            <span className="bg-white/10 border border-white/25 text-white/90 text-[13px] font-sans font-semibold px-4 py-1 rounded tracking-widest uppercase">
-              LAPOR-AI
-            </span>
+            <img src={logo} alt="LAPOR-AI Logo" className="h-10 w-auto rounded-md object-contain" />
           </Link>
 
           
