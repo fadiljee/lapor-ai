@@ -60,7 +60,7 @@ export function LenisGsapProvider({ children }) {
 
       elements.forEach((el) => {
         
-        if (el.closest('header') || el.closest('aside') || el.closest('footer')) return;
+        if (el.closest('header') || el.closest('aside') || el.closest('footer') || el.closest('[data-gsap-ignore]') || el.hasAttribute('data-gsap-ignore')) return;
 
         gsap.fromTo(
           el,

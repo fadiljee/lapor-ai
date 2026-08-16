@@ -30,7 +30,7 @@ export function RoutingManagementPage() {
           </p>
         </div>
 
-        <div className="bg-white border border-border rounded-lg overflow-x-auto shadow-sm">
+        <div className="bg-white border border-border rounded-lg overflow-x-auto shadow-sm" data-lenis-prevent="true">
           <table className="w-full text-left border-collapse text-xs">
             <thead>
               <tr className="bg-primary text-white">

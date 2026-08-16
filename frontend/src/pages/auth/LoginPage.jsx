@@ -57,7 +57,7 @@ export function LoginPage() {
 
   return (
     <div className="max-w-md mx-auto px-4 py-12">
-      <div className="bg-white border border-border rounded-lg p-8 shadow-sm">
+      <div className="bg-white border border-border rounded-lg p-8 shadow-sm" data-gsap-ignore="true">
         <div className="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center mx-auto mb-4">
           <Shield className="w-6 h-6" />
         </div>
@@ -75,16 +75,16 @@ export function LoginPage() {
             <UserCheck className="w-4 h-4" />
             <span>Pilih Akun Demo:</span>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 mt-2 max-h-52 overflow-y-auto custom-scrollbar pr-1 content-start">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 mt-2 max-h-52 overflow-y-auto custom-scrollbar pr-1 content-start" data-lenis-prevent="true">
             {demoAccounts.map((acc) => (
               <button
                 key={acc.email}
                 type="button"
                 onClick={() => selectDemoAccount(acc)}
-                className={`text-left p-2 rounded border text-[11px] transition-colors min-h-[44px] flex-shrink-0 flex flex-col justify-center ${
+                className={`text-left p-2 rounded text-[11px] min-h-[44px] flex-shrink-0 flex flex-col justify-center ${
                   email === acc.email
-                    ? 'bg-primary text-white border-primary'
-                    : 'bg-white text-text-primary border-border hover:bg-black/5'
+                    ? 'bg-primary text-white ring-1 ring-primary'
+                    : 'bg-transparent text-text-primary ring-1 ring-border hover:bg-black/5'
                 }`}
               >
                 <div className="font-bold truncate w-full">{acc.role}</div>
