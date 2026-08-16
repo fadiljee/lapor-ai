@@ -24,6 +24,7 @@ import { UserManagementPage } from './pages/admin/UserManagementPage';
 import { AnalyticsPage } from './pages/admin/AnalyticsPage';
 import { AuditLogPage } from './pages/admin/AuditLogPage';
 import { InstansiManagementPage } from './pages/admin/InstansiManagementPage';
+import { NotFoundPage } from './pages/NotFoundPage';
 
 function RoleProtectedRoute({ allowedRoles, children }) {
   const token = localStorage.getItem('lapor_ai_token');
@@ -156,6 +157,7 @@ function AppContent() {
               </RoleProtectedRoute>
             }
           />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>
       {!isDashboard && <Footer />}
