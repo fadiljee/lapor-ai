@@ -7,7 +7,7 @@ from app.schemas.report import InstansiCreate, InstansiResponse
 
 router = APIRouter()
 
-@router.get("/", response_model=List[InstansiResponse])
+@router.get("", response_model=List[InstansiResponse])
 def get_instansi_list(db: Session = Depends(get_db)):
     instansis = db.query(Instansi).all()
     # Serialize to match InstansiResponse (especially datetime to str)
@@ -20,7 +20,7 @@ def get_instansi_list(db: Session = Depends(get_db)):
         } for i in instansis
     ]
 
-@router.post("/", response_model=InstansiResponse)
+@router.post("", response_model=InstansiResponse)
 def create_instansi(instansi: InstansiCreate, db: Session = Depends(get_db)):
     db_instansi = db.query(Instansi).filter(Instansi.nama == instansi.nama).first()
     if db_instansi:
