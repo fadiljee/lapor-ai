@@ -12,7 +12,6 @@ from app.api.v1 import users as users_router
 from app.models.report import User, AuditLog
 from app.services.auth_service import auth_service
 
-# Create DB Tables if not present
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
@@ -21,7 +20,6 @@ app = FastAPI(
     description="LAPOR-AI API — Sistem Pengaduan Warga Terintegrasi LLM"
 )
 
-# Enable CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -35,26 +33,22 @@ from fastapi.staticfiles import StaticFiles
 from slowapi.errors import RateLimitExceeded
 from app.core.rate_limiter import limiter, _rate_limit_exceeded_handler
 
-# Create uploads directory if not exists
 os.makedirs("uploads", exist_ok=True)
 
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
-# Register Routers
 app.include_router(report_router.router, prefix=settings.API_V1_STR)
 app.include_router(auth_router.router, prefix=settings.API_V1_STR)
 app.include_router(dashboard_router.router, prefix=settings.API_V1_STR)
 app.include_router(users_router.router, prefix=settings.API_V1_STR)
 
-# Serve uploaded attachments statically
 app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 
 @app.get("/health")
 def health_check():
     return {"status": "online", "system": settings.PROJECT_NAME, "version": settings.VERSION}
 
-# Seed Initial System Users into PostgreSQL Database
 def seed_initial_users():
     db: Session = SessionLocal()
     try:

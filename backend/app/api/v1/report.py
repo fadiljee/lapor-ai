@@ -57,10 +57,8 @@ def create_report(
     ticket_id = generate_ticket_id()
     target_email = (pelapor_email or email or "").strip()
     
-    # Tangani penyimpanan file lampiran fisik (jika ada)
     lampiran_path = None
     if lampiran and lampiran.filename:
-        # File Validation
         lampiran.file.seek(0, 2)
         file_size = lampiran.file.tell()
         lampiran.file.seek(0)
@@ -85,29 +83,23 @@ def create_report(
         with open(lampiran_path, "wb") as buffer:
             shutil.copyfileobj(lampiran.file, buffer)
     
-    # 1. PII Masking
     masked_desc = pii_masking_service.mask_text(deskripsi)
     
-    # 2. Text Fingerprint & Duplicate Detection
     fingerprint = duplicate_detection_service.generate_fingerprint(deskripsi)
     existing_duplicate = db.query(Report).filter(Report.text_fingerprint == fingerprint).first()
     is_duplicate = existing_duplicate is not None
     
-    # 3. Prompt Injection Guard & LLM Analysis
     wrapped_prompt = prompt_injection_guard.sanitize_and_wrap(masked_desc)
     ai_res = llm_orchestrator.analyze_report(wrapped_prompt, preset_type)
     
-    # 4. Department Lookup
     dinas = department_routing_service.get_department(ai_res.get("kategori", "Lainnya"))
     
-    # Status determination
     initial_status = "Pending Email Verification" if (not is_anonim and target_email) else "Terverifikasi AI"
     if is_duplicate:
         initial_status = "Perlu Verifikasi Manual"
         
     email_verified = is_anonim
     
-    # Create Report entity
     new_report = Report(
         id=ticket_id,
         pelapor_email=target_email if not is_anonim else None,
@@ -137,7 +129,6 @@ def create_report(
     db.commit()
     db.refresh(new_report)
     
-    # Create AI Analysis Log
     analysis_log = AIAnalysisLog(
         report_id=ticket_id,
         model_used=ai_res.get("provider", "Google Gemini API"),
@@ -149,7 +140,6 @@ def create_report(
     )
     db.add(analysis_log)
     
-    # Create Audit Log
     audit = AuditLog(
         report_id=ticket_id,
         actor="AI Triage Engine",
@@ -159,7 +149,6 @@ def create_report(
     )
     db.add(audit)
     
-    # If requires OTP verification
     if not is_anonim and target_email:
         otp_code = auth_service.generate_otp()
         verification = EmailVerification(
@@ -169,7 +158,6 @@ def create_report(
             status="pending"
         )
         db.add(verification)
-        # Send OTP email via Resend API (lapor-ai.web.id)
         try:
             email_service.send_otp_email(target_email, otp_code, new_report.id)
         except Exception as e:
