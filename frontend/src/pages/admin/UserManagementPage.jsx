@@ -172,7 +172,7 @@ export function UserManagementPage() {
                   <tr key={u.id} className="hover:bg-bg-base transition-colors">
                     <td className="p-3 font-semibold text-text-primary">{u.nama}</td>
                     <td className="p-3 text-text-secondary">{u.email}</td>
-                    <td className="p-3">
+                    <td className="p-3 whitespace-nowrap">
                       <span className="bg-accent/10 text-accent font-bold px-2 py-1 rounded text-xs">
                         {getRoleLabel(u.role)}
                       </span>

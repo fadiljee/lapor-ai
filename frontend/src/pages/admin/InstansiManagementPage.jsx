@@ -9,6 +9,7 @@ export function InstansiManagementPage() {
   const [error, setError] = useState(null);
   
   const [showModal, setShowModal] = useState(false);
+  const [editingId, setEditingId] = useState(null);
   
   const [formData, setFormData] = useState({
     nama: '',
@@ -33,7 +34,14 @@ export function InstansiManagementPage() {
   };
 
   const handleOpenAdd = () => {
+    setEditingId(null);
     setFormData({ nama: '', deskripsi: '' });
+    setShowModal(true);
+  };
+
+  const handleOpenEdit = (instansi) => {
+    setEditingId(instansi.id);
+    setFormData({ nama: instansi.nama, deskripsi: instansi.deskripsi || '' });
     setShowModal(true);
   };
 
@@ -51,7 +59,11 @@ export function InstansiManagementPage() {
     e.preventDefault();
     if (!formData.nama) return;
     try {
-      await api.createInstansi(formData);
+      if (editingId) {
+        await api.updateInstansi(editingId, formData);
+      } else {
+        await api.createInstansi(formData);
+      }
       setShowModal(false);
       fetchInstansi();
     } catch (err) {
@@ -121,6 +133,13 @@ export function InstansiManagementPage() {
                     <td className="p-3 text-text-secondary">{new Date(inst.created_at).toLocaleDateString('id-ID')}</td>
                     <td className="p-3 flex items-center justify-end gap-2">
                       <button 
+                        onClick={() => handleOpenEdit(inst)}
+                        className="p-1.5 text-blue-600 hover:bg-blue-50 rounded transition-colors"
+                        title="Edit Instansi"
+                      >
+                        <Edit className="w-4 h-4" />
+                      </button>
+                      <button 
                         onClick={() => handleDelete(inst.id)}
                         className="p-1.5 text-red-600 hover:bg-red-50 rounded transition-colors"
                         title="Hapus Instansi"
@@ -140,7 +159,7 @@ export function InstansiManagementPage() {
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
           <div className="bg-white rounded-lg shadow-xl w-full max-w-md overflow-hidden flex flex-col">
             <div className="flex items-center justify-between p-4 border-b border-border bg-primary text-white">
-              <h2 className="font-bold font-serif">Tambah Instansi Baru</h2>
+              <h2 className="font-bold font-serif">{editingId ? 'Edit Instansi' : 'Tambah Instansi Baru'}</h2>
               <button onClick={() => setShowModal(false)} className="hover:bg-primary-dark p-1 rounded">
                 <X className="w-5 h-5" />
               </button>
