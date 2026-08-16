@@ -17,20 +17,6 @@ services:
       timeout: 5s
       retries: 5
 
-  redis:
-    image: redis:7-alpine
-    container_name: lapor-ai-redis
-    restart: always
-    ports:
-      - "6379:6379"
-    volumes:
-      - redis_data:/data
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
   backend:
     build:
       context: ./backend
@@ -42,7 +28,6 @@ services:
     environment:
       - APP_BASE_URL=${APP_BASE_URL:-}
       - DATABASE_URL=postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-password}@postgres:5432/${POSTGRES_DB:-lapor_ai}
-      - REDIS_URL=redis://redis:6379/0
       - SECRET_KEY=${SECRET_KEY:-lapor-ai-super-secret-key-2026-fti-fest}
       - GEMINI_API_KEY=${GEMINI_API_KEY:-}
       - GEMINI_BASE_URL=${GEMINI_BASE_URL:-https://generativelanguage.googleapis.com/v1beta}
@@ -54,8 +39,6 @@ services:
       - backend_uploads:/app/uploads
     depends_on:
       postgres:
-        condition: service_healthy
-      redis:
         condition: service_healthy
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
@@ -83,8 +66,6 @@ services:
 
 volumes:
   postgres_data:
-    driver: local
-  redis_data:
     driver: local
   backend_uploads:
     driver: local
