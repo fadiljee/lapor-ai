@@ -59,7 +59,7 @@ function AppContent() {
       <Navbar />
       <div className="flex-1">
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<AboutLaporAiPage />} />
           <Route path="/verifikasi-email" element={<EmailVerificationPage />} />
           <Route path="/dashboard/lapor/berhasil" element={<ReportSuccessPage />} />
           <Route path="/tentang-lapor-ai" element={<AboutLaporAiPage />} />

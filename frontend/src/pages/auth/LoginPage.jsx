@@ -76,20 +76,20 @@ export function LoginPage() {
             <UserCheck className="w-4 h-4" />
             <span>Pilih Akun Demo:</span>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 mt-2 max-h-40 overflow-y-auto custom-scrollbar pr-1">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 mt-2 max-h-52 overflow-y-auto custom-scrollbar pr-1 content-start">
             {demoAccounts.map((acc) => (
               <button
                 key={acc.email}
                 type="button"
                 onClick={() => selectDemoAccount(acc)}
-                className={`text-left p-2 rounded border text-[11px] transition-colors ${
+                className={`text-left p-2 rounded border text-[11px] transition-colors min-h-[44px] flex-shrink-0 flex flex-col justify-center ${
                   email === acc.email
                     ? 'bg-primary text-white border-primary'
                     : 'bg-white text-text-primary border-border hover:bg-black/5'
                 }`}
               >
-                <div className="font-bold truncate">{acc.role}</div>
-                <div className="text-[10px] opacity-80 truncate">{acc.nama}</div>
+                <div className="font-bold truncate w-full">{acc.role}</div>
+                <div className="text-[10px] opacity-80 truncate w-full">{acc.nama}</div>
               </button>
             ))}
           </div>

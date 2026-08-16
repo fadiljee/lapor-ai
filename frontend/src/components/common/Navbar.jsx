@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { FilePlus, Search, LogIn, LayoutDashboard, Menu, X, Info, LogOut, Shield } from 'lucide-react';
+import { FilePlus, Search, LogIn, LayoutDashboard, Menu, X, Info, Phone, LogOut, Shield } from 'lucide-react';
 import { LogoutModal } from './LogoutModal';
 
 import logo from '../../assets/lapor-ai.png';
@@ -20,6 +20,7 @@ export function Navbar() {
 
   const navLinks = [
     { to: '/tentang-lapor-ai', icon: <Info className="w-4 h-4" />, label: 'Tentang LAPOR-AI' },
+    { to: '/hubungi-kami', icon: <Phone className="w-4 h-4" />, label: 'Hubungi Kami' },
   ];
 
   const handleLogoutConfirm = () => {
