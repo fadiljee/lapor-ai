@@ -54,7 +54,7 @@ export function AuditLogPage() {
   return (
     <div className="flex flex-col md:flex-row min-h-[calc(100vh-4rem)]">
       <Sidebar />
-      <main className="flex-1 p-4 sm:p-6 bg-bg-base">
+      <main className="flex-1 p-4 sm:p-6 bg-bg-base overflow-y-auto" data-lenis-prevent="true">
         
         <div className="bg-white border border-border p-6 rounded-lg mb-6 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
