@@ -26,7 +26,7 @@ export function AuditLogPage() {
     loadAuditLogs();
   }, []);
 
-  // Filter logs based on search term
+  
   const filteredLogs = logs.filter((log) => {
     if (!searchTerm.trim()) return true;
     const term = searchTerm.toLowerCase();
@@ -39,12 +39,12 @@ export function AuditLogPage() {
     );
   });
 
-  // Reset to page 1 when search or itemsPerPage changes
+  
   useEffect(() => {
     setCurrentPage(1);
   }, [searchTerm, itemsPerPage]);
 
-  // Pagination math
+  
   const totalItems = filteredLogs.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage) || 1;
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -55,7 +55,7 @@ export function AuditLogPage() {
     <div className="flex flex-col md:flex-row min-h-[calc(100vh-4rem)]">
       <Sidebar />
       <main className="flex-1 p-4 sm:p-6 bg-bg-base">
-        {/* Header */}
+        
         <div className="bg-white border border-border p-6 rounded-lg mb-6 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-1">
@@ -79,7 +79,7 @@ export function AuditLogPage() {
           </button>
         </div>
 
-        {/* Search & Filter Bar */}
+        
         <div className="bg-white border border-border rounded-lg p-4 mb-4 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
           <div className="relative w-full sm:w-80">
             <Search className="w-4 h-4 text-text-secondary absolute left-3 top-2.5" />
@@ -107,7 +107,7 @@ export function AuditLogPage() {
           </div>
         </div>
 
-        {/* Audit Log Table */}
+        
         <div className="bg-white border border-border rounded-lg overflow-hidden shadow-sm mb-4">
           <div data-lenis-prevent className="overflow-x-auto custom-scrollbar">
             <table className="w-full text-left border-collapse text-xs min-w-[700px]">
@@ -149,7 +149,7 @@ export function AuditLogPage() {
           </div>
         </div>
 
-        {/* Pagination Controls */}
+        
         {!loading && totalItems > 0 && (
           <div className="bg-white border border-border rounded-lg p-4 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
             <div className="text-text-secondary">

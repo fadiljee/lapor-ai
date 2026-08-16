@@ -1,6 +1,6 @@
 const API_BASE_URL = '/api/v1';
 
-// ─── Core fetch wrapper ───────────────────────────────────────────────────────
+
 async function fetchAPI(endpoint, options = {}) {
   const defaultHeaders = {};
 
@@ -9,18 +9,18 @@ async function fetchAPI(endpoint, options = {}) {
     defaultHeaders['Authorization'] = `Bearer ${token}`;
   }
 
-  // Jika body BUKAN FormData, set Content-Type ke application/json
+  
   if (!(options.body instanceof FormData)) {
     defaultHeaders['Content-Type'] = 'application/json';
   }
-  // Jika body adalah FormData, biarkan browser mengatur Content-Type (dengan boundary-nya) secara otomatis
+  
 
   const response = await fetch(`${API_BASE_URL}${endpoint}`, {
     ...options,
     headers: { ...defaultHeaders, ...options.headers },
   });
 
-  // Handle empty or non-JSON body safely
+  
   const text = await response.text();
   let data = {};
   try {
@@ -41,7 +41,7 @@ async function fetchAPI(endpoint, options = {}) {
   return data;
 }
 
-// ─── Auth helpers ─────────────────────────────────────────────────────────────
+
 export function getStoredToken() {
   return localStorage.getItem('lapor_ai_token');
 }
@@ -59,9 +59,9 @@ export function logout() {
   localStorage.removeItem('lapor_ai_role');
   localStorage.removeItem('lapor_ai_nama');
 }
-// ─── API methods ──────────────────────────────────────────────────────────────
+
 export const api = {
-  // ── Auth & OTP
+  
   login: (credentials) =>
     fetchAPI('/auth/login', { method: 'POST', body: JSON.stringify(credentials) }),
 
@@ -74,7 +74,7 @@ export const api = {
   resendOTP: (data) =>
     fetchAPI('/resend-otp', { method: 'POST', body: JSON.stringify(data) }),
 
-  // ── Reports
+  
   createReport: (reportData) =>
     fetchAPI('/reports', { 
       method: 'POST', 
@@ -112,7 +112,7 @@ export const api = {
 
   getAuditLogs: () => fetchAPI('/audit-logs'),
 
-  // ── Users (Admin)
+  
   getUsers: () => fetchAPI('/users'),
   createUser: (data) => fetchAPI('/users', { method: 'POST', body: JSON.stringify(data) }),
   updateUser: (id, data) => fetchAPI(`/users/${id}`, { method: 'PUT', body: JSON.stringify(data) }),

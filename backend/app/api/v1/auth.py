@@ -18,7 +18,7 @@ def login(request: Request, req: UserLogin, db: Session = Depends(get_db)):
     
     user = db.query(User).filter(User.email == email_clean).first()
     
-    # If user exists, verify password
+                                     
     if user:
         if not auth_service.verify_password(req.password, user.hashed_password):
             raise HTTPException(
@@ -80,7 +80,7 @@ def verify_email(request: Request, req: VerifyOTPRequest, db: Session = Depends(
             raise HTTPException(status_code=400, detail="Kode OTP telah kedaluwarsa (berlaku 15 menit). Silakan kirim ulang OTP.")
         record.status = "verified"
         
-    # Update associated reports status to Terverifikasi AI
+                                                          
     reports = db.query(Report).filter(
         Report.pelapor_email == req.email,
         Report.status == "Pending Email Verification"
@@ -101,7 +101,7 @@ def resend_otp(request: Request, req: ResendOTPRequest, db: Session = Depends(ge
         EmailVerification.email == req.email
     ).order_by(EmailVerification.created_at.desc()).first()
     
-    # Enforce 60-second cooldown
+                                
     if last_req and (now - last_req.last_requested_at).total_seconds() < 60:
         remaining = 60 - int((now - last_req.last_requested_at).total_seconds())
         raise HTTPException(
@@ -120,7 +120,7 @@ def resend_otp(request: Request, req: ResendOTPRequest, db: Session = Depends(ge
     db.add(new_record)
     db.commit()
     
-    # Send OTP email via Resend API (lapor-ai.web.id)
+                                                     
     try:
         email_service.send_otp_email(req.email, new_otp)
     except Exception as e:

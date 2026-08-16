@@ -5,7 +5,7 @@ from jose import jwt
 from passlib.context import CryptContext
 from app.core.config import settings
 
-# Use pbkdf2_sha256 as primary scheme to ensure 100% compatibility across all Python versions
+                                                                                             
 pwd_context = CryptContext(schemes=["pbkdf2_sha256", "bcrypt"], deprecated="auto")
 
 class AuthService:

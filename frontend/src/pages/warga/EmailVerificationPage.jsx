@@ -30,7 +30,7 @@ export function EmailVerificationPage() {
     newOtp[index] = value;
     setOtp(newOtp);
 
-    // Auto-focus next input
+    
     if (value && index < 5) {
       const nextInput = document.getElementById(`otp-input-${index + 1}`);
       if (nextInput) nextInput.focus();
@@ -50,7 +50,7 @@ export function EmailVerificationPage() {
 
     try {
       await api.verifyOTP({ email, otp_code: code });
-      // Fetch real report data so success page shows the actual ticket
+      
       let reportData = {
         id: ticketId,
         pelapor_email: email,
@@ -62,9 +62,9 @@ export function EmailVerificationPage() {
       try {
         reportData = await api.getReportDetail(ticketId);
       } catch (_) {
-        // fallback to minimal data above if fetch fails
+        
       }
-      navigate('/lapor/berhasil', { state: { report: reportData } });
+      navigate('/dashboard/lapor/berhasil', { state: { report: reportData } });
     } catch (err) {
       setError(err.message || 'Kode OTP salah atau kedaluwarsa.');
     } finally {
@@ -112,7 +112,7 @@ export function EmailVerificationPage() {
           </div>
         )}
 
-        {/* OTP Input 6 Digits */}
+        
         <form onSubmit={handleVerify} className="space-y-6">
           <div className="flex justify-center gap-2">
             {otp.map((digit, idx) => (
@@ -142,7 +142,7 @@ export function EmailVerificationPage() {
           </button>
         </form>
 
-        {/* Resend Cooldown Section */}
+        
         <div className="mt-6 pt-4 border-t border-border">
           <p className="text-xs text-text-secondary mb-2">Tidak menerima kode OTP?</p>
           <button

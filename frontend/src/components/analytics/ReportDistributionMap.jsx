@@ -5,7 +5,7 @@ export function ReportDistributionMap({ locations = [] }) {
   const mapRef = useRef(null);
   const mapInstanceRef = useRef(null);
 
-  // Default sample locations if empty
+  
   const points = locations.length > 0 ? locations : [
     { id: 'LP-2026-08-04-6518', lat: -2.1316, lng: 106.1169, alamat: 'Pasar Sekanak, Pangkalpinang', urgensi: 'Kritis', kategori: 'Keamanan/Bencana', dinas: 'BPBD', status: 'Assigned', ringkasan: 'Kebakaran hebat dekat permukiman warga.' },
     { id: 'LP-2026-08-04-9812', lat: -2.1245, lng: 106.1088, alamat: 'Jl. Jenderal Sudirman, Pangkalpinang', urgensi: 'Tinggi', kategori: 'Infrastruktur', dinas: 'PUPR', status: 'In Progress', ringkasan: 'Jalan utama ambles dan berbahaya bagi pengendara.' },
@@ -16,10 +16,10 @@ export function ReportDistributionMap({ locations = [] }) {
 
   const getUrgencyColor = (urgensi) => {
     switch ((urgensi || '').toUpperCase()) {
-      case 'KRITIS': return '#B3382B'; // Merah
-      case 'TINGGI': return '#B9832E'; // Amber
-      case 'SEDANG': return '#4A6C93'; // Biru
-      default: return '#6E7259';        // Olive/Green
+      case 'KRITIS': return '#B3382B'; 
+      case 'TINGGI': return '#B9832E'; 
+      case 'SEDANG': return '#4A6C93'; 
+      default: return '#6E7259';        
     }
   };
 
@@ -38,7 +38,7 @@ export function ReportDistributionMap({ locations = [] }) {
       attribution: '© OpenStreetMap'
     }).addTo(map);
 
-    // Plot location markers
+    
     points.forEach((pt) => {
       const color = getUrgencyColor(pt.urgensi);
       
@@ -109,7 +109,7 @@ export function ReportDistributionMap({ locations = [] }) {
 
   return (
     <div className="bg-white border border-border rounded-lg p-5 shadow-sm space-y-4">
-      {/* Header */}
+      
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border-b border-border pb-3">
         <div>
           <div className="flex items-center gap-2">
@@ -123,7 +123,7 @@ export function ReportDistributionMap({ locations = [] }) {
           </p>
         </div>
 
-        {/* Legend */}
+        
         <div className="flex items-center gap-3 text-xs font-mono">
           <div className="flex items-center gap-1">
             <span className="w-2.5 h-2.5 rounded-full bg-[#B3382B] inline-block" />
@@ -144,12 +144,12 @@ export function ReportDistributionMap({ locations = [] }) {
         </div>
       </div>
 
-      {/* Map Container */}
+      
       <div className="relative rounded-lg overflow-hidden border border-border">
         <div ref={mapRef} className="w-full h-[320px] z-10" />
       </div>
 
-      {/* Hotspots Summary Strip */}
+      
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs pt-1">
         <div className="bg-bg-base p-3 rounded border border-border">
           <span className="text-text-secondary block font-medium">Titik Lokasi Tercatat:</span>

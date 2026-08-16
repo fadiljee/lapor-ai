@@ -42,7 +42,7 @@ export function DashboardPetugasPage() {
       });
       setReports(data);
       if (data.length > 0) {
-        // If current selectedReport is in data, update it. Otherwise select first.
+        
         const found = data.find((r) => r.id === selectedReport?.id);
         setSelectedReport(found || data[0]);
       } else {
@@ -59,7 +59,7 @@ export function DashboardPetugasPage() {
     loadReports();
   }, [urgencyFilter]);
 
-  // Real-time search filtering across ticket ID, description, category, department, location
+  
   const filteredReports = reports.filter((rpt) => {
     if (!searchQuery.trim()) return true;
     const q = searchQuery.toLowerCase();
@@ -79,9 +79,7 @@ export function DashboardPetugasPage() {
     setActionError('');
   };
 
-  /* ──────────────────────────────────────────────────────────────
-     ✅ FIX 1: Setuju Rekomendasi AI (Approve AI Recommendation)
-     ────────────────────────────────────────────────────────────── */
+  
   const handleApprove = async () => {
     if (!selectedReport) return;
     setActionNotice(null);
@@ -105,9 +103,7 @@ export function DashboardPetugasPage() {
     }
   };
 
-  /* ──────────────────────────────────────────────────────────────
-     ✅ FIX 2: Tandai Tidak Relevan (Mark Irrelevant / Closed)
-     ────────────────────────────────────────────────────────────── */
+  
   const handleMarkIrrelevant = async () => {
     if (!selectedReport) return;
     if (!window.confirm(`Konfirmasi: Tandai Tiket #${selectedReport.id} sebagai Tidak Relevan / Spam?`)) return;
@@ -132,9 +128,7 @@ export function DashboardPetugasPage() {
     }
   };
 
-  /* ──────────────────────────────────────────────────────────────
-     ✅ FIX 3: Koreksi Kategori / Urgensi (Human Override Modal)
-     ────────────────────────────────────────────────────────────── */
+  
   const openOverrideDialog = () => {
     if (!selectedReport) return;
     setActionNotice(null);
@@ -198,7 +192,7 @@ export function DashboardPetugasPage() {
       <Sidebar />
 
       <main className="flex-1 p-4 sm:p-6 bg-bg-base overflow-x-hidden">
-        {/* Top Filter Bar */}
+        
         <div className="bg-white border border-border p-4 rounded-lg mb-6 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <ListFilter className="w-5 h-5 text-primary" />
@@ -208,7 +202,7 @@ export function DashboardPetugasPage() {
           </div>
 
           <div className="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto">
-            {/* Real-time Search Input Box */}
+            
             <div className="relative w-full sm:w-64">
               <Search className="w-4 h-4 text-text-secondary absolute left-3 top-2.5" />
               <input
@@ -252,7 +246,7 @@ export function DashboardPetugasPage() {
           </div>
         </div>
 
-        {/* Global Action Notices */}
+        
         {actionNotice && (
           <div className={`p-4 rounded-lg mb-6 border text-xs flex items-center gap-2.5 shadow-sm ${
             actionNotice.type === 'warning'
@@ -271,9 +265,9 @@ export function DashboardPetugasPage() {
           </div>
         )}
 
-        {/* Master-Detail Layout */}
+        
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-          {/* Left Master List (4 Cols) */}
+          
           <div className="lg:col-span-4 bg-white border border-border rounded-lg p-3.5 shadow-sm flex flex-col max-h-[calc(100vh-6rem)] sticky top-4 overflow-hidden">
             <div className="text-[11px] font-bold text-text-secondary uppercase tracking-wider px-1 py-1 pb-2.5 mb-1 border-b border-border flex items-center justify-between shrink-0">
               <span>Daftar Antrean</span>
@@ -317,11 +311,11 @@ export function DashboardPetugasPage() {
             </div>
           </div>
 
-          {/* Right Detail Panel (8 Cols) */}
+          
           <div className="lg:col-span-8">
             {selectedReport ? (
               <div className="space-y-6">
-                {/* Header Actions Card */}
+                
                 <div className="bg-white border border-border rounded-lg p-5 shadow-sm">
                   <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4 pb-4 border-b border-border">
                     <div>
@@ -340,7 +334,7 @@ export function DashboardPetugasPage() {
                     <UrgencyBadge level={selectedReport.skor_urgensi} />
                   </div>
 
-                  {/* Officer Actions Buttons */}
+                  
                   <div className="flex flex-wrap gap-2">
                     <button
                       type="button"
@@ -371,10 +365,10 @@ export function DashboardPetugasPage() {
                   </div>
                 </div>
 
-                {/* Responsible AI Panel Component */}
+                
                 <AIJustificationCard report={selectedReport} />
 
-                {/* Report Description Detail */}
+                
                 <div className="bg-white border border-border rounded-lg p-5 shadow-sm space-y-3">
                   <h3 className="text-xs font-bold text-text-primary uppercase tracking-wider">
                     Deskripsi Lengkap Laporan Warga (PII Masked)
@@ -384,7 +378,7 @@ export function DashboardPetugasPage() {
                   </div>
                 </div>
 
-                {/* Lampiran Foto / Bukti Pengaduan */}
+                
                 <div className="bg-white border border-border rounded-lg p-5 shadow-sm space-y-3">
                   <div className="flex items-center justify-between">
                     <h3 className="text-xs font-bold text-text-primary uppercase tracking-wider flex items-center gap-2">
@@ -448,7 +442,7 @@ export function DashboardPetugasPage() {
           </div>
         </div>
 
-        {/* Override Modal Dialog */}
+        
         {overrideModal && (
           <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
             <div className="bg-white border border-border rounded-lg max-w-md w-full p-6 shadow-xl space-y-4">

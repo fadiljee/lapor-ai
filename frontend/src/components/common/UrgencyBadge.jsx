@@ -1,11 +1,6 @@
 import React from 'react';
 
-/**
- * UrgencyBadge — Badge status urgensi AI.
- * Palet warna: kritis=merah garuda, tinggi=soga/ochre,
- * sedang=hijau lumut, rendah=indigo pudar.
- * Font mono 12px uppercase per spek komponen.
- */
+
 export function UrgencyBadge({ level }) {
   const normalized = (level || 'Rendah').toUpperCase();
 

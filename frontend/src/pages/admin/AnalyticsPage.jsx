@@ -5,7 +5,7 @@ import { ReportDistributionMap } from '../../components/analytics/ReportDistribu
 import { api } from '../../services/api';
 import { BarChart3, TrendingUp, AlertTriangle, RefreshCw, Building } from 'lucide-react';
 
-// ─── Helpers ─────────────────────────────────────────────────────────────────
+
 function calcPct(value, total) {
   if (!total || total === 0) return 0;
   return Math.min(100, Math.round((value / total) * 100));
@@ -36,7 +36,7 @@ function UrgencyBar({ label, count, total, colorBg, colorText }) {
   );
 }
 
-// ─── Component ────────────────────────────────────────────────────────────────
+
 export function AnalyticsPage() {
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -70,7 +70,7 @@ export function AnalyticsPage() {
       <Sidebar />
       <main className="flex-1 p-4 sm:p-6 bg-bg-base">
 
-        {/* Page Header */}
+        
         <div className="bg-white border border-border p-6 rounded-lg mb-6 shadow-sm flex items-center justify-between">
           <div>
             <div className="flex items-center gap-2 mb-2">
@@ -100,7 +100,7 @@ export function AnalyticsPage() {
           </div>
         )}
 
-        {/* KPI Cards */}
+        
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
           <StatCard
             label="Total Laporan Masuk"
@@ -132,16 +132,16 @@ export function AnalyticsPage() {
           />
         </div>
 
-        {/* Real-time Daily Trend Graph & Spatial Distribution Map */}
+        
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
           <ReportTrendChart dailyData={stats?.daily_trend} />
           <ReportDistributionMap locations={stats?.locations} />
         </div>
 
-        {/* Urgensi Distribution + Department */}
+        
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
 
-          {/* Urgensi Distribution — bars calculated from real data */}
+          
           <div className="bg-white border border-border p-5 rounded-lg shadow-sm">
             <h3 className="text-xs font-bold text-text-primary uppercase tracking-wider mb-4">
               Distribusi Urgensi Laporan
@@ -182,7 +182,7 @@ export function AnalyticsPage() {
             )}
           </div>
 
-          {/* Department Distribution — real from DB */}
+          
           <div className="bg-white border border-border p-5 rounded-lg shadow-sm">
             <h3 className="text-xs font-bold text-text-primary uppercase tracking-wider mb-4 flex items-center gap-1.5">
               <Building className="w-4 h-4 text-primary" />
@@ -212,7 +212,7 @@ export function AnalyticsPage() {
           </div>
         </div>
 
-        {/* Duplicate Detection Card */}
+        
         <div className="bg-white border border-border p-5 rounded-lg shadow-sm">
           <h3 className="text-xs font-bold text-text-primary uppercase tracking-wider mb-3">
             Deteksi Duplikat & Statistik Tambahan

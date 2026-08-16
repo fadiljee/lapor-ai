@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { FilePlus, BarChart2, CheckCircle2, XCircle, ChevronDown, ChevronUp } from 'lucide-react';
 import { AiStampCap } from '../../components/common/AiStampCap';
 
-/* ── Alur singkat 4 tahap ─────────────────────────────────────── */
+
 const FLOW = [
   { label: 'Warga menulis', sub: 'Bahasa Indonesia atau Bahasa Bangka' },
   { label: 'AI menandai urgensi & kategori', sub: '< 10 detik, otomatis' },
@@ -11,7 +11,7 @@ const FLOW = [
   { label: 'Warga dapat kabar', sub: 'Notifikasi email pergerakan status' },
 ];
 
-/* ── FAQ baru ───────────────────────────────────── */
+
 const FAQ_ITEMS = [
   {
     q: 'Apakah AI bisa membuat kesalahan?',
@@ -64,15 +64,15 @@ export function AboutLaporAiPage() {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 py-10">
 
-      {/* ── Hero ──────────────────────────────────────────────── */}
+      
       <section className="mb-12 grid grid-cols-1 md:grid-cols-5 gap-8 items-start">
         <div className="md:col-span-3">
-          {/* Eyebrow */}
+          
           <div className="text-[10px] font-mono-ticket text-primary uppercase tracking-[0.2em] mb-4">
             Sistem Pengaduan Publik Berbasis AI
           </div>
 
-          {/* H1 — Fraunces */}
+          
           <h1 className="font-display text-[28px] sm:text-[36px] font-semibold text-text-text-primary leading-[1.15] mb-5">
             Setiap laporan dibaca dalam hitungan detik.
             Setiap keputusan tetap di tangan petugas.
@@ -84,7 +84,7 @@ export function AboutLaporAiPage() {
           </p>
         </div>
 
-        {/* Hero Illustration — Resi + Cap AI */}
+        
         <div className="md:col-span-2 flex flex-col items-center gap-5">
           <div className="relative bg-white border border-border rounded-lg p-5 w-full" style={{ boxShadow: '0 1px 3px rgba(0,0,0,.07)' }}>
             <div className="bg-primary -mx-5 -mt-5 px-5 py-2.5 rounded-t-lg mb-4 flex items-center justify-between">
@@ -108,7 +108,7 @@ export function AboutLaporAiPage() {
 
       <hr className="border-border mb-12" />
 
-      {/* ── Tiga Hal yang Dikerjakan AI ───────────────────────── */}
+      
       <section className="mb-12">
         <h2 className="font-display text-2xl sm:text-[28px] font-semibold text-text-text-primary mb-6">
           Tiga hal yang dikerjakan AI
@@ -150,7 +150,7 @@ export function AboutLaporAiPage() {
 
       <hr className="border-border mb-12" />
 
-      {/* ── Yang TIDAK Dilakukan AI ───────────────────────────── */}
+      
       <section className="mb-12">
         <h2 className="font-display text-2xl sm:text-[28px] font-semibold text-text-text-primary mb-2">
           Yang <em>tidak</em> dilakukan AI
@@ -175,7 +175,7 @@ export function AboutLaporAiPage() {
 
       <hr className="border-border mb-12" />
 
-      {/* ── Alur Singkat — Resi Horizontal ───────────────────── */}
+      
       <section className="mb-12">
         <h2 className="font-display text-2xl sm:text-[28px] font-semibold text-text-text-primary mb-5">
           Alur singkat
@@ -197,7 +197,7 @@ export function AboutLaporAiPage() {
 
       <hr className="border-border mb-12" />
 
-      {/* ── FAQ ──────────────────────────────────────────────── */}
+      
       <section className="mb-12">
         <h2 className="font-display text-2xl sm:text-[28px] font-semibold text-text-text-primary mb-6">
           Pertanyaan yang sering ditanyakan
@@ -209,7 +209,7 @@ export function AboutLaporAiPage() {
         </div>
       </section>
 
-      {/* ── CTA Penutup ──────────────────────────────────────── */}
+      
       <section className="bg-white border border-border rounded-lg p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-5">
         <div className="flex-1">
           <h3 className="font-display text-xl font-semibold text-text-text-primary mb-2">
@@ -221,7 +221,7 @@ export function AboutLaporAiPage() {
         </div>
         <div className="flex flex-col sm:flex-row gap-3 shrink-0 justify-end">
           <Link
-            to="/lapor"
+            to="/dashboard/lapor"
             className="bg-accent hover:bg-accent-hover text-white px-5 py-2.5 rounded font-bold text-sm flex items-center justify-center gap-2 transition-colors"
           >
             <FilePlus className="w-4 h-4" />

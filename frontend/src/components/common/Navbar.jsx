@@ -55,16 +55,16 @@ export function Navbar() {
       <header className="bg-primary text-white border-b border-primary-dark sticky top-0 z-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
 
-          {/* Brand Logo */}
+          
           <Link to="/" className="flex items-center gap-2.5 group shrink-0">
             <span className="bg-white/10 border border-white/25 text-white/90 text-[13px] font-sans font-semibold px-4 py-1 rounded tracking-widest uppercase">
               LAPOR-AI
             </span>
           </Link>
 
-          {/* Desktop Navigation */}
+          
           <nav className="hidden md:flex items-center gap-1">
-            {/* If on Dashboard, HIDE public links (Requirement #4) */}
+            
             {!isDashboardRoute && (
               <>
                 {navLinks.map((link) => (
@@ -102,7 +102,7 @@ export function Navbar() {
               </>
             )}
 
-            {/* Dashboard Mode Navbar (Public links hidden) */}
+            
             {isDashboardRoute && (
               <div className="flex items-center gap-3">
                 <div className="bg-primary-dark border border-border/20 px-3 py-1 rounded text-xs flex items-center gap-2">
@@ -126,7 +126,7 @@ export function Navbar() {
             )}
           </nav>
 
-          {/* Mobile Menu Toggle */}
+          
           <button
             className="md:hidden p-2 rounded hover:bg-primary-dark transition-colors"
             onClick={() => setMobileOpen((v) => !v)}
@@ -136,7 +136,7 @@ export function Navbar() {
           </button>
         </div>
 
-        {/* Mobile Dropdown */}
+        
         {mobileOpen && (
           <div className="md:hidden border-t border-primary-dark bg-primary px-4 pb-4 pt-2 space-y-2">
             {!isDashboardRoute && (
@@ -203,7 +203,7 @@ export function Navbar() {
         )}
       </header>
 
-      {/* Logout Confirmation Modal */}
+      
       <LogoutModal
         isOpen={logoutModalOpen}
         onClose={() => setLogoutModalOpen(false)}

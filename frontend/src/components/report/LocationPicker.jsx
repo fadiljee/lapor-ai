@@ -11,7 +11,7 @@ export function LocationPicker({ value, onChange, error, onUseMyLocation }) {
   const defaultLat = value.lokasi_lat || -2.1316;
   const defaultLng = value.lokasi_lng || 106.1169;
 
-  // Load Leaflet CSS and JS via CDN if not already present
+  
   useEffect(() => {
     if (document.getElementById('leaflet-css')) {
       initMap();
@@ -82,14 +82,14 @@ export function LocationPicker({ value, onChange, error, onUseMyLocation }) {
   const geocodeAbortRef = useRef(null);
 
   const updateLocation = async (lat, lng) => {
-    // Abort previous pending geocode request if any
+    
     if (geocodeAbortRef.current) {
       geocodeAbortRef.current.abort();
     }
     const controller = new AbortController();
     geocodeAbortRef.current = controller;
 
-    // Immediately update coordinates and temporary status
+    
     const tempAddress = `Mencari alamat... (${lat.toFixed(5)}, ${lng.toFixed(5)})`;
     onChange({
       ...value,
@@ -210,7 +210,7 @@ export function LocationPicker({ value, onChange, error, onUseMyLocation }) {
         )}
       </div>
 
-      {/* Leaflet Interactive Map Container */}
+      
       <div className="border border-border rounded-lg overflow-hidden bg-bg-base">
         <div className="p-2 bg-slate-100 border-b border-border flex justify-between items-center text-xs">
           <span className="font-semibold text-text-text-primary">Klik Peta atau Geser Pin untuk Menentukan Lokasi</span>

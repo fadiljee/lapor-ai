@@ -53,7 +53,7 @@ export function SubmitReportPage() {
     setError('');
   };
 
-  /* ── File upload handlers ─────────────────────────────────────── */
+  
   const handleFileSelect = (fileList) => {
     setFileError('');
     const file = fileList?.[0];
@@ -156,7 +156,7 @@ export function SubmitReportPage() {
           }
         });
       } else {
-        navigate('/lapor/berhasil', { state: { report: res } });
+        navigate('/dashboard/lapor/berhasil', { state: { report: res } });
       }
     } catch (err) {
       console.error("Detail Error Submit:", err);
@@ -181,7 +181,7 @@ export function SubmitReportPage() {
       <Sidebar />
       <main className="flex-1 p-4 sm:p-6 bg-bg-base overflow-x-hidden">
         <div className="max-w-3xl mx-auto space-y-6">
-          {/* Page Header */}
+          
           <div className="mb-6">
             <h1 className="font-display text-2xl sm:text-3xl font-semibold text-text-primary mb-1">
               Formulir Pengaduan Warga
@@ -191,7 +191,7 @@ export function SubmitReportPage() {
             </p>
           </div>
 
-          {/* Step Indicator */}
+          
           <div className="bg-white border border-border rounded-lg overflow-hidden mb-6 shadow-sm">
             <div className="grid grid-cols-4 divide-x divide-dashed divide-border">
               {STEPS.map((s) => (
@@ -227,7 +227,7 @@ export function SubmitReportPage() {
 
           <form onSubmit={handleSubmit} className="bg-white border border-border rounded-lg p-6 shadow-sm">
 
-            {/* STEP 1: Kategori & Deskripsi */}
+            
             {step === 1 && (
               <div className="space-y-5">
                 <div>
@@ -269,7 +269,7 @@ export function SubmitReportPage() {
               </div>
             )}
 
-            {/* STEP 2: Lokasi & Lampiran */}
+            
             {step === 2 && (
               <div className="space-y-5">
                 <LocationPicker
@@ -327,7 +327,7 @@ export function SubmitReportPage() {
               </div>
             )}
 
-            {/* STEP 3: Identitas Pelapor */}
+            
             {step === 3 && (
               <div className="space-y-5">
                 <div>
@@ -400,7 +400,7 @@ export function SubmitReportPage() {
               </div>
             )}
 
-            {/* STEP 4: Tinjau & Kirim */}
+            
             {step === 4 && (
               <div className="space-y-4">
                 <h3 className="text-xs font-bold text-text-primary uppercase tracking-wider mb-3">
@@ -439,7 +439,7 @@ export function SubmitReportPage() {
               </div>
             )}
 
-            {/* Form Action Controls */}
+            
             <div className="flex items-center justify-between border-t border-border pt-5 mt-6">
               {step > 1 ? (
                 <button

@@ -23,7 +23,7 @@ export function DashboardWargaPage() {
     <div className="flex flex-col md:flex-row min-h-[calc(100vh-4rem)]">
       <Sidebar />
       <main className="flex-1 p-4 sm:p-6 bg-bg-base overflow-x-hidden">
-        {/* Welcome Banner */}
+        
         <div className="bg-primary text-white p-6 rounded-lg mb-6 shadow-sm relative overflow-hidden">
           <div className="relative z-10">
             <span className="bg-accent text-white text-[10px] uppercase tracking-widest px-2 py-0.5 rounded font-mono font-bold">
@@ -38,7 +38,7 @@ export function DashboardWargaPage() {
           </div>
         </div>
 
-        {/* Action Cards Grid */}
+        
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           <div className="bg-white border border-border p-6 rounded-lg shadow-sm hover:border-primary transition-colors flex flex-col justify-between">
             <div>
@@ -53,7 +53,7 @@ export function DashboardWargaPage() {
               </p>
             </div>
             <Link
-              to="/lapor"
+              to="/dashboard/lapor"
               className="inline-flex items-center justify-between bg-accent hover:bg-accent-hover text-white px-4 py-2.5 rounded text-xs font-bold transition-colors w-full sm:w-auto"
             >
               <span>Mulai Formulir Pengaduan</span>
@@ -74,7 +74,7 @@ export function DashboardWargaPage() {
               </p>
             </div>
             <Link
-              to="/lacak"
+              to="/dashboard/lacak"
               className="inline-flex items-center justify-between bg-primary hover:bg-primary-dark text-white px-4 py-2.5 rounded text-xs font-bold transition-colors w-full sm:w-auto"
             >
               <span>Lacak Progres Laporan</span>
@@ -83,7 +83,7 @@ export function DashboardWargaPage() {
           </div>
         </div>
 
-        {/* Live Recent Reports Section (Real Data from PostgreSQL) */}
+        
         <div className="bg-white border border-border p-6 rounded-lg shadow-sm mb-6 space-y-4">
           <div className="flex items-center justify-between border-b border-border pb-3">
             <div className="flex items-center gap-2">
@@ -106,7 +106,7 @@ export function DashboardWargaPage() {
                   <div>
                     <div className="flex items-center gap-2 mb-1">
                       <Link
-                        to="/lacak"
+                        to="/dashboard/lacak"
                         state={{ ticketId: rpt.id }}
                         className="font-mono font-bold text-primary hover:text-accent hover:underline transition-colors"
                         title="Klik untuk lacak rincian tiket ini"
@@ -120,7 +120,7 @@ export function DashboardWargaPage() {
                     <span className="text-[11px] text-text-secondary">{rpt.lokasi_alamat} → <span className="font-semibold text-text-primary">{rpt.dinas_tujuan}</span></span>
                   </div>
                   <Link
-                    to="/lacak"
+                    to="/dashboard/lacak"
                     state={{ ticketId: rpt.id }}
                     className="inline-flex items-center justify-center gap-1.5 bg-primary text-white hover:bg-primary-dark px-3 py-1.5 rounded text-xs font-bold transition-colors shrink-0 shadow-sm"
                   >
@@ -132,7 +132,7 @@ export function DashboardWargaPage() {
           )}
         </div>
 
-        {/* Information & Safeguard Panel */}
+        
         <div className="bg-white border border-border p-6 rounded-lg shadow-sm space-y-4">
           <div className="flex items-center gap-2 border-b border-border pb-3">
             <Sparkles className="w-5 h-5 text-primary" />

@@ -20,10 +20,10 @@ export function DashboardDinasPage() {
     setLoading(true);
     try {
       const data = await api.getReports();
-      // Only show reports that are Assigned or in Progress
+      
       let active = data.filter(r => ['Assigned', 'Diproses'].includes(r.status));
       
-      // If the admin belongs to a specific instansi, filter it
+      
       if (instansiName) {
         active = active.filter(r => r.dinas_tujuan === instansiName);
       }
@@ -109,7 +109,7 @@ export function DashboardDinasPage() {
       <Sidebar />
 
       <main className="flex-1 p-4 sm:p-6 bg-bg-base overflow-x-hidden">
-        {/* Header */}
+        
         <div className="bg-white border border-border p-4 rounded-lg mb-6 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <Inbox className="w-5 h-5 text-primary" />
@@ -126,7 +126,7 @@ export function DashboardDinasPage() {
           </button>
         </div>
 
-        {/* Notices */}
+        
         {actionNotice && (
           <div className="bg-bg-base border border-primary text-primary p-4 rounded-lg mb-6 text-xs flex items-center gap-2.5 shadow-sm">
             <CheckCircle className="w-5 h-5 shrink-0" />
@@ -140,9 +140,9 @@ export function DashboardDinasPage() {
           </div>
         )}
 
-        {/* Master-Detail */}
+        
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-          {/* Left Panel */}
+          
           <div className="lg:col-span-4 bg-white border border-border rounded-lg p-3.5 shadow-sm flex flex-col max-h-[calc(100vh-6rem)] sticky top-4 overflow-hidden">
             <div className="text-[11px] font-bold text-text-secondary uppercase tracking-wider px-1 py-1 pb-2.5 mb-1 border-b border-border flex items-center justify-between shrink-0">
               <span>Antrean Tugas</span>
@@ -180,7 +180,7 @@ export function DashboardDinasPage() {
             </div>
           </div>
 
-          {/* Right Panel */}
+          
           <div className="lg:col-span-8">
             {selectedReport ? (
               <div className="space-y-6">
@@ -202,7 +202,7 @@ export function DashboardDinasPage() {
                     </div>
                   </div>
 
-                  {/* Actions */}
+                  
                   <div className="flex flex-wrap gap-2">
                     {selectedReport.status === 'Assigned' && (
                       <button
@@ -249,7 +249,7 @@ export function DashboardDinasPage() {
                   </div>
                 )}
                 
-                {/* AI Justification (Read-Only) */}
+                
                 <AIJustificationCard report={selectedReport} />
 
               </div>
@@ -261,7 +261,7 @@ export function DashboardDinasPage() {
           </div>
         </div>
 
-        {/* Modal Tutup Laporan */}
+        
         {showCloseModal && (
           <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
             <div className="bg-white border border-border rounded-lg max-w-md w-full p-6 shadow-xl space-y-4">

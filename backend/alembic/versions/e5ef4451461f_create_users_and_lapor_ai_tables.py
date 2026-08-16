@@ -9,14 +9,14 @@ from typing import Sequence, Union
 from alembic import op
 import sqlalchemy as sa
 
-# revision identifiers, used by Alembic.
+                                        
 revision: str = 'e5ef4451461f'
 down_revision: Union[str, Sequence[str], None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 
 def upgrade() -> None:
-    # Users Table
+                 
     op.create_table(
         'users',
         sa.Column('id', sa.Integer(), nullable=False),
@@ -31,7 +31,7 @@ def upgrade() -> None:
     op.create_index(op.f('ix_users_email'), 'users', ['email'], unique=True)
     op.create_index(op.f('ix_users_id'), 'users', ['id'], unique=False)
 
-    # Email Verifications Table
+                               
     op.create_table(
         'email_verifications',
         sa.Column('id', sa.Integer(), nullable=False),
@@ -46,7 +46,7 @@ def upgrade() -> None:
     op.create_index(op.f('ix_email_verifications_email'), 'email_verifications', ['email'], unique=False)
     op.create_index(op.f('ix_email_verifications_id'), 'email_verifications', ['id'], unique=False)
 
-    # Reports Table
+                   
     op.create_table(
         'reports',
         sa.Column('id', sa.String(), nullable=False),
@@ -78,7 +78,7 @@ def upgrade() -> None:
     op.create_index(op.f('ix_reports_id'), 'reports', ['id'], unique=False)
     op.create_index(op.f('ix_reports_text_fingerprint'), 'reports', ['text_fingerprint'], unique=False)
 
-    # AI Analysis Logs Table
+                            
     op.create_table(
         'ai_analysis_logs',
         sa.Column('id', sa.Integer(), nullable=False),
@@ -95,7 +95,7 @@ def upgrade() -> None:
     )
     op.create_index(op.f('ix_ai_analysis_logs_id'), 'ai_analysis_logs', ['id'], unique=False)
 
-    # Feedbacks Table
+                     
     op.create_table(
         'feedbacks',
         sa.Column('id', sa.Integer(), nullable=False),
@@ -115,7 +115,7 @@ def upgrade() -> None:
     )
     op.create_index(op.f('ix_feedbacks_id'), 'feedbacks', ['id'], unique=False)
 
-    # Audit Logs Table
+                      
     op.create_table(
         'audit_logs',
         sa.Column('id', sa.Integer(), nullable=False),

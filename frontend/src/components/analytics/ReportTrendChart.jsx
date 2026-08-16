@@ -2,7 +2,7 @@ import React from 'react';
 import { TrendingUp, Calendar, Activity } from 'lucide-react';
 
 export function ReportTrendChart({ dailyData = [] }) {
-  // Sample data fallback if dailyData is empty or short
+  
   const data = dailyData.length > 0 ? dailyData : [
     { date: '2026-08-02', display: '02 Aug', total: 12, kritis: 2 },
     { date: '2026-08-03', display: '03 Aug', total: 19, kritis: 5 },
@@ -18,7 +18,7 @@ export function ReportTrendChart({ dailyData = [] }) {
 
   return (
     <div className="bg-white border border-border rounded-lg p-5 shadow-sm space-y-4">
-      {/* Header */}
+      
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border-b border-border pb-3">
         <div>
           <div className="flex items-center gap-2">
@@ -44,7 +44,7 @@ export function ReportTrendChart({ dailyData = [] }) {
         </div>
       </div>
 
-      {/* SVG Bar / Trend Chart */}
+      
       <div className="pt-4 pb-2">
         <div className="grid grid-cols-7 gap-2 sm:gap-4 items-end h-[200px] border-b border-border px-2">
           {data.map((item, idx) => {
@@ -53,20 +53,20 @@ export function ReportTrendChart({ dailyData = [] }) {
 
             return (
               <div key={idx} className="flex flex-col items-center h-full justify-end group relative">
-                {/* Tooltip on hover */}
+                
                 <div className="absolute -top-12 bg-primary text-white text-[10px] font-mono px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20 whitespace-nowrap shadow-md">
                   <div className="font-bold">{item.display}</div>
                   <div>Total: {item.total} | Kritis: {item.kritis}</div>
                 </div>
 
-                {/* Bars Container */}
+                
                 <div className="w-full max-w-[36px] bg-bg-base rounded-t overflow-hidden relative flex flex-col justify-end transition-all group-hover:bg-slate-200" style={{ height: `${Math.max(barHeightPct, 8)}%` }}>
-                  {/* Total bar fill */}
+                  
                   <div
                     className="w-full bg-primary/80 group-hover:bg-primary transition-all rounded-t relative"
                     style={{ height: '100%' }}
                   >
-                    {/* Critical overlay */}
+                    
                     <div
                       className="w-full bg-accent absolute bottom-0 left-0 transition-all"
                       style={{ height: `${item.total > 0 ? (item.kritis / item.total) * 100 : 0}%` }}
@@ -74,12 +74,12 @@ export function ReportTrendChart({ dailyData = [] }) {
                   </div>
                 </div>
 
-                {/* Count badge */}
+                
                 <span className="font-mono text-[10px] font-bold text-text-primary mt-1.5">
                   {item.total}
                 </span>
 
-                {/* Date label */}
+                
                 <span className="text-[10px] font-medium text-text-secondary truncate max-w-full">
                   {item.display}
                 </span>
@@ -89,7 +89,7 @@ export function ReportTrendChart({ dailyData = [] }) {
         </div>
       </div>
 
-      {/* Footer Info */}
+      
       <div className="flex items-center justify-between text-[11px] text-text-secondary pt-1">
         <div className="flex items-center gap-1">
           <Calendar className="w-3.5 h-3.5 text-primary" />
