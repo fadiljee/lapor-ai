@@ -10,6 +10,7 @@ from app.api.v1 import auth as auth_router
 from app.api.v1 import dashboard as dashboard_router
 from app.api.v1 import users as users_router
 from app.api.v1 import instansi as instansi_router
+from app.api.v1 import support as support_router
 from app.models.report import User, AuditLog, Instansi
 from app.services.auth_service import auth_service
 
@@ -44,6 +45,7 @@ app.include_router(auth_router.router, prefix=settings.API_V1_STR)
 app.include_router(dashboard_router.router, prefix=settings.API_V1_STR)
 app.include_router(users_router.router, prefix=settings.API_V1_STR)
 app.include_router(instansi_router.router, prefix=settings.API_V1_STR + "/instansi", tags=["Instansi"])
+app.include_router(support_router.router, prefix=settings.API_V1_STR + "/support", tags=["Support Bantuan"])
 
 app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 

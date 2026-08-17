@@ -123,4 +123,7 @@ export const api = {
   createInstansi: (data) => fetchAPI('/instansi', { method: 'POST', body: JSON.stringify(data) }),
   updateInstansi: (id, data) => fetchAPI(`/instansi/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
   deleteInstansi: (id) => fetchAPI(`/instansi/${id}`, { method: 'DELETE' }),
+
+  // Support Email API
+  submitSupportContact: (data) => fetchAPI('/support/contact', { method: 'POST', body: JSON.stringify(data) }),
 };

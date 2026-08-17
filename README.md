@@ -24,7 +24,7 @@ Sistem ini bertindak sebagai platform pengaduan masyarakat pintar berbasis AI de
 - 📄 **Ringkasan Otomatis (Executive Summary)**: Menghasilkan ringkasan narasional singkat untuk percepatan baca petugas.
 - 🔁 **Routing Otomatis & Deterministik**: Menentukan rekomendasi awal dinas/instansi tujuan secara presisi.
 - 🛡️ **Pengamanan PII & Safeguard**: Melindungi data pribadi warga (email, nomor telp, NIK) melalui *PII Masking* sebelum dikirim ke LLM, serta dilengkapi *Prompt Injection Guard*.
-- ✉️ **Integrasi Email Transaksional Resend**: Pengiriman kode OTP verifikasi email fisik 6-digit (berlaku 15 menit) dari domain resmi `lapor-ai.web.id`.
+- ✉️ **Integrasi Email Transaksional Resend & Cloudflare Routing**: Pengiriman kode OTP verifikasi email 6-digit serta penanganan form bantuan "Hubungi Kami" (`bantuan@lapor-ai.web.id`) dengan sistem *Auto-Reply* dan *Reply-To Header* dinamis ke tim support.
 - 🌐 **Dukungan Bahasa Lokal (Bahasa Bangka & Indonesia)**: Memahami dialek lokal Bahasa Bangka (misal: *nian, banyu, dide', katek, uma*) dan Bahasa Indonesia formal/informal.
 - 👨‍💼 **Prinsip Responsible AI (Human-in-the-Loop)**: Memberikan rekomendasi transparan kepada petugas verifikator tanpa pernah mengambil keputusan penanganan akhir secara sepihak.
 
@@ -41,6 +41,7 @@ Project ini dikembangkan sebagai prototipe solusi untuk **FTI FEST 2026** dengan
 - 📸 **Lampiran Dokumen/Foto Bukti**: Unggah bukti pendukung hingga 10 MB dan ditayangkan secara statis di `/uploads`.
 - 🔍 **Pelacakan Tiket Real-Time & Navigasi Langsung**: Memantau progres status laporan secara instan menggunakan nomor resi resmi (contoh: `LP-2026-08-0000412`).
 - ✉️ **Verifikasi Email OTP Resend (15 Menit)**: Autentikasi email pelapor dengan masa berlaku 15 menit dan cooldown pengiriman 60 detik.
+- 📞 **Modul Bantuan & Support Email (`/hubungi-kami`)**: Form bantuan teknis warga terintegrasi Resend API (`POST /api/v1/support/contact`), rate limited 5 req/jam, dengan *Auto-Reply* & *Reply-To Header* dinamis langsung ke inbox tim support.
 - 🕵️ **Mode Anonim**: Pilihan melapor tanpa mencatat identitas email.
 
 ## 🤖 Artificial Intelligence & Safeguards
@@ -127,9 +128,9 @@ Project ini dikembangkan sebagai prototipe solusi untuk **FTI FEST 2026** dengan
 lapor-ai/
 ├── backend/
 │   ├── app/
-│   │   ├── api/v1/          # Endpoint API (auth, report, dashboard, instansi)
+│   │   ├── api/v1/          # Endpoint API (auth, report, dashboard, instansi, support)
 │   │   ├── core/            # Config, database setup, security
-│   │   ├── models/          # SQLAlchemy ORM models (Report, User, AuditLog, EmailVerification, Instansi)
+│   │   ├── models/          # SQLAlchemy ORM models (Report, User, AuditLog, EmailVerification, Instansi, SupportMessage)
 │   │   ├── schemas/         # Pydantic validation schemas
 │   │   └── services/        # Business logic (llm_orchestrator, email_service, pii_masking, etc.)
 │   ├── uploads/             # Berkas lampiran foto/PDF warga (Diabaikan Git)
@@ -225,7 +226,8 @@ FALLBACK_MODEL="gemini-2.0-flash"
 
 # Resend Transactional Email Credentials
 RESEND_API_KEY="YOUR_RESEND_API_KEY"
-RESEND_FROM_EMAIL="LAPOR-AI <noreply@lapor-ai.web.id>"
+RESEND_FROM_EMAIL="LAPOR-AI Support <bantuan@lapor-ai.web.id>"
+SUPPORT_TARGET_EMAIL="[EMAIL_ADDRESS]"
 ```
 
 Jalankan server backend FastAPI:

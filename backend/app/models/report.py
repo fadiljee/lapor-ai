@@ -109,3 +109,15 @@ class AuditLog(Base):
     details = Column(Text, nullable=True)
     model_version = Column(String, nullable=True)
     timestamp = Column(DateTime, default=datetime.datetime.utcnow)
+
+class SupportMessage(Base):
+    __tablename__ = "support_messages"
+
+    id = Column(Integer, primary_key=True, index=True)
+    nama = Column(String, nullable=False)
+    email = Column(String, index=True, nullable=False)
+    pesan = Column(Text, nullable=False)
+    status = Column(String, default="sent")                                     
+    error_message = Column(Text, nullable=True)
+    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+
