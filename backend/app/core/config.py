@@ -30,7 +30,8 @@ class Settings(BaseSettings):
 
                       
     RESEND_API_KEY: str = os.getenv("RESEND_API_KEY", "")
-    RESEND_FROM_EMAIL: str = os.getenv("RESEND_FROM_EMAIL", "LAPOR-AI <noreply@lapor-ai.web.id>")
+    RESEND_FROM_EMAIL: str = os.getenv("RESEND_FROM_EMAIL", "LAPOR-AI Support <bantuan@lapor-ai.web.id>")
+    SUPPORT_TARGET_EMAIL: str = os.getenv("SUPPORT_TARGET_EMAIL", "fadilje700@gmail.com")
 
     APP_BASE_URL: str = os.getenv("APP_BASE_URL", "")
     class Config:
