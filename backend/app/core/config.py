@@ -21,7 +21,7 @@ class Settings(BaseSettings):
     GEMINI_API_KEY: str = os.getenv("GEMINI_API_KEY") or ""
     GEMINI_BASE_URL: str = os.getenv("GEMINI_BASE_URL") or "https://generativelanguage.googleapis.com/v1beta"
     PRIMARY_MODEL: str = os.getenv("PRIMARY_MODEL") or "gemini-3.6-flash"
-    FALLBACK_MODEL: str = os.getenv("FALLBACK_MODEL") or "gemini-2.0-flash"
+    FALLBACK_MODEL: str = os.getenv("FALLBACK_MODEL") or "gemini-3.5-flash"
     
                            
     DATABASE_URL: str = os.getenv("DATABASE_URL") or "postgresql://postgres:password@localhost:5432/lapor_ai"
