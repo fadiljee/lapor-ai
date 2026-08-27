@@ -13,6 +13,8 @@ from app.api.v1 import instansi as instansi_router
 from app.api.v1 import support as support_router
 from app.models.report import User, AuditLog, Instansi
 from app.services.auth_service import auth_service
+from apscheduler.schedulers.background import BackgroundScheduler
+from app.services.data_retention_service import run_retention_cleanup
 
 Base.metadata.create_all(bind=engine)
 
@@ -39,6 +41,18 @@ os.makedirs("uploads", exist_ok=True)
 
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+
+# --- Setup Scheduler ---
+scheduler = BackgroundScheduler()
+scheduler.add_job(run_retention_cleanup, 'cron', hour=3, minute=0)
+
+@app.on_event("startup")
+def startup_event():
+    scheduler.start()
+
+@app.on_event("shutdown")
+def shutdown_event():
+    scheduler.shutdown()
 
 app.include_router(report_router.router, prefix=settings.API_V1_STR)
 app.include_router(auth_router.router, prefix=settings.API_V1_STR)
