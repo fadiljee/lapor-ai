@@ -41,7 +41,6 @@ class Report(Base):
     pelapor_email = Column(String, nullable=True)
     is_anonim = Column(Boolean, default=False)
     email_verified = Column(Boolean, default=False)
-    
                              
     deskripsi_asli = Column(Text, nullable=False)
     deskripsi_masked = Column(Text, nullable=False)

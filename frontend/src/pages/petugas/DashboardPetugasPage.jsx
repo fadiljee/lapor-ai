@@ -361,34 +361,40 @@ export function DashboardPetugasPage() {
                   </div>
 
                   
-                  <div className="flex flex-wrap gap-2">
-                    <button
-                      type="button"
-                      onClick={handleApprove}
-                      className="bg-primary hover:bg-primary-dark text-white px-4 py-2.5 rounded text-xs font-bold flex items-center gap-1.5 transition-colors shadow-sm"
-                    >
-                      <CheckCircle2 className="w-4 h-4" />
-                      <span>Setujui Rekomendasi AI</span>
-                    </button>
+                  {selectedReport.status === 'Menunggu Verifikasi AI' ? (
+                    <div className="flex flex-wrap gap-2">
+                      <button
+                        type="button"
+                        onClick={handleApprove}
+                        className="bg-primary hover:bg-primary-dark text-white px-4 py-2.5 rounded text-xs font-bold flex items-center gap-1.5 transition-colors shadow-sm"
+                      >
+                        <CheckCircle2 className="w-4 h-4" />
+                        <span>Setujui Rekomendasi AI</span>
+                      </button>
 
-                    <button
-                      type="button"
-                      onClick={openOverrideDialog}
-                      className="bg-bg-base hover:bg-border text-text-primary border border-border px-4 py-2.5 rounded text-xs font-bold flex items-center gap-1.5 transition-colors"
-                    >
-                      <Edit3 className="w-4 h-4 text-primary" />
-                      <span>Koreksi Kategori / Urgensi</span>
-                    </button>
+                      <button
+                        type="button"
+                        onClick={openOverrideDialog}
+                        className="bg-bg-base hover:bg-border text-text-primary border border-border px-4 py-2.5 rounded text-xs font-bold flex items-center gap-1.5 transition-colors"
+                      >
+                        <Edit3 className="w-4 h-4 text-primary" />
+                        <span>Koreksi Kategori / Urgensi</span>
+                      </button>
 
-                    <button
-                      type="button"
-                      onClick={handleMarkIrrelevant}
-                      className="bg-red-50 hover:bg-accent text-accent hover:text-white border border-accent px-4 py-2.5 rounded text-xs font-bold flex items-center gap-1.5 transition-colors"
-                    >
-                      <XCircle className="w-4 h-4" />
-                      <span>Tandai Tidak Relevan</span>
-                    </button>
-                  </div>
+                      <button
+                        type="button"
+                        onClick={handleMarkIrrelevant}
+                        className="bg-red-50 hover:bg-accent text-accent hover:text-white border border-accent px-4 py-2.5 rounded text-xs font-bold flex items-center gap-1.5 transition-colors"
+                      >
+                        <XCircle className="w-4 h-4" />
+                        <span>Tandai Tidak Relevan</span>
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="bg-bg-base border border-border rounded p-3 text-xs text-text-secondary italic">
+                      Laporan ini telah diproses (Status: {selectedReport.status}). Tindakan verifikasi tidak lagi tersedia.
+                    </div>
+                  )}
                 </div>
 
                 
