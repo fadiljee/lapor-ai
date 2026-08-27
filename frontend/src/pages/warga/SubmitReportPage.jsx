@@ -16,7 +16,10 @@ const STEPS = [
 const KATEGORI = [
   { value: 'Infrastruktur',      label: 'Infrastruktur (Jalan, Jembatan, Kabel, Lampu)' },
   { value: 'Keamanan/Bencana',   label: 'Keamanan / Bencana (Kebakaran, Banjir, Kecelakaan)' },
-  { value: 'Layanan Publik',     label: 'Layanan Publik (Administrasi, Kantor Dinas)' },
+  { value: 'Layanan Publik',     label: 'Layanan Publik (Perizinan, Kantor Dinas)' },
+  { value: 'Kependudukan',       label: 'Kependudukan (KTP, KK, Catatan Sipil)' },
+  { value: 'Transportasi',       label: 'Transportasi (Lampu Jalan, Angkutan, Parkir)' },
+  { value: 'Sosial',             label: 'Sosial (Bantuan, Orang Telantar)' },
   { value: 'Lingkungan',         label: 'Lingkungan (Sampah, Limbah, Pencemaran)' },
   { value: 'Kesehatan',          label: 'Kesehatan (Puskesmas, RS, Sanitasi)' },
   { value: 'Pendidikan',         label: 'Pendidikan (Fasilitas Sekolah)' },

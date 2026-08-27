@@ -14,6 +14,9 @@ const DEPARTMENT_MAP = {
   'Kesehatan': 'Dinas Kesehatan (Dinkes)',
   'Pendidikan': 'Dinas Pendidikan (Disdik)',
   'Ketertiban Umum': 'Satuan Polisi Pamong Praja (Satpol PP)',
+  'Kependudukan': 'Dinas Kependudukan dan Pencatatan Sipil (Disdukcapil)',
+  'Transportasi': 'Dinas Perhubungan (Dishub)',
+  'Sosial': 'Dinas Sosial (Dinsos)',
   'Lainnya': 'Disposisi Manual (Antrean Admin)'
 };
 
@@ -489,6 +492,9 @@ export function DashboardPetugasPage() {
                     <option value="Kesehatan">Kesehatan</option>
                     <option value="Pendidikan">Pendidikan</option>
                     <option value="Ketertiban Umum">Ketertiban Umum</option>
+                    <option value="Kependudukan">Kependudukan</option>
+                    <option value="Transportasi">Transportasi</option>
+                    <option value="Sosial">Sosial</option>
                     <option value="Lainnya">Lainnya</option>
                   </select>
                 </div>

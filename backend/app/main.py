@@ -78,7 +78,9 @@ def seed_initial_users():
             "Dinas Perhubungan (Dishub)",
             "Dinas Sosial (Dinsos)",
             "Satuan Polisi Pamong Praja (Satpol PP)",
-            "Badan Penanggulangan Bencana Daerah (BPBD)"
+            "Badan Penanggulangan Bencana Daerah (BPBD)",
+            "Dinas Penanaman Modal dan Pelayanan Terpadu Satu Pintu (DPMPTSP)",
+            "Dinas Pendidikan (Disdik)"
         ]
 
         for inst in initial_instansi:
@@ -97,7 +99,9 @@ def seed_initial_users():
             {"email": "dinas.dishub@lapor.go.id", "nama": "Tito Dishub", "role": "dinas", "instansi": "Dinas Perhubungan (Dishub)"},
             {"email": "dinas.dinsos@lapor.go.id", "nama": "Wati Dinsos", "role": "dinas", "instansi": "Dinas Sosial (Dinsos)"},
             {"email": "dinas.satpolpp@lapor.go.id", "nama": "Bambang Satpol", "role": "dinas", "instansi": "Satuan Polisi Pamong Praja (Satpol PP)"},
-            {"email": "dinas.bpbd@lapor.go.id", "nama": "Bima BPBD", "role": "dinas", "instansi": "Badan Penanggulangan Bencana Daerah (BPBD)"}
+            {"email": "dinas.bpbd@lapor.go.id", "nama": "Bima BPBD", "role": "dinas", "instansi": "Badan Penanggulangan Bencana Daerah (BPBD)"},
+            {"email": "dinas.dpmptsp@lapor.go.id", "nama": "Toni DPMPTSP", "role": "dinas", "instansi": "Dinas Penanaman Modal dan Pelayanan Terpadu Satu Pintu (DPMPTSP)"},
+            {"email": "dinas.disdik@lapor.go.id", "nama": "Sari Disdik", "role": "dinas", "instansi": "Dinas Pendidikan (Disdik)"}
         ]
         
         for u in initial_users:
