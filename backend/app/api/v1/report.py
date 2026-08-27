@@ -96,8 +96,6 @@ def create_report(
     wrapped_prompt = prompt_injection_guard.sanitize_and_wrap(masked_desc)
     ai_res = llm_orchestrator.analyze_report(wrapped_prompt, preset_type, active_instansi)
     
-    # We now trust the LLM to pick dinas_tujuan based on the provided list
-    # If the LLM didn't return it or failed, fallback to department_routing_service
     dinas = ai_res.get("dinas_tujuan")
     if not dinas or dinas == "[PILIH SALAH SATU DARI DAFTAR INSTANSI DI BAWAH INI]":
         dinas = department_routing_service.get_department(ai_res.get("kategori", "Lainnya"))
@@ -231,6 +229,12 @@ def override_report(
     if not report:
         raise HTTPException(status_code=404, detail="Laporan tidak ditemukan")
         
+    if report.status in ["Closed", "Resolved"] and current_user.role != "admin":
+        raise HTTPException(status_code=400, detail="Tindakan ditolak: Laporan ini sudah berstatus final (Closed/Resolved) dan tidak dapat dimodifikasi lagi.")
+        
+    if current_user.role == "petugas" and report.status != "Menunggu Verifikasi AI":
+        raise HTTPException(status_code=400, detail="Tindakan ditolak: Petugas verifikator hanya dapat memproses laporan yang masih 'Menunggu Verifikasi AI'.")
+
     if current_user.role == "dinas":
         if report.dinas_tujuan != current_user.instansi:
             raise HTTPException(status_code=403, detail="Akses ditolak: Anda hanya dapat memproses tiket untuk instansi Anda sendiri.")

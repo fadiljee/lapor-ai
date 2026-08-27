@@ -203,29 +203,35 @@ export function DashboardDinasPage() {
                   </div>
 
                   
-                  <div className="flex flex-wrap gap-2">
-                    {selectedReport.status === 'Assigned' && (
+                  {selectedReport.status !== 'Closed' && selectedReport.status !== 'Resolved' ? (
+                    <div className="flex flex-wrap gap-2">
+                      {selectedReport.status === 'Assigned' && (
+                        <button
+                          onClick={handleProcessReport}
+                          className="bg-bg-base hover:bg-border text-text-primary border border-border px-4 py-2.5 rounded text-xs font-bold flex items-center gap-1.5 transition-colors"
+                        >
+                          <RefreshCw className="w-4 h-4 text-primary" />
+                          <span>Tandai Sedang Diproses</span>
+                        </button>
+                      )}
                       <button
-                        onClick={handleProcessReport}
-                        className="bg-bg-base hover:bg-border text-text-primary border border-border px-4 py-2.5 rounded text-xs font-bold flex items-center gap-1.5 transition-colors"
+                        onClick={() => setShowCloseModal(true)}
+                        className="bg-primary hover:bg-primary-dark text-white px-4 py-2.5 rounded text-xs font-bold flex items-center gap-1.5 transition-colors shadow-sm"
                       >
-                        <RefreshCw className="w-4 h-4 text-primary" />
-                        <span>Tandai Sedang Diproses</span>
+                        <CheckCircle2 className="w-4 h-4" />
+                        <span>Tandai Selesai / Tutup Laporan</span>
                       </button>
-                    )}
-                    <button
-                      onClick={() => setShowCloseModal(true)}
-                      className="bg-primary hover:bg-primary-dark text-white px-4 py-2.5 rounded text-xs font-bold flex items-center gap-1.5 transition-colors shadow-sm"
-                    >
-                      <CheckCircle2 className="w-4 h-4" />
-                      <span>Tandai Selesai / Tutup Laporan</span>
-                    </button>
-                  </div>
+                    </div>
+                  ) : (
+                    <div className="bg-bg-base border border-border rounded p-3 text-xs text-text-secondary italic">
+                      Laporan ini telah ditutup/diselesaikan (Status: {selectedReport.status}).
+                    </div>
+                  )}
                 </div>
 
                 <div className="bg-white border border-border rounded-lg p-5 shadow-sm space-y-3">
                   <h3 className="text-xs font-bold text-text-primary uppercase tracking-wider">Deskripsi Laporan</h3>
-                  <div className="bg-bg-base p-4 rounded border border-border text-xs text-text-primary leading-relaxed whitespace-pre-wrap font-mono">
+                  <div className="bg-bg-base p-4 rounded border border-border text-xs text-text-primary leading-relaxed whitespace-pre-wrap font-mono max-h-[250px] overflow-y-auto custom-scrollbar" data-lenis-prevent="true">
                     {selectedReport.deskripsi_masked}
                   </div>
                 </div>
