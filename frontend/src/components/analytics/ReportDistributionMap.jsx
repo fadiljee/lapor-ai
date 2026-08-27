@@ -6,13 +6,7 @@ export function ReportDistributionMap({ locations = [] }) {
   const mapInstanceRef = useRef(null);
 
   
-  const points = locations.length > 0 ? locations : [
-    { id: 'LP-2026-08-04-6518', lat: -2.1316, lng: 106.1169, alamat: 'Pasar Sekanak, Pangkalpinang', urgensi: 'Kritis', kategori: 'Keamanan/Bencana', dinas: 'BPBD', status: 'Assigned', ringkasan: 'Kebakaran hebat dekat permukiman warga.' },
-    { id: 'LP-2026-08-04-9812', lat: -2.1245, lng: 106.1088, alamat: 'Jl. Jenderal Sudirman, Pangkalpinang', urgensi: 'Tinggi', kategori: 'Infrastruktur', dinas: 'PUPR', status: 'In Progress', ringkasan: 'Jalan utama ambles dan berbahaya bagi pengendara.' },
-    { id: 'LP-2026-08-05-1102', lat: -2.1401, lng: 106.1255, alamat: 'Kawasan Pelabuhan Pangkalbalam', urgensi: 'Sedang', kategori: 'Lingkungan', dinas: 'DLH', status: 'Assigned', ringkasan: 'Penumpukan sampah liar di area dermaga.' },
-    { id: 'LP-2026-08-06-4431', lat: -2.1550, lng: 106.1010, alamat: 'Simpang Empat Ramayana', urgensi: 'Kritis', kategori: 'Infrastruktur', dinas: 'PUPR', status: 'In Progress', ringkasan: 'Lampu lalu lintas padam total pemicu kemacetan parah.' },
-    { id: 'LP-2026-08-07-2299', lat: -2.1180, lng: 106.1340, alamat: 'Kawasan Industri Selindung', urgensi: 'Rendah', kategori: 'Layanan Publik', dinas: 'Satpol PP', status: 'Resolved', ringkasan: 'Penertiban PKL di trotoar umum.' },
-  ];
+  const points = locations || [];
 
   const getUrgencyColor = (urgensi) => {
     switch ((urgensi || '').toUpperCase()) {

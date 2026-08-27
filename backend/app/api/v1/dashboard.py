@@ -59,32 +59,17 @@ def get_dashboard_stats(request: Request, current_user: User = Depends(require_r
     location_reports = db.query(Report).all()
     locations = []
     
-    default_coords = [
-        (-2.1316, 106.1169, "Pasar Sekanak, Pangkalpinang"),
-        (-2.1245, 106.1088, "Jl. Jenderal Sudirman, Pangkalpinang"),
-        (-2.1401, 106.1255, "Kawasan Pelabuhan Pangkalbalam"),
-        (-2.1550, 106.1010, "Simpang Empat Ramayana"),
-        (-2.1180, 106.1340, "Kawasan Industri Selindung"),
-        (-2.1480, 106.0950, "Puskesmas Gerunggang"),
-        (-2.1290, 106.1120, "Alun-Alun Taman Merdeka")
-    ]
-    
     for idx, r in enumerate(location_reports):
         lat = r.lokasi_lat
         lng = r.lokasi_lng
         if not lat or not lng:
-            d_lat, d_lng, d_alamat = default_coords[idx % len(default_coords)]
-            lat = d_lat + (idx * 0.003)
-            lng = d_lng + (idx * 0.003)
-            alamat = r.lokasi_alamat or d_alamat
-        else:
-            alamat = r.lokasi_alamat
+            continue
             
         locations.append({
             "id": r.id,
             "lat": lat,
             "lng": lng,
-            "alamat": alamat,
+            "alamat": r.lokasi_alamat,
             "kategori": r.kategori,
             "urgensi": r.skor_urgensi,
             "dinas": r.dinas_tujuan,

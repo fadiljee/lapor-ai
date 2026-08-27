@@ -24,10 +24,7 @@ def submit_support_contact(
     payload: SupportContactRequest,
     db: Session = Depends(get_db)
 ):
-    """
-    FR-EM.1 & FR-EM.4: Form Hubungi Kami — Mengirim notifikasi email via Resend
-    dan menyimpan log pesan bantuan di database.
-    """
+   
     try:
         # 1. Simpan pesan ke database
         support_record = SupportMessage(
