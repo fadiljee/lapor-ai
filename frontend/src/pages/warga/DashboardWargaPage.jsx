@@ -93,7 +93,6 @@ export function DashboardWargaPage() {
                 Daftar Pengaduan Masuk Real-Time
               </h3>
             </div>
-            <span className="text-xs text-text-secondary font-mono">Real PostgreSQL Database</span>
           </div>
 
           {loading ? (

@@ -375,7 +375,7 @@ export function SubmitReportPage() {
                         <div>
                           <div className="text-sm font-bold text-text-primary">Mode Anonim</div>
                           <p className="text-[11px] text-text-secondary mt-0.5">
-                            Identitas email tidak dicatat. Simpan nomor tiket secara manual untuk melacak status — tidak ada notifikasi personal.
+                            Identitas email tidak dicatat. Simpan nomor tiket secara manual untuk melacak status.
                           </p>
                         </div>
                       </div>
