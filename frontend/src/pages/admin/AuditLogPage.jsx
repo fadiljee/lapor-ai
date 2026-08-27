@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Sidebar } from '../../components/dashboard/Sidebar';
 import { api } from '../../services/api';
 import { ShieldAlert, Search, RefreshCw, ChevronLeft, ChevronRight } from 'lucide-react';
+import { formatToJakartaTime } from '../../utils/dateFormatter';
 
 export function AuditLogPage() {
   const [logs, setLogs] = useState([]);
@@ -135,7 +136,7 @@ export function AuditLogPage() {
                 ) : (
                   currentLogs.map((log) => (
                     <tr key={log.id} className="hover:bg-bg-base transition-colors">
-                      <td className="p-3 font-mono text-[11px] text-text-secondary whitespace-nowrap">{log.timestamp}</td>
+                      <td className="p-3 font-mono text-[11px] text-text-secondary whitespace-nowrap">{formatToJakartaTime(log.timestamp)}</td>
                       <td className="p-3 font-mono font-bold text-primary whitespace-nowrap">{log.report_id || 'SYSTEM'}</td>
                       <td className="p-3 font-semibold text-text-primary">{log.actor}</td>
                       <td className="p-3 font-mono text-[11px] uppercase font-bold text-accent whitespace-nowrap">{log.action}</td>

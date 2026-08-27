@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Sidebar } from '../../components/dashboard/Sidebar';
 import { Building2, Plus, Edit, Trash2, X, Check, Save } from 'lucide-react';
 import { api } from '../../services/api';
+import { formatToJakartaTime } from '../../utils/dateFormatter';
 
 export function InstansiManagementPage() {
   const [instansiList, setInstansiList] = useState([]);
@@ -130,7 +131,7 @@ export function InstansiManagementPage() {
                   <tr key={inst.id} className="hover:bg-bg-base transition-colors">
                     <td className="p-3 font-semibold text-text-primary">{inst.nama}</td>
                     <td className="p-3 text-text-secondary">{inst.deskripsi || '-'}</td>
-                    <td className="p-3 text-text-secondary">{new Date(inst.created_at).toLocaleDateString('id-ID')}</td>
+                    <td className="p-3 text-text-secondary">{formatToJakartaTime(inst.created_at)}</td>
                     <td className="p-3 flex items-center justify-end gap-2">
                       <button 
                         onClick={() => handleOpenEdit(inst)}

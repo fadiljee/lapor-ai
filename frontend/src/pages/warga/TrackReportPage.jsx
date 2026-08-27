@@ -6,6 +6,7 @@ import { TicketStub } from '../../components/common/TicketStub';
 import { UrgencyBadge } from '../../components/common/UrgencyBadge';
 import { AiStampCap } from '../../components/common/AiStampCap';
 import { Search, Loader2, CheckCircle2, Image, Paperclip, ExternalLink } from 'lucide-react';
+import { formatToJakartaTime } from '../../utils/dateFormatter';
 
 
 const STATUS_STEPS = [
@@ -188,7 +189,7 @@ export function TrackReportPage() {
             <TicketStub
               ticketId={report.id}
               status={report.status}
-              createdAt={report.created_at}
+              createdAt={formatToJakartaTime(report.created_at)}
               pelaporEmail={report.pelapor_email}
               isAnonim={report.is_anonim}
               category={report.kategori}
