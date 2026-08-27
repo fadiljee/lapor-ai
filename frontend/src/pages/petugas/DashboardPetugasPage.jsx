@@ -361,7 +361,7 @@ export function DashboardPetugasPage() {
                   </div>
 
                   
-                  {selectedReport.status === 'Menunggu Verifikasi AI' ? (
+                  {['Terverifikasi AI', 'Perlu Verifikasi Manual', 'Menunggu Verifikasi AI'].includes(selectedReport.status) ? (
                     <div className="flex flex-wrap gap-2">
                       <button
                         type="button"

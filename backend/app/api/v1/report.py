@@ -232,8 +232,8 @@ def override_report(
     if report.status in ["Closed", "Resolved"] and current_user.role != "admin":
         raise HTTPException(status_code=400, detail="Tindakan ditolak: Laporan ini sudah berstatus final (Closed/Resolved) dan tidak dapat dimodifikasi lagi.")
         
-    if current_user.role == "petugas" and report.status != "Menunggu Verifikasi AI":
-        raise HTTPException(status_code=400, detail="Tindakan ditolak: Petugas verifikator hanya dapat memproses laporan yang masih 'Menunggu Verifikasi AI'.")
+    if current_user.role == "petugas" and report.status not in ["Terverifikasi AI", "Perlu Verifikasi Manual", "Menunggu Verifikasi AI", "Pending Email Verification"]:
+        raise HTTPException(status_code=400, detail="Tindakan ditolak: Petugas verifikator hanya dapat memproses laporan baru.")
 
     if current_user.role == "dinas":
         if report.dinas_tujuan != current_user.instansi:
