@@ -203,7 +203,7 @@ export function TrackReportPage() {
 
               <div>
                 <span className="text-text-secondary block mb-1 font-medium">Ringkasan Laporan:</span>
-                <p className="text-text-primary bg-bg-base p-3 rounded border border-border leading-relaxed">
+                <p className="text-text-primary bg-bg-base p-3 rounded border border-border leading-relaxed max-h-[200px] overflow-y-auto custom-scrollbar" data-lenis-prevent="true">
                   {report.deskripsi_masked}
                 </p>
               </div>

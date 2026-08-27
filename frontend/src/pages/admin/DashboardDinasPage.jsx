@@ -231,7 +231,7 @@ export function DashboardDinasPage() {
 
                 <div className="bg-white border border-border rounded-lg p-5 shadow-sm space-y-3">
                   <h3 className="text-xs font-bold text-text-primary uppercase tracking-wider">Deskripsi Laporan</h3>
-                  <div className="bg-bg-base p-4 rounded border border-border text-xs text-text-primary leading-relaxed whitespace-pre-wrap font-mono">
+                  <div className="bg-bg-base p-4 rounded border border-border text-xs text-text-primary leading-relaxed whitespace-pre-wrap font-mono max-h-[250px] overflow-y-auto custom-scrollbar" data-lenis-prevent="true">
                     {selectedReport.deskripsi_masked}
                   </div>
                 </div>

@@ -405,7 +405,7 @@ export function DashboardPetugasPage() {
                   <h3 className="text-xs font-bold text-text-primary uppercase tracking-wider">
                     Deskripsi Lengkap Laporan Warga (PII Masked)
                   </h3>
-                  <div className="bg-bg-base p-4 rounded border border-border text-xs text-text-primary leading-relaxed whitespace-pre-wrap font-mono">
+                  <div className="bg-bg-base p-4 rounded border border-border text-xs text-text-primary leading-relaxed whitespace-pre-wrap font-mono max-h-[250px] overflow-y-auto custom-scrollbar" data-lenis-prevent="true">
                     {selectedReport.deskripsi_masked}
                   </div>
                 </div>
