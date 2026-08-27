@@ -7,10 +7,13 @@ export function RoutingManagementPage() {
     { kategori: 'Infrastruktur', ciri: 'Jalan berlubang/ambles, jembatan rusak, drainase mampet, lampu jalan mati, kabel listrik', dinas: 'Dinas Pekerjaan Umum dan Penataan Ruang (PUPR)', prioritas: 'Tinggi jika berpotensi bahaya' },
     { kategori: 'Keamanan/Bencana', ciri: 'Kebakaran, kecelakaan massal, kekerasan berlangsung, bencana alam (banjir, longsor)', dinas: 'Badan Penanggulangan Bencana Daerah (BPBD)', prioritas: 'Selalu Kritis/Tinggi' },
     { kategori: 'Layanan Publik', ciri: 'Pelayanan administrasi lambat/dipersulit, fasilitas kantor pelayanan publik rusak', dinas: 'Dinas Penanaman Modal dan Pelayanan Terpadu Satu Pintu (DPMPTSP)', prioritas: 'Sedang' },
-    { kategori: 'Lingkungan', ciri: 'Sampah menumpuk, pencemaran air/udara, penebangan liar', dinas: 'Dinas Lingkungan Hidup (DLH)', prioritas: 'Sedang–Tinggi' },
+    { kategori: 'Kependudukan', ciri: 'Masalah KTP, KK, Akta Kelahiran, administrasi kependudukan', dinas: 'Dinas Kependudukan dan Pencatatan Sipil (Disdukcapil)', prioritas: 'Sedang' },
+    { kategori: 'Transportasi', ciri: 'Lampu jalan mati, jalan macet, angkutan umum bermasalah, parkir liar', dinas: 'Dinas Perhubungan (Dishub)', prioritas: 'Sedang' },
+    { kategori: 'Sosial', ciri: 'Bantuan sosial fiktif, pungli bansos, penanganan anak jalanan/orang telantar', dinas: 'Dinas Sosial (Dinsos)', prioritas: 'Sedang' },
+    { kategori: 'Lingkungan', ciri: 'Sampah menumpuk, pencemaran air/udara, penebangan liar', dinas: 'Dinas Lingkungan Hidup (DLH)', prioritas: 'Sedang - Tinggi' },
     { kategori: 'Kesehatan', ciri: 'Fasilitas puskesmas/rumah sakit bermasalah, sanitasi buruk, indikasi wabah', dinas: 'Dinas Kesehatan (Dinkes)', prioritas: 'Tinggi jika wabah' },
     { kategori: 'Pendidikan', ciri: 'Fasilitas sekolah rusak, dugaan pungutan liar di sekolah', dinas: 'Dinas Pendidikan (Disdik)', prioritas: 'Sedang' },
-    { kategori: 'Ketertiban Umum', ciri: 'PKL/bangunan liar, gangguan ketertiban non-darurat', dinas: 'Satuan Polisi Pamong Praja (Satpol PP)', prioritas: 'Rendah–Sedang' },
+    { kategori: 'Ketertiban Umum', ciri: 'PKL/bangunan liar, gangguan ketertiban non-darurat', dinas: 'Satuan Polisi Pamong Praja (Satpol PP)', prioritas: 'Rendah - Sedang' },
     { kategori: 'Lainnya', ciri: 'Tidak sesuai kategori di atas atau confidence rendah (<80%)', dinas: 'Disposisi Manual (Antrean Admin)', prioritas: 'Sesuai Urgensi' }
   ];
 

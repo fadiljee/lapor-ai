@@ -7,13 +7,15 @@ class DepartmentRoutingService:
         "Kesehatan": "Dinas Kesehatan (Dinkes)",
         "Pendidikan": "Dinas Pendidikan (Disdik)",
         "Ketertiban Umum": "Satuan Polisi Pamong Praja (Satpol PP)",
-        "Lainnya": "Disposisi Manual"
+        "Kependudukan": "Dinas Kependudukan dan Pencatatan Sipil (Disdukcapil)",
+        "Transportasi": "Dinas Perhubungan (Dishub)",
+        "Sosial": "Dinas Sosial (Dinsos)",
+        "Lainnya": "Disposisi Manual (Antrean Admin)"
     }
 
     def get_department(self, category: str) -> str:
         if not category:
-            return "Disposisi Manual"
-            
+            return "Disposisi Manual (Antrean Admin)"
                                                  
         category_clean = category.strip()
         if category_clean in self.MAPPING:
@@ -23,6 +25,6 @@ class DepartmentRoutingService:
             if key.lower() in category_clean.lower() or category_clean.lower() in key.lower():
                 return dept
                 
-        return "Disposisi Manual"
+        return "Disposisi Manual (Antrean Admin)"
 
 department_routing_service = DepartmentRoutingService()

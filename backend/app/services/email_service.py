@@ -14,7 +14,7 @@ class ResendEmailService:
     def send_otp_email(self, to_email: str, otp_code: str, ticket_id: str = None) -> bool:
         if not self.api_key:
             logger.warning("RESEND_API_KEY is missing. Skipping email send.")
-            print(f"📧 [MOCK EMAIL] OTP {otp_code} for {to_email}")
+            print(f"[MOCK EMAIL] OTP {otp_code} for {to_email}")
             return False
 
         subject = f"[{otp_code}] Kode Verifikasi Laporan Pengaduan - LAPOR-AI"

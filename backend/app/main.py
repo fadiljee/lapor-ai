@@ -13,6 +13,8 @@ from app.api.v1 import instansi as instansi_router
 from app.api.v1 import support as support_router
 from app.models.report import User, AuditLog, Instansi
 from app.services.auth_service import auth_service
+from apscheduler.schedulers.background import BackgroundScheduler
+from app.services.data_retention_service import run_retention_cleanup
 
 Base.metadata.create_all(bind=engine)
 
@@ -40,6 +42,18 @@ os.makedirs("uploads", exist_ok=True)
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
+# --- Setup Scheduler ---
+scheduler = BackgroundScheduler()
+scheduler.add_job(run_retention_cleanup, 'cron', hour=3, minute=0)
+
+@app.on_event("startup")
+def startup_event():
+    scheduler.start()
+
+@app.on_event("shutdown")
+def shutdown_event():
+    scheduler.shutdown()
+
 app.include_router(report_router.router, prefix=settings.API_V1_STR)
 app.include_router(auth_router.router, prefix=settings.API_V1_STR)
 app.include_router(dashboard_router.router, prefix=settings.API_V1_STR)
@@ -64,7 +78,9 @@ def seed_initial_users():
             "Dinas Perhubungan (Dishub)",
             "Dinas Sosial (Dinsos)",
             "Satuan Polisi Pamong Praja (Satpol PP)",
-            "Badan Penanggulangan Bencana Daerah (BPBD)"
+            "Badan Penanggulangan Bencana Daerah (BPBD)",
+            "Dinas Penanaman Modal dan Pelayanan Terpadu Satu Pintu (DPMPTSP)",
+            "Dinas Pendidikan (Disdik)"
         ]
 
         for inst in initial_instansi:
@@ -83,7 +99,9 @@ def seed_initial_users():
             {"email": "dinas.dishub@lapor.go.id", "nama": "Tito Dishub", "role": "dinas", "instansi": "Dinas Perhubungan (Dishub)"},
             {"email": "dinas.dinsos@lapor.go.id", "nama": "Wati Dinsos", "role": "dinas", "instansi": "Dinas Sosial (Dinsos)"},
             {"email": "dinas.satpolpp@lapor.go.id", "nama": "Bambang Satpol", "role": "dinas", "instansi": "Satuan Polisi Pamong Praja (Satpol PP)"},
-            {"email": "dinas.bpbd@lapor.go.id", "nama": "Bima BPBD", "role": "dinas", "instansi": "Badan Penanggulangan Bencana Daerah (BPBD)"}
+            {"email": "dinas.bpbd@lapor.go.id", "nama": "Bima BPBD", "role": "dinas", "instansi": "Badan Penanggulangan Bencana Daerah (BPBD)"},
+            {"email": "dinas.dpmptsp@lapor.go.id", "nama": "Toni DPMPTSP", "role": "dinas", "instansi": "Dinas Penanaman Modal dan Pelayanan Terpadu Satu Pintu (DPMPTSP)"},
+            {"email": "dinas.disdik@lapor.go.id", "nama": "Sari Disdik", "role": "dinas", "instansi": "Dinas Pendidikan (Disdik)"}
         ]
         
         for u in initial_users:
