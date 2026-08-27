@@ -47,7 +47,7 @@ Project ini dikembangkan sebagai prototipe solusi untuk **FTI FEST 2026** dengan
 - **Google Gemini 3.6 Flash Integration**: Memanfaatkan mode JSON terstruktur native (`responseMimeType: application/json` & `system_instruction`).
 - **PII Masking Service**: Anonimisasi otomatis nomor telepon, email, NIK, dan nomor rekening warga.
 - **Prompt Injection Protection**: Sanitasi input warga dengan teknik *data wrapping* `<user_report>` agar LLM tidak dapat di-hijack oleh instruksi tersembunyi.
-- **Multi-Tier Model Fallback**: Skema failover dari Primary Model (`gemini-3.6-flash`) ke Fallback Model (`gemini-2.0-flash`) hingga Local Rule-Based Engine jika terjadi gangguan koneksi.
+- **Multi-Tier Model Fallback**: Skema failover dari Primary Model (`gemini-3.6-flash`) ke Fallback Model (`gemini-3.5-flash`) hingga Local Rule-Based Engine jika terjadi gangguan koneksi.
 - **Deteksi Laporan Ganda (Duplicate Detection)**: Hashing teks fingerprint untuk menandai laporan serupa yang berpotensi membanjiri antrean.
 
 ## Petugas & Staff Dashboard (Klasifikasi AI)
@@ -116,7 +116,7 @@ Project ini dikembangkan sebagai prototipe solusi untuk **FTI FEST 2026** dengan
 
 ### Large Language Model (AI)
 - **Primary LLM**: Google Gemini API (`gemini-3.6-flash`)
-- **Fallback LLM**: Google Gemini API (`gemini-2.0-flash`)
+- **Fallback LLM**: Google Gemini API (`gemini-3.5-flash`)
 - **Emergency Local Engine**: Rule-based Keyword & Heuristic Mesin Klasifikasi
 
 ---
@@ -221,7 +221,7 @@ APP_BASE_URL="http://localhost"
 GEMINI_API_KEY="YOUR_GEMINI_API_KEY"
 GEMINI_BASE_URL="https://generativelanguage.googleapis.com/v1beta"
 PRIMARY_MODEL="gemini-3.6-flash"
-FALLBACK_MODEL="gemini-2.0-flash"
+FALLBACK_MODEL="gemini-3.5-flash"
 
 # Resend Transactional Email Credentials
 RESEND_API_KEY="YOUR_RESEND_API_KEY"
