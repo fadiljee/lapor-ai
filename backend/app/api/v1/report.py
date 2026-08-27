@@ -301,6 +301,8 @@ def _format_report_response(r: Report) -> ReportResponse:
         confidence_score=r.confidence_score or 0.90,
         entitas=entitas_list,
         lokasi_alamat=r.lokasi_alamat or "Tidak ditentukan",
+        lokasi_lat=r.lokasi_lat,
+        lokasi_lng=r.lokasi_lng,
         lampiran_path=f"{settings.APP_BASE_URL}/{r.lampiran_path}" if r.lampiran_path else None,
         dinas_tujuan=r.dinas_tujuan,
         is_duplikat=r.is_duplikat,
