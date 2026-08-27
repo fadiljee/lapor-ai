@@ -3,6 +3,7 @@ import { Sidebar } from '../../components/dashboard/Sidebar';
 import { Users, Plus, Edit, Trash2, X, Check, Save } from 'lucide-react';
 import { api } from '../../services/api';
 import { SearchableSelect } from '../../components/common/SearchableSelect';
+import { formatToJakartaTime } from '../../utils/dateFormatter';
 
 export function UserManagementPage() {
   const [users, setUsers] = useState([]);
@@ -178,7 +179,7 @@ export function UserManagementPage() {
                       </span>
                     </td>
                     <td className="p-3 text-text-secondary">{u.instansi || '-'}</td>
-                    <td className="p-3 text-text-secondary">{new Date(u.created_at).toLocaleDateString('id-ID')}</td>
+                    <td className="p-3 text-text-secondary">{formatToJakartaTime(u.created_at)}</td>
                     <td className="p-3 flex items-center justify-end gap-2">
                       <button 
                         onClick={() => handleOpenEdit(u)}

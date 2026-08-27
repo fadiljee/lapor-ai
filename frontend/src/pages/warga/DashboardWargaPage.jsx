@@ -4,6 +4,7 @@ import { Sidebar } from '../../components/dashboard/Sidebar';
 import { UrgencyBadge } from '../../components/common/UrgencyBadge';
 import { api } from '../../services/api';
 import { FilePlus, Search, ShieldCheck, Bot, Clock, ArrowRight, CheckCircle, Sparkles, FileText } from 'lucide-react';
+import { formatToJakartaTime } from '../../utils/dateFormatter';
 
 export function DashboardWargaPage() {
   const userName = localStorage.getItem('lapor_ai_nama') || 'Warga Pelapor';
@@ -114,7 +115,7 @@ export function DashboardWargaPage() {
                         {rpt.id}
                       </Link>
                       <UrgencyBadge level={rpt.skor_urgensi} />
-                      <span className="text-[10px] text-text-secondary">· {rpt.created_at}</span>
+                      <span className="text-[10px] text-text-secondary">· {formatToJakartaTime(rpt.created_at)}</span>
                     </div>
                     <p className="text-text-primary font-medium line-clamp-1 mb-0.5">{rpt.ringkasan || rpt.deskripsi_masked}</p>
                     <span className="text-[11px] text-text-secondary">{rpt.lokasi_alamat} → <span className="font-semibold text-text-primary">{rpt.dinas_tujuan}</span></span>

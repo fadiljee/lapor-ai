@@ -3,6 +3,7 @@ import { useLocation, Link } from 'react-router-dom';
 import { TicketStub } from '../../components/common/TicketStub';
 import { AiStampCap } from '../../components/common/AiStampCap';
 import { CheckCircle2, Search, FilePlus } from 'lucide-react';
+import { formatToJakartaTime } from '../../utils/dateFormatter';
 
 export function ReportSuccessPage() {
   const location = useLocation();
@@ -44,7 +45,7 @@ export function ReportSuccessPage() {
           <TicketStub
             ticketId={report.id}
             status={report.status}
-            createdAt={report.created_at}
+            createdAt={formatToJakartaTime(report.created_at)}
             pelaporEmail={report.pelapor_email}
             isAnonim={report.is_anonim}
             category={report.kategori}

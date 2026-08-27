@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { api } from '../../services/api';
 import { Mail, ShieldCheck, RefreshCw, AlertTriangle, CheckCircle2 } from 'lucide-react';
+import { formatToJakartaTime } from '../../utils/dateFormatter';
 
 export function EmailVerificationPage() {
   const location = useLocation();
@@ -56,7 +57,7 @@ export function EmailVerificationPage() {
         pelapor_email: email,
         status: 'Terverifikasi AI',
         kategori: 'Pengaduan Warga',
-        created_at: new Date().toLocaleString('id-ID'),
+        created_at: formatToJakartaTime(new Date()),
         is_anonim: false,
       };
       try {
